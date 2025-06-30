@@ -1,1 +1,1 @@
-"# cc-website" 
+# CC website
