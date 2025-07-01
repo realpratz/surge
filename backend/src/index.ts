@@ -5,6 +5,8 @@ import session from "express-session";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import authRoutes from './routes/auth';
+import { prisma } from './db';
+import { User } from "@prisma/client";
 
 dotenv.config();
 const app = express();
@@ -33,16 +35,45 @@ passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID!,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
   callbackURL: process.env.CALLBACK_URL!,
-}, (accessToken, refreshToken, profile, done) => {
-  return done(null, profile);
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    const email = profile.emails![0].value;
+    const name = profile.displayName;
+    const pfpUrl = profile.photos![0].value;
+    const user = await prisma.user.upsert({
+      where: {
+        email: email,
+      },
+      update: {
+        name: name,
+        pfpUrl: pfpUrl,
+      },
+      create: {
+        email: email,
+        name: name,
+        pfpUrl: pfpUrl,
+      },
+    });
+    return done(null, user);
+  } catch (error) {
+    console.error("Error during Google authentication:", error);
+    return done(new Error("Authentication failed"));
+  }
 }));
 
 passport.serializeUser((user, done) => {
-  done(null, user);
+  const prismaUser = user as User;
+  done(null, prismaUser.id);
 });
 
-passport.deserializeUser((user: any, done) => {
-  done(null, user);
+passport.deserializeUser(async (userId: string, done) => {
+  try {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    done(null, user);
+  } catch (error) {
+    console.error("Error deserializing user:", error);
+    done(new Error("Could not deserialize user"), null);
+  }
 });
 
 app.get("/", (_req, res) => {
