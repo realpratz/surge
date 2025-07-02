@@ -1,14 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import type { User } from "../types/User";
 
 type AuthContextType = {
-  user: any;
+  user: User | null;
   loading: boolean;
 };
 
-const AuthContext = createContext<AuthContextType>({ user: null, loading: true });
+const AuthContext = createContext<AuthContextType>({
+  user: null,
+  loading: true,
+});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,6 +21,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     })
       .then((res) => (res.status === 401 ? null : res.json()))
       .then((data) => {
+        console.log(data?.user);
         setUser(data?.user || null);
         setLoading(false);
       })
