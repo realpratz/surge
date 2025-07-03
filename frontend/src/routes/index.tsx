@@ -18,7 +18,7 @@ function RouteComponent() {
         <Link to="/leaderboard">Leaderboard</Link>
       </p>
       <p>
-        <Link to="/resources">Resources</Link>
+        <Link to="/resource">Resources</Link>
       </p>
     </div>
   );
