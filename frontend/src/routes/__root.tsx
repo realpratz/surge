@@ -4,13 +4,14 @@ import { useEffect } from "react";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import Login from "../pages/Login";
 import Navbar from "../components/Navbar";
+import CFHandleModal from "../components/CFHandleModal";
 
 export const Route = createRootRoute({
   component: RootComponent,
 });
 
 export default function RootComponent() {
-  const { user, loading } = useAuth();
+  const { user, loading, setUser } = useAuth();
 
   useEffect(() => {
     console.log(`User: ${user}`);
@@ -30,6 +31,13 @@ export default function RootComponent() {
       </main>
       {import.meta.env.VITE_ENV === "development" && (
         <TanStackRouterDevtools position="bottom-right" />
+      )}
+      {user.cfHandle === null && (
+        <CFHandleModal
+          onSuccess={(updatedUser) => {
+            setUser(updatedUser);
+          }}
+        />
       )}
     </div>
   );
