@@ -27,7 +27,7 @@ export default function Navbar() {
         <Link to="/stats" className="text-highlight-light hover:text-white">
           <ChartBarIcon className="w-12 h-12" />
         </Link>
-        <Link to="/resources" className="text-highlight-light hover:text-white">
+        <Link to="/resource" className="text-highlight-light hover:text-white">
           <BookOpenIcon className="w-12 h-12" />
         </Link>
       </div>

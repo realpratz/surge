@@ -10,19 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StatsRouteImport } from './routes/stats'
-import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ResourceIndexRouteImport } from './routes/resource/index'
+import { Route as ResourceSlugRouteImport } from './routes/resource/$slug'
 
 const StatsRoute = StatsRouteImport.update({
   id: '/stats',
   path: '/stats',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResourcesRoute = ResourcesRouteImport.update({
-  id: '/resources',
-  path: '/resources',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -40,43 +36,76 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResourceIndexRoute = ResourceIndexRouteImport.update({
+  id: '/resource/',
+  path: '/resource/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResourceSlugRoute = ResourceSlugRouteImport.update({
+  id: '/resource/$slug',
+  path: '/resource/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/leaderboard': typeof LeaderboardRoute
   '/profile': typeof ProfileRoute
-  '/resources': typeof ResourcesRoute
   '/stats': typeof StatsRoute
+  '/resource/$slug': typeof ResourceSlugRoute
+  '/resource': typeof ResourceIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/leaderboard': typeof LeaderboardRoute
   '/profile': typeof ProfileRoute
-  '/resources': typeof ResourcesRoute
   '/stats': typeof StatsRoute
+  '/resource/$slug': typeof ResourceSlugRoute
+  '/resource': typeof ResourceIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/leaderboard': typeof LeaderboardRoute
   '/profile': typeof ProfileRoute
-  '/resources': typeof ResourcesRoute
   '/stats': typeof StatsRoute
+  '/resource/$slug': typeof ResourceSlugRoute
+  '/resource/': typeof ResourceIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/leaderboard' | '/profile' | '/resources' | '/stats'
+  fullPaths:
+    | '/'
+    | '/leaderboard'
+    | '/profile'
+    | '/stats'
+    | '/resource/$slug'
+    | '/resource'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/leaderboard' | '/profile' | '/resources' | '/stats'
-  id: '__root__' | '/' | '/leaderboard' | '/profile' | '/resources' | '/stats'
+  to:
+    | '/'
+    | '/leaderboard'
+    | '/profile'
+    | '/stats'
+    | '/resource/$slug'
+    | '/resource'
+  id:
+    | '__root__'
+    | '/'
+    | '/leaderboard'
+    | '/profile'
+    | '/stats'
+    | '/resource/$slug'
+    | '/resource/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LeaderboardRoute: typeof LeaderboardRoute
   ProfileRoute: typeof ProfileRoute
-  ResourcesRoute: typeof ResourcesRoute
   StatsRoute: typeof StatsRoute
+  ResourceSlugRoute: typeof ResourceSlugRoute
+  ResourceIndexRoute: typeof ResourceIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -86,13 +115,6 @@ declare module '@tanstack/react-router' {
       path: '/stats'
       fullPath: '/stats'
       preLoaderRoute: typeof StatsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/resources': {
-      id: '/resources'
-      path: '/resources'
-      fullPath: '/resources'
-      preLoaderRoute: typeof ResourcesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -116,6 +138,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/resource/': {
+      id: '/resource/'
+      path: '/resource'
+      fullPath: '/resource'
+      preLoaderRoute: typeof ResourceIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resource/$slug': {
+      id: '/resource/$slug'
+      path: '/resource/$slug'
+      fullPath: '/resource/$slug'
+      preLoaderRoute: typeof ResourceSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -123,8 +159,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LeaderboardRoute: LeaderboardRoute,
   ProfileRoute: ProfileRoute,
-  ResourcesRoute: ResourcesRoute,
   StatsRoute: StatsRoute,
+  ResourceSlugRoute: ResourceSlugRoute,
+  ResourceIndexRoute: ResourceIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
