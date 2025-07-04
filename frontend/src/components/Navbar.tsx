@@ -9,7 +9,7 @@ import { Link } from "@tanstack/react-router";
 
 export default function Navbar() {
   return (
-    <nav className="w-30 bg-highlight-dark text-white flex flex-col items-center py-4 shadow-lg">
+    <nav className="fixed inset-y-0 left-0 w-30 bg-highlight-dark text-white flex flex-col items-center py-4 shadow-lg">
       <Link to="/" className="mb-16 mt-6">
         <img src="/logo.png" alt="Logo" className="w-14 h-14" />
       </Link>
