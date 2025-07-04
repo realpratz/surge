@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { getRatingLevel } from "../utils";
 import ProfileAvatar from "../components/ProfileAvatar";
+import ProfileHeader from "../components/ProfileHeader";
 
 interface Profile {
   name: string | null;
@@ -49,18 +51,6 @@ function RouteComponent() {
     return "text-red-400";
   };
 
-  const getRatingLevel = (rating: number | null) => {
-    if (!rating) return "Unrated";
-    if (rating < 1200) return "Newbie";
-    if (rating < 1400) return "Pupil";
-    if (rating < 1600) return "Specialist";
-    if (rating < 1900) return "Expert";
-    if (rating < 2100) return "Candidate Master";
-    if (rating < 2300) return "Master";
-    if (rating < 2400) return "International Master";
-    return "Grandmaster";
-  };
-
   // Helper to ensure cfRating is number or null
   const cfRatingNumber =
     profile?.cfRating !== undefined && profile?.cfRating !== null
@@ -95,23 +85,7 @@ function RouteComponent() {
                 Your <span className="text-gray-400">Profile</span>
               </h1>
             </div>
-
-            <div className="flex gap-4">
-              {profile?.cfRating && (
-                <div className="rounded-full px-4 py-2 border border-yellow-500">
-                  <span className="text-yellow-400">⭐</span>
-                  <span className="text-white ml-2">
-                    Rating: {profile.cfRating}
-                  </span>
-                </div>
-              )}
-              <div className="rounded-full px-4 py-2 border border-red-500">
-                <span className="text-red-400">🔥</span>
-                <span className="text-white ml-2">
-                  Rank: {getRatingLevel(cfRatingNumber)}
-                </span>
-              </div>
-            </div>
+            <ProfileHeader cfRating={profile?.cfRating} />
           </div>
         </div>
 
