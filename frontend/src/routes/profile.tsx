@@ -17,16 +17,29 @@ export const Route = createFileRoute('/profile')({
 
 function RouteComponent() {
   const [profile, setProfile] = useState<Profile | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_BASE_URL}/profile`, { withCredentials: true })
-      .then((res) => setProfile(res.data))
-      .catch((err) => console.error("Error fetching profile: ", err))
+      .then((res) => {
+        setProfile(res.data)
+        setLoading(false)
+      })
+      .catch((_err: any) => {
+        setError('Failed to load profile.')
+        setLoading(false)
+      })
   }, [])
+
+  if (loading) return <div className="p-4">Loading...</div>
+  if (error) return <div className="p-4 text-red-600">{error}</div>
+
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold text-blue-600">Profile Page</h1>
       {profile && (
-        <div className="flex flex-col gap-2 p-4 border rounded shadow max-w-md mt-4"> 
+        <div className="flex flex-col gap-2 p-4 border rounded shadow max-w-md mt-4">
           <div className="flex justify-center mb-2">
             <img
               src={'/logo-new.png'} // TODO: change to profile.pfpUrl
