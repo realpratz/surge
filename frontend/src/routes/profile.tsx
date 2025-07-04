@@ -1,9 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import ProfileAvatar from '../components/ProfileAvatar'
+import { createFileRoute } from "@tanstack/react-router";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import ProfileAvatar from "../components/ProfileAvatar";
 
-// Define the expected profile type
 interface Profile {
   name: string | null;
   email: string | null;
@@ -12,70 +11,78 @@ interface Profile {
   cfRating: number | null;
 }
 
-export const Route = createFileRoute('/profile')({
+export const Route = createFileRoute("/profile")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const [profile, setProfile] = useState<Profile | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_BASE_URL}/profile`, { withCredentials: true })
+    axios
+      .get(`${import.meta.env.VITE_API_BASE_URL}/profile`, {
+        withCredentials: true,
+      })
       .then((res) => {
-        setProfile(res.data)
-        setLoading(false)
+        setProfile(res.data);
+        setLoading(false);
       })
       .catch((err: any) => {
         console.error(err);
-        setError('Failed to load profile.')
-        setLoading(false)
-      })
-  }, [])
+        setError("Failed to load profile.");
+        setLoading(false);
+      });
+  }, []);
 
   // Get rating color based on Codeforces rating system
   const getRatingColor = (rating: number | null) => {
-    if (!rating) return 'text-gray-400'
-    if (rating < 1200) return 'text-gray-300'
-    if (rating < 1400) return 'text-green-400'
-    if (rating < 1600) return 'text-cyan-400'
-    if (rating < 1900) return 'text-blue-400'
-    if (rating < 2100) return 'text-purple-400'
-    if (rating < 2300) return 'text-yellow-400'
-    if (rating < 2400) return 'text-orange-400'
-    return 'text-red-400'
-  }
+    if (!rating) return "text-gray-400";
+    if (rating < 1200) return "text-gray-300";
+    if (rating < 1400) return "text-green-400";
+    if (rating < 1600) return "text-cyan-400";
+    if (rating < 1900) return "text-blue-400";
+    if (rating < 2100) return "text-purple-400";
+    if (rating < 2300) return "text-yellow-400";
+    if (rating < 2400) return "text-orange-400";
+    return "text-red-400";
+  };
 
   const getRatingLevel = (rating: number | null) => {
-    if (!rating) return 'Unrated'
-    if (rating < 1200) return 'Newbie'
-    if (rating < 1400) return 'Pupil'
-    if (rating < 1600) return 'Specialist'
-    if (rating < 1900) return 'Expert'
-    if (rating < 2100) return 'Candidate Master'
-    if (rating < 2300) return 'Master'
-    if (rating < 2400) return 'International Master'
-    return 'Grandmaster'
-  }
+    if (!rating) return "Unrated";
+    if (rating < 1200) return "Newbie";
+    if (rating < 1400) return "Pupil";
+    if (rating < 1600) return "Specialist";
+    if (rating < 1900) return "Expert";
+    if (rating < 2100) return "Candidate Master";
+    if (rating < 2300) return "Master";
+    if (rating < 2400) return "International Master";
+    return "Grandmaster";
+  };
 
   // Helper to ensure cfRating is number or null
-  const cfRatingNumber = profile?.cfRating !== undefined && profile?.cfRating !== null ? Number(profile.cfRating) : null;
+  const cfRatingNumber =
+    profile?.cfRating !== undefined && profile?.cfRating !== null
+      ? Number(profile.cfRating)
+      : null;
 
-  if (loading) return (
-    <div className="min-h-screen text-white flex items-center justify-center">
-      <div className="flex flex-col items-center">
-        <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <div className="text-lg animate-pulse">Loading...</div>
+  if (loading)
+    return (
+      <div className="min-h-screen text-white flex items-center justify-center">
+        <div className="flex flex-col items-center">
+          <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+          <div className="text-lg animate-pulse">Loading...</div>
+        </div>
       </div>
-    </div>
-  )
+    );
 
-  if (error) return (
-    <div className="min-h-screen text-white flex items-center justify-center">
-      <div className="text-red-400 animate-pulse">{error}</div>
-    </div>
-  )
+  if (error)
+    return (
+      <div className="min-h-screen text-white flex items-center justify-center">
+        <div className="text-red-400 animate-pulse">{error}</div>
+      </div>
+    );
 
   return (
     <div className="min-h-screen text-white p-6">
@@ -84,18 +91,25 @@ function RouteComponent() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-blue-600">Profile</h1>
+              <h1 className="text-3xl font-bold ">
+                Your <span className="text-gray-400">Profile</span>
+              </h1>
             </div>
+
             <div className="flex gap-4">
               {profile?.cfRating && (
                 <div className="rounded-full px-4 py-2 border border-yellow-500">
                   <span className="text-yellow-400">⭐</span>
-                  <span className="text-white ml-2">Rating: {profile.cfRating}</span>
+                  <span className="text-white ml-2">
+                    Rating: {profile.cfRating}
+                  </span>
                 </div>
               )}
               <div className="rounded-full px-4 py-2 border border-red-500">
                 <span className="text-red-400">🔥</span>
-                <span className="text-white ml-2">Rank: {getRatingLevel(cfRatingNumber)}</span>
+                <span className="text-white ml-2">
+                  Rank: {getRatingLevel(cfRatingNumber)}
+                </span>
               </div>
             </div>
           </div>
@@ -103,17 +117,13 @@ function RouteComponent() {
 
         {/* Profile Information Section */}
         <div className="mb-8">
-          <h3 className="text-xl font-light mb-4">
-            Profile <span className="text-gray-400">Information</span>
-          </h3>
-          
-          <div className="bg-gray-800 rounded-lg p-8 border border-gray-700 hover:border-gray-600 transition-all duration-300 hover:shadow-lg">
+          <div className="bg-highlight-dark rounded-lg p-8  transition-all duration-300 hover:shadow-lg">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
               {/* Profile Picture */}
               <div className="flex-shrink-0">
                 <ProfileAvatar pfpUrl={profile?.pfpUrl || null} />
               </div>
-              
+
               {/* Profile Details */}
               <div className="flex-grow">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -121,21 +131,23 @@ function RouteComponent() {
                     <div className="group">
                       <div className="text-sm text-gray-400 mb-1">Name</div>
                       <div className="text-white font-medium text-lg group-hover:text-blue-400 transition-colors duration-300">
-                        {profile?.name || 'N/A'}
+                        {profile?.name || "N/A"}
                       </div>
                     </div>
-                    
+
                     <div className="group">
                       <div className="text-sm text-gray-400 mb-1">Email</div>
                       <div className="text-white font-medium break-all group-hover:text-blue-400 transition-colors duration-300">
-                        {profile?.email || 'N/A'}
+                        {profile?.email || "N/A"}
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <div className="group">
-                      <div className="text-sm text-gray-400 mb-1">Codeforces Handle</div>
+                      <div className="text-sm text-gray-400 mb-1">
+                        Codeforces Handle
+                      </div>
                       <div className="text-white font-medium">
                         {profile?.cfHandle ? (
                           <a
@@ -147,15 +159,21 @@ function RouteComponent() {
                             {profile.cfHandle}
                           </a>
                         ) : (
-                          <span className="group-hover:text-blue-400 transition-colors duration-300">N/A</span>
+                          <span className="group-hover:text-blue-400 transition-colors duration-300">
+                            N/A
+                          </span>
                         )}
                       </div>
                     </div>
-                    
+
                     <div className="group">
-                      <div className="text-sm text-gray-400 mb-1">Codeforces Rating</div>
-                      <div className={`font-bold text-xl ${getRatingColor(cfRatingNumber)} group-hover:scale-105 transition-transform duration-300 inline-block animate-pulse`}>
-                        {profile?.cfRating || 'Unrated'}
+                      <div className="text-sm text-gray-400 mb-1">
+                        Codeforces Rating
+                      </div>
+                      <div
+                        className={`font-bold text-xl ${getRatingColor(cfRatingNumber)} group-hover:scale-105 transition-transform duration-300 inline-block animate-pulse`}
+                      >
+                        {profile?.cfRating || "Unrated"}
                       </div>
                     </div>
                   </div>
@@ -165,40 +183,46 @@ function RouteComponent() {
           </div>
         </div>
 
-
-
         {/* Progress Section */}
         {profile?.cfRating && (
           <div>
             <h3 className="text-xl font-light mb-4">
               Progress <span className="text-gray-400">Level</span>
             </h3>
-            
-            <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+
+            <div className="bg-highlight-dark rounded-lg p-6  ">
               <div className="flex items-center justify-between mb-4">
                 <div className="text-white font-medium">
-                  {getRatingLevel(cfRatingNumber)} to {getRatingLevel(cfRatingNumber !== null ? cfRatingNumber + 200 : null)}
+                  {getRatingLevel(cfRatingNumber)} to{" "}
+                  {getRatingLevel(
+                    cfRatingNumber !== null ? cfRatingNumber + 200 : null
+                  )}
                 </div>
               </div>
-              
+
               <div className="mb-4">
                 <div className="text-sm text-gray-400 mb-2">
-                  Rating: {profile.cfRating}/{Math.ceil((profile?.cfRating ?? 0) / 200) * 200}
+                  Rating: {profile.cfRating}/
+                  {Math.ceil((profile?.cfRating ?? 0) / 200) * 200}
                 </div>
                 <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div 
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500"
-                    style={{ width: `${((profile?.cfRating ?? 0) % 200) / 2}%` }}
+                  <div
+                    className="bg-gradient-to-r from-blue-300 to-accent-red h-2 rounded-full transition-all duration-500"
+                    style={{
+                      width: `${((profile?.cfRating ?? 0) % 200) / 2}%`,
+                    }}
                   ></div>
                 </div>
                 <div className="text-sm text-gray-400 mt-2">
-                  {Math.round(((profile?.cfRating ?? 0) % 200) / 2)}% along the way!
+                  {Math.round(((profile?.cfRating ?? 0) % 200) / 2)}% along the
+                  way!
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between">
                 <div className="text-sm text-gray-400">
-                  🏆 Next milestone at {Math.ceil((profile?.cfRating ?? 0) / 200) * 200}
+                  🏆 Next milestone at{" "}
+                  {Math.ceil((profile?.cfRating ?? 0) / 200) * 200}
                 </div>
                 {/* <div className="text-blue-400 text-sm">View full rating system</div> */}
               </div>
