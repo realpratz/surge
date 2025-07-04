@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getRatingLevel } from "../utils";
+import { getRatingLevel, getRatingColor } from "../utils";
 import ProfileAvatar from "../components/ProfileAvatar";
 import ProfileHeader from "../components/ProfileHeader";
 
@@ -37,19 +37,6 @@ function RouteComponent() {
         setLoading(false);
       });
   }, []);
-
-  // Get rating color based on Codeforces rating system
-  const getRatingColor = (rating: number | null) => {
-    if (!rating) return "text-gray-400";
-    if (rating < 1200) return "text-gray-300";
-    if (rating < 1400) return "text-green-400";
-    if (rating < 1600) return "text-cyan-400";
-    if (rating < 1900) return "text-blue-400";
-    if (rating < 2100) return "text-purple-400";
-    if (rating < 2300) return "text-yellow-400";
-    if (rating < 2400) return "text-orange-400";
-    return "text-red-400";
-  };
 
   // Helper to ensure cfRating is number or null
   const cfRatingNumber =
