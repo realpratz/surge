@@ -21,6 +21,7 @@
   --color-highlight-light: rgba(69, 75, 104, 1);
   --color-highlight-dark: rgba(37, 41, 62, 1);
   --color-dark-background: rgba(15, 17, 26, 1);
+  --color-accent-red: rgba(235, 87, 87, 1);
 }
 
 @layer base {
