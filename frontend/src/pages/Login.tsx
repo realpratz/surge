@@ -9,14 +9,14 @@ export default function Login() {
       </div>
 
       <div className="z-10 backdrop-blur-md bg-white/5 border border-white/10 px-10 py-12 rounded-xl shadow-2xl flex flex-col items-center text-center">
-        <img src="/logo-new.png" alt="Logo" className="w-14 h-14" />
+        <img src="/logo-v2.png" alt="Logo" className="w-14 h-14" />
 
         <h1 className="text-5xl font-bold tracking-widest text-white mb-3 mt-6">
           SURGE
         </h1>
         <p className="text-sm text-gray-300 mb-8">powered by CRUx</p>
         <a href={`${import.meta.env.VITE_API_BASE_URL}/auth/google`}>
-          <button className="bg-gradient-to-br from-highlight-light to-highlight-dark text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition">
+          <button className="bg-gradient-to-br from-highlight-light to-accent-red text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition">
             Login using Google
           </button>
         </a>
