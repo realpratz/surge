@@ -4,6 +4,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import Login from "../pages/Login";
 import Navbar from "../components/Navbar";
 import CFHandleModal from "../components/CFHandleModal";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -12,7 +13,12 @@ export const Route = createRootRoute({
 export default function RootComponent() {
   const { user, loading, setUser } = useAuth();
 
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    return (
+      <div className="bg-dark-background">
+        <LoadingIndicator />
+      </div>
+    );
 
   if (!user) {
     return <Login />;

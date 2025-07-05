@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getRatingLevel, getRatingColor } from "../utils";
+import { getRatingColor } from "../utils";
 import ProfileAvatar from "../components/ProfileAvatar";
 import ProfileHeader from "../components/ProfileHeader";
 import RatingGraph from "../components/RatingGraph";
@@ -9,6 +9,7 @@ import ProblemRatingBar from "../components/ProblemRatingsBar";
 import TagPieChart from "../components/TagPieChart";
 import StreakHeatmap from "../components/StreakHeatMap";
 import ProgressLevel from "../components/ProgressLevel";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 interface Profile {
   name: string | null;
@@ -49,15 +50,7 @@ function RouteComponent() {
       ? Number(profile.cfRating)
       : null;
 
-  if (loading)
-    return (
-      <div className="min-h-screen text-white flex items-center justify-center">
-        <div className="flex flex-col items-center">
-          <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin mb-4"></div>
-          <div className="text-lg animate-pulse">Loading...</div>
-        </div>
-      </div>
-    );
+  if (loading) return <LoadingIndicator />;
 
   if (error)
     return (
