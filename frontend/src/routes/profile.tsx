@@ -63,7 +63,7 @@ function RouteComponent() {
     <div className="min-h-screen text-white p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
-        <div className="mb-8">
+        <div className="mb-8 border-b border-[#25293E]">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold ">
