@@ -44,7 +44,15 @@ export default function RatingGraph({ handle }: { handle: string }) {
           <LineChart data={formattedData}>
             <XAxis dataKey="date" tick={{ fill: "white" }} />
             <YAxis domain={["auto", "auto"]} tick={{ fill: "white" }} />
-            <Tooltip />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "#1f2937", // gray-800
+                border: "1px solid #374151", // gray-700
+                borderRadius: "8px",
+              }}
+              labelStyle={{ color: "#f9fafb" }} // gray-50
+              itemStyle={{ color: "#f9fafb" }} // gray-50
+            />{" "}
             <Line
               type="monotone"
               dataKey="rating"

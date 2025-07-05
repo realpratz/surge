@@ -18,51 +18,93 @@ export default function TagPieChart({ handle }: { handle: string }) {
           });
         });
 
-        const result = Object.entries(tagCount).map(([name, value]) => ({
-          name,
-          value,
-        }));
+        const result = Object.entries(tagCount)
+          .map(([name, value]) => ({ name, value }))
+          .sort((a, b) => b.value - a.value); // sort descending
+
         setData(result);
       });
   }, [handle]);
 
   const COLORS = [
     "#f87171",
-    "#60a5fa",
+    "#fb923c",
     "#facc15",
+    "#4ade80",
     "#34d399",
+    "#60a5fa",
+    "#818cf8",
     "#a78bfa",
     "#f472b6",
-    "#fb923c",
-    "#4ade80",
-    "#fcd34d",
+    "#e879f9",
     "#c084fc",
+    "#22d3ee",
+    "#2dd4bf",
+    "#86efac",
+    "#fde68a",
+    "#fcd34d",
+    "#fbbf24",
+    "#f97316",
+    "#ef4444",
+    "#e11d48",
+    "#10b981",
+    "#93c5fd",
+    "#c7d2fe",
+    "#fda4af",
   ];
 
   return (
     <div>
       <h2 className="text-white text-xl mb-4 mt-4">
-        Tags <span className="text-gray-400">Distribution</span>
+        Tags <span className="text-gray-400">Solved</span>
       </h2>
 
-      <div className="bg-highlight-dark p-6 rounded-lg">
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              dataKey="value"
-              data={data}
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-            >
-              {data.map((_, index) => (
-                <Cell key={index} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
-        </ResponsiveContainer>
+      <div className="bg-highlight-dark p-6 rounded-lg flex flex-col md:flex-row gap-4">
+        {/* Pie chart container */}
+        <div className="w-full md:w-[60%] h-[400px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                dataKey="value"
+                data={data}
+                nameKey="name"
+                cx="40%"
+                cy="50%"
+                innerRadius={70}
+                outerRadius={130}
+                paddingAngle={0}
+              >
+                {data.map((_, index) => (
+                  <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1f2937",
+                  border: "1px solid #374151",
+                  borderRadius: "8px",
+                }}
+                labelStyle={{ color: "#f9fafb" }}
+                itemStyle={{ color: "#f9fafb" }}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Legend container */}
+        <div className="w-full md:w-[40%] max-h-[400px] overflow-y-auto pr-4">
+          <ul className="text-sm space-y-1 text-white">
+            {data.map((entry, index) => (
+              <li key={index} className="flex items-center gap-2">
+                <span
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                ></span>
+                {entry.name}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

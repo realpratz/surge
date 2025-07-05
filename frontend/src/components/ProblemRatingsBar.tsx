@@ -46,8 +46,16 @@ export default function ProblemRatingBar({ handle }: { handle: string }) {
           <BarChart data={data}>
             <XAxis dataKey="rating" tick={{ fill: "white" }} />
             <YAxis tick={{ fill: "white" }} />
-            <Tooltip />
-            <Bar dataKey="count" fill="#4ade80" />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "#1f2937", // gray-800
+                border: "1px solid #374151", // gray-700
+                borderRadius: "8px",
+              }}
+              labelStyle={{ color: "#f9fafb" }} // gray-50
+              itemStyle={{ color: "#f9fafb" }} // gray-50
+            />{" "}
+            <Bar dataKey="count" fill="rgba(235, 87, 87, 1)" />
           </BarChart>
         </ResponsiveContainer>
       </div>
