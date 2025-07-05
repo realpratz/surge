@@ -24,8 +24,8 @@ const getColor = (count: number) => {
 };
 
 const computeStats = (days: string[], heatmap: Record<string, number>) => {
-  let totalAll = 0,
-    totalYear = 0,
+  const totalAll = Object.values(heatmap).reduce((sum, c) => sum + c, 0);
+  let totalYear = 0,
     totalMonth = 0;
   let maxStreak = 0,
     curStreak = 0;
@@ -40,7 +40,7 @@ const computeStats = (days: string[], heatmap: Record<string, number>) => {
 
   days.forEach((d) => {
     const c = heatmap[d] || 0;
-    totalAll += c;
+    // totalAll += c;
     if (dayjs(d).isAfter(oneYearAgo)) totalYear += c;
     if (dayjs(d).isAfter(oneMonthAgo)) totalMonth += c;
 
