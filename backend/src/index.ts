@@ -10,6 +10,7 @@ import { User } from "@prisma/client";
 import accountRoutes from './routes/account';
 import leaderboardRoutes from './routes/leaderboard'
 import profileRoutes from './routes/profile';
+import contestRoutes from "./routes/contest";
 dotenv.config();
 const app = express();
 
@@ -86,5 +87,6 @@ app.use('/auth', authRoutes);
 app.use('/account',accountRoutes);
 app.use('/leaderboard',leaderboardRoutes);
 app.use('/profile', profileRoutes);
+app.use("/contest", contestRoutes);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
