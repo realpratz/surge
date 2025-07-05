@@ -20,32 +20,32 @@ router.post(
 );
 router.post("/check-verification", checkVerificationController);
 
-router.get("/:handle/stats", async (req: Request, res: Response) : Promise<any> => {
+router.get("/:handle/stats", async (req: Request, res: Response) => {
   const {handle} = req.params;
 
   try {
     const response = await fetch(BASE_URL + `user.info?handles=${handle}`)
 
     if(!response.ok){
-      return res.status(response.status).json({error: 'Failed to fetch from CodeForces API'});
+      res.status(response.status).send({error: 'Failed to fetch from CodeForces API'});
     }
 
     const data = await response.json();
 
     if(data.status !== 'OK' || !data.result || !data.result[0]){
-      return res.status(404).json({error: 'CodeForces user not found!'});
+      res.status(404).send({error: 'CodeForces user not found!'});
     }
 
     const user : User = data.result[0];
 
-    return res.json(user);
+    res.send(user);
   } catch(error) {
-    return res.status(500).json({error: "Internal server error"});
+    res.status(500).send({error: "Internal server error"});
   }
 
 })
 
-router.get("/:handle/ratings", async (req: Request, res: Response) : Promise<any> => {
+router.get("/:handle/ratings", async (req: Request, res: Response) => {
   const {handle} = req.params;
 
   const from = parseInt(req.query.from as string) as number | undefined;
@@ -55,13 +55,13 @@ router.get("/:handle/ratings", async (req: Request, res: Response) : Promise<any
     const response = await fetch(BASE_URL + `user.rating?handle=${handle}`);
 
     if(!response.ok){
-      return res.status(response.status).json({error: 'Failed to fetch from CodeForces API'});
+      res.status(response.status).send({error: 'Failed to fetch from CodeForces API'});
     }
 
     const data = await response.json();
 
     if(data.status !== 'OK' || !data.result){
-      return res.status(404).json({error: "CodeForces user not found!"});
+      res.status(404).send({error: "CodeForces user not found!"});
     }
 
     let ratingChanges : RatingChange[] = data.result;
@@ -71,13 +71,13 @@ router.get("/:handle/ratings", async (req: Request, res: Response) : Promise<any
       (to ? change.ratingUpdateTimeSeconds <= to: true)
     )
 
-    return res.json(ratingChanges);
+    res.send(ratingChanges);
   } catch(error) {
-    return res.status(500).json({error: "Internal server error"});
+    res.status(500).send({error: "Internal server error"});
   }
 })
 
-router.get("/:handle/submissions", async (req: Request, res: Response) : Promise<any> => {
+router.get("/:handle/submissions", async (req: Request, res: Response) => {
   const {handle} = req.params;
 
   const start = parseInt(req.query.from as string) as number | undefined;
@@ -89,24 +89,24 @@ router.get("/:handle/submissions", async (req: Request, res: Response) : Promise
       + (count ? `&count=${count}` : ""));
 
     if(!response.ok){
-      return res.status(response.status).json({error: 'Failed to fetch from CodeForces API'});
+      res.status(response.status).send({error: 'Failed to fetch from CodeForces API'});
     }
 
     const data = await response.json();
 
     if(data.status !== 'OK' || !data.result){
-      return res.status(404).json({error: "CodeForces user not found!"});
+      res.status(404).send({error: "CodeForces user not found!"});
     }
 
     const submissions : Submission[] = data.result;
 
-    return res.json(submissions);
+    res.send(submissions);
   } catch(error) {
-    return res.status(500).json({error: "Internal server error"});
+    res.status(500).send({error: "Internal server error"});
   }
 })
 
-router.get("/:handle/solved", async (req: Request, res: Response) : Promise<any> => {
+router.get("/:handle/solved", async (req: Request, res: Response) => {
   const {handle} = req.params;
 
   const start = parseInt(req.query.from as string) as number | undefined;
@@ -118,13 +118,13 @@ router.get("/:handle/solved", async (req: Request, res: Response) : Promise<any>
       + (count ? `&count=${count}` : ""));
 
     if(!response.ok){
-      return res.status(response.status).json({error: 'Failed to fetch from CodeForces API'});
+      res.status(response.status).send({error: 'Failed to fetch from CodeForces API'});
     }
 
     const data = await response.json();
 
     if(data.status !== 'OK' || !data.result){
-      return res.status(404).json({error: "CodeForces user not found!"});
+      res.status(404).send({error: "CodeForces user not found!"});
     }
 
     const submissions : Submission[] = data.result;
@@ -149,12 +149,12 @@ router.get("/:handle/solved", async (req: Request, res: Response) : Promise<any>
       }
     });
 
-    return res.json(Array.from(solvedMap.values()).sort((a, b) => 
+    res.send(Array.from(solvedMap.values()).sort((a, b) => 
       b.dateSolved.getTime() - a.dateSolved.getTime()
     ))
 
   } catch(error) {
-    return res.status(500).json({error: "Internal server error"});
+    res.status(500).send({error: "Internal server error"});
   }
 })
 

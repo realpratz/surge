@@ -43,26 +43,26 @@ fetchContests();
 //Refresh contest cache every 60 minutes
 setInterval(fetchContests , 10000);
 
-router.get("/", async (req : Request, res : Response) : Promise<any> => {
+router.get("/", async (req : Request, res : Response) => {
 
 	if(!contestsCache){
-		return res.status(500).json({error: "Internal server error"});
+		res.status(500).send({error: "Internal server error"});
 	}
 
-	return res.json(contestsCache);
+	res.send(contestsCache);
 })
 
-router.get("/upcoming", async (req: Request, res: Response) : Promise<any> => {
+router.get("/upcoming", async (req: Request, res: Response) => {
 
 	if(!contestsCache){
-		return res.status(500).json({error: "Internal server error"});
+		res.status(500).send({error: "Internal server error"});
 	}
 
 	const upcomingContests : Contest[] = contestsCache.filter(contest => 
 		new Date(contest.start) > new Date()
 	)
 
-	return res.json(upcomingContests);
+	res.send(upcomingContests);
 })
 
 export default router; 
