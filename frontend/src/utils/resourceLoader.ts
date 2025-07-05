@@ -15,7 +15,6 @@ export const allResources: Resource[] = Object.entries(resourceFiles).map(([path
 	const slug = path.split('/').pop()!.replace('.md', '');
 
 	const data = fm(raw as string);
-	console.log(data)
 
 	return {
 		slug,

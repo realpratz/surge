@@ -1,6 +1,5 @@
 import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { useAuth } from "../context/AuthContext";
-import { useEffect } from "react";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import Login from "../pages/Login";
 import Navbar from "../components/Navbar";
@@ -12,10 +11,6 @@ export const Route = createRootRoute({
 
 export default function RootComponent() {
   const { user, loading, setUser } = useAuth();
-
-  useEffect(() => {
-    console.log(`User: ${user}`);
-  }, [user]);
 
   if (loading) return <p>Loading...</p>;
 
