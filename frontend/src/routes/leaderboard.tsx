@@ -2,15 +2,24 @@ import { createFileRoute } from "@tanstack/react-router";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { getRatingLevel } from "../utils";
-import { Divide } from "lucide-react";
 import LoadingIndicator from "../components/LoadingIndicator";
 
 export const Route = createFileRoute("/leaderboard")({
   component: RouteComponent,
 });
 
+type Leaderboard = {
+  id: string,
+  name: string,
+  email: string,
+  cfHandle: string,
+  cfRating: number,
+  pfpUrl: string,
+  batch: string,
+}
+
 function RouteComponent() {
-  const [leaderboard, setLeaderboard] = useState([]);
+  const [leaderboard, setLeaderboard] = useState<Leaderboard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [batch, setBatch] = useState(false);
@@ -146,7 +155,7 @@ function RouteComponent() {
               {leaderboard[1].batch || "N/A"}
             </div>
             <div className="text-xs flex justify-center items-center">
-              {leaderboard[1].cfRating}
+              {leaderboard[1].cfRating || "N/A"}
             </div>
             <div className="text-xs flex justify-center items-center">
               {getRatingLevel(leaderboard[1].cfRating)}
@@ -170,7 +179,7 @@ function RouteComponent() {
               {leaderboard[0].batch || "N/A"}
             </div>
             <div className="text-xs flex justify-center items-center">
-              {leaderboard[0].cfRating}
+              {leaderboard[0].cfRating || "N/A"}
             </div>
             <div className="text-xs flex justify-center items-center">
               {getRatingLevel(leaderboard[0].cfRating)}
@@ -197,7 +206,7 @@ function RouteComponent() {
               {leaderboard[2].batch || "N/A"}
             </div>
             <div className="text-xs flex justify-center items-center">
-              {leaderboard[2].cfRating}
+              {leaderboard[2].cfRating || "N/A"}
             </div>
             <div className="text-xs flex justify-center items-center">
               {getRatingLevel(leaderboard[2].cfRating)}
@@ -228,7 +237,7 @@ function RouteComponent() {
               {user.batch || "N/A"}
             </div>
             <div className="w-1/20 text-sm flex justify-center items-center">
-              {user.cfRating}
+              {user.cfRating || "N/A"}
             </div>
             <div className="w-4/20 text-sm flex justify-center items-center">
               {getRatingLevel(user.cfRating)}
