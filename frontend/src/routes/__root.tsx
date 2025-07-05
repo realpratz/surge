@@ -27,7 +27,7 @@ export default function RootComponent() {
   return (
     <div className="flex min-h-screen">
       <Navbar />
-      <main className="flex-grow p-6 ml-30 bg-dark-background text-white">
+      <main className="flex-grow p-6 mt-16 md:mt-0 md:ml-30 bg-dark-background text-white max-w-screen">
         <Outlet />
       </main>
       {import.meta.env.VITE_ENV === "development" && (
