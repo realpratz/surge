@@ -20,7 +20,6 @@ const fetchContests = async () => {
 	try {
 		const response = await fetch(BASE_URL + `?limit=100&host__regex=${HOST_REGEX}&order_by=-start&username=${CLIST_USERNAME}&api_key=${CLIST_SECRET}`);
 
-		console.log(response)
 		if(!response.ok){
 			console.log("Error: Failed to fetch from CList API!");
 			return;
