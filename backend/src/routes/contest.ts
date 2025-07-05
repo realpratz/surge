@@ -52,4 +52,17 @@ router.get("/", async (req : Request, res : Response) : Promise<any> => {
 	return res.json(contestsCache);
 })
 
+router.get("/upcoming", async (req: Request, res: Response) : Promise<any> => {
+
+	if(!contestsCache){
+		return res.status(500).json({error: "Internal server error"});
+	}
+
+	const upcomingContests : Contest[] = contestsCache.filter(contest => 
+		new Date(contest.start) > new Date()
+	)
+
+	return res.json(upcomingContests);
+})
+
 export default router; 
