@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
+// import { Request, Response } from "express";
 
 const router = Router()
 const prisma = new PrismaClient()
@@ -25,7 +26,7 @@ router.get("/", async (req, res) => {
             const match = user.email.match(/f(\d{4})/)
             const batch = match ? match[1] : null
             return { ...user, batch: batch }
-        })
+        }).filter((user) => user.cfRating != null)
         res.status(200).json(updatedLeaderboard)
     } catch (err) {
         console.error(`error fetching leaderboard:${err}`)
