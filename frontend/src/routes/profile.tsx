@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import { getRatingLevel, getRatingColor } from "../utils";
 import ProfileAvatar from "../components/ProfileAvatar";
 import ProfileHeader from "../components/ProfileHeader";
+import RatingGraph from "../components/RatingGraph";
+import ProblemRatingBar from "../components/ProblemRatingsBar";
+import TagPieChart from "../components/TagPieChart";
+import StreakHeatmap from "../components/StreakHeatMap";
 
 interface Profile {
   name: string | null;
@@ -145,49 +149,56 @@ function RouteComponent() {
         </div>
 
         {/* Progress Section */}
-        {profile?.cfRating && (
+        {profile?.cfRating && profile?.cfHandle && (
           <div>
-            <h3 className="text-xl font-light mb-4">
-              Progress <span className="text-gray-400">Level</span>
-            </h3>
+            <div>
+              <h3 className="text-xl font-light mb-4">
+                Progress <span className="text-gray-400">Level</span>
+              </h3>
 
-            <div className="bg-highlight-dark rounded-lg p-6  ">
-              <div className="flex items-center justify-between mb-4">
-                <div className="text-white font-medium">
-                  {getRatingLevel(cfRatingNumber)} to{" "}
-                  {getRatingLevel(
-                    cfRatingNumber !== null ? cfRatingNumber + 200 : null
-                  )}
+              <div className="bg-highlight-dark rounded-lg p-6  ">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="text-white font-medium">
+                    {getRatingLevel(cfRatingNumber)} to{" "}
+                    {getRatingLevel(
+                      cfRatingNumber !== null ? cfRatingNumber + 200 : null
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              <div className="mb-4">
-                <div className="text-sm text-gray-400 mb-2">
-                  Rating: {profile.cfRating}/
-                  {Math.ceil((profile?.cfRating ?? 0) / 200) * 200}
+                <div className="mb-4">
+                  <div className="text-sm text-gray-400 mb-2">
+                    Rating: {profile.cfRating}/
+                    {Math.ceil((profile?.cfRating ?? 0) / 200) * 200}
+                  </div>
+                  <div className="w-full bg-gray-700 rounded-full h-2">
+                    <div
+                      className="bg-gradient-to-r from-blue-300 to-accent-red h-2 rounded-full transition-all duration-500"
+                      style={{
+                        width: `${((profile?.cfRating ?? 0) % 200) / 2}%`,
+                      }}
+                    ></div>
+                  </div>
+                  <div className="text-sm text-gray-400 mt-2">
+                    {Math.round(((profile?.cfRating ?? 0) % 200) / 2)}% along
+                    the way!
+                  </div>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
-                  <div
-                    className="bg-gradient-to-r from-blue-300 to-accent-red h-2 rounded-full transition-all duration-500"
-                    style={{
-                      width: `${((profile?.cfRating ?? 0) % 200) / 2}%`,
-                    }}
-                  ></div>
-                </div>
-                <div className="text-sm text-gray-400 mt-2">
-                  {Math.round(((profile?.cfRating ?? 0) % 200) / 2)}% along the
-                  way!
-                </div>
-              </div>
 
-              <div className="flex items-center justify-between">
-                <div className="text-sm text-gray-400">
-                  🏆 Next milestone at{" "}
-                  {Math.ceil((profile?.cfRating ?? 0) / 200) * 200}
+                <div className="flex items-center justify-between">
+                  <div className="text-sm text-gray-400">
+                    🏆 Next milestone at{" "}
+                    {Math.ceil((profile?.cfRating ?? 0) / 200) * 200}
+                  </div>
+                  {/* <div className="text-blue-400 text-sm">View full rating system</div> */}
                 </div>
-                {/* <div className="text-blue-400 text-sm">View full rating system</div> */}
               </div>
             </div>
+
+            <StreakHeatmap handle={profile?.cfHandle} />
+            <RatingGraph handle={profile?.cfHandle} />
+            <ProblemRatingBar handle={profile?.cfHandle} />
+            <TagPieChart handle={profile?.cfHandle} />
           </div>
         )}
       </div>
