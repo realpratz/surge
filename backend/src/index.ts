@@ -11,6 +11,9 @@ import accountRoutes from './routes/account';
 import leaderboardRoutes from './routes/leaderboard'
 import profileRoutes from './routes/profile';
 import contestRoutes from "./routes/contest";
+import { RedisStore } from 'connect-redis';
+import { createClient } from 'redis';
+
 dotenv.config();
 const app = express();
 
@@ -20,14 +23,21 @@ app.use(cors({
 }));
 app.use(express.json());
 
+const redisClient = createClient({
+  url: process.env.REDIS_URL || 'redis://localhost:6379'
+});
+
+redisClient.connect().catch(console.error)
+
 app.use(session({
+  store: new RedisStore({ client: redisClient }),
   secret: process.env.SESSION_SECRET || 'default_secret',
   resave: false,
   saveUninitialized: false,
   cookie: {
     sameSite: 'lax',
     secure: false,
-    maxAge: 24 * 60 * 60 * 1000
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   }
 }));
 
