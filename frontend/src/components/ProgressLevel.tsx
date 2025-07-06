@@ -16,7 +16,7 @@ const ProgressLevel: React.FC<ProgressLevelProps> = ({ cfRating }) => {
         Progress <span className="text-gray-400">Level</span>
       </h3>
 
-      <div className="bg-highlight-dark rounded-lg p-6">
+      <div className="bg-highlight-dark rounded-lg p-4 md:p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="text-white font-medium">
             {getRatingLevel(cfRating)} to{" "}

@@ -104,9 +104,16 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
   const days = getPastYearDates();
   // chunk into weeks of 7 days
   const weeks: string[][] = [];
-  for (let i = 0; i < days.length; i += 7) {
+  //Since each week on the heatmap starts from Sunday and ends on Saturday, get first chunk!
+  const indexOfFirstSaturday = days.findIndex((day) => dayjs(day).format("ddd") === 'Sat');
+  weeks.push(days.slice(0, indexOfFirstSaturday+1));
+  for (let i = indexOfFirstSaturday+1; i < days.length; i += 7) {
     weeks.push(days.slice(i, i + 7));
   }
+  
+  //Populate first week
+  //Maybe change this to get the actual dates in the future
+  weeks[0] = Array(7-weeks[0].length).fill(weeks[0][0]).concat(weeks[0]);
 
   // show label at week i if month changes from previous
   const monthNums = weeks.map((w) => dayjs(w[0]).month());
@@ -122,7 +129,7 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
 
       <div className="bg-highlight-dark p-4 rounded-lg">
         <div
-          className="grid grid-flow-col text-xs text-gray-300 mb-1 w-full"
+          className="grid grid-flow-col text-[.5rem] md:text-xs text-gray-300 mb-1 w-full md:ml-7 md:w-[calc(100%-1.75rem)]"
           style={{
             gridTemplateColumns: `repeat(${weeks.length}, minmax(0, 1fr))`,
           }}
@@ -135,7 +142,7 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
         </div>
 
         <div className="flex">
-          <div className="flex flex-col justify-between text-xs text-gray-400 mr-2">
+          <div className="hidden md:flex flex-col justify-between text-xs text-gray-400 mr-2 w-5">
             {["Mon", "Wed", "Fri"].map((d) => (
               <div key={d} className="h-4">
                 {d}
@@ -144,9 +151,9 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
           </div>
 
           <div
-            className="grid gap-[2px] w-full"
+            className="grid gap-[2px] w-full aspect-53/7"
             style={{
-              gridTemplateRows: "repeat(7, 16px)",
+              gridTemplateRows: "repeat(7, 1fr)",
               gridTemplateColumns: `repeat(${weeks.length}, 1fr)`,
             }}
           >
@@ -159,7 +166,7 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
                     style={{ gridColumn: wi + 1, gridRow: di + 1 }}
                     className={classNames(
                       getColor(c),
-                      "w-full h-full rounded-sm"
+                      "w-full h-full md:rounded-sm"
                     )}
                     title={`${date}: ${c} submission${c !== 1 ? "s" : ""}`}
                   />
@@ -172,42 +179,42 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
         {stats && (
           <div className="grid grid-cols-3 grid-rows-2 gap-4 text-center text-white mt-6">
             <div>
-              <div className="text-2xl font-semibold">{stats.totalAll}</div>
-              <div className="text-sm text-gray-400">
+              <div className="text-xl md:text-2xl font-semibold">{stats.totalAll}</div>
+              <div className="text-xs text-gray-400">
                 problems solved for all time
               </div>
             </div>
             <div>
-              <div className="text-2xl font-semibold">{stats.totalYear}</div>
-              <div className="text-sm text-gray-400">
+              <div className="text-xl md:text-2xl font-semibold">{stats.totalYear}</div>
+              <div className="text-xs text-gray-400">
                 solved for the last year
               </div>
             </div>
             <div>
-              <div className="text-2xl font-semibold">{stats.totalMonth}</div>
-              <div className="text-sm text-gray-400">
+              <div className="text-xl md:text-2xl font-semibold">{stats.totalMonth}</div>
+              <div className="text-xs text-gray-400">
                 solved for the last month
               </div>
             </div>
             <div>
-              <div className="text-2xl font-semibold">
+              <div className="text-xl md:text-2xl font-semibold">
                 {stats.maxStreak} days
               </div>
-              <div className="text-sm text-gray-400">in a row max</div>
+              <div className="text-xs text-gray-400">in a row max</div>
             </div>
             <div>
-              <div className="text-2xl font-semibold">
+              <div className="text-xl md:text-2xl font-semibold">
                 {stats.maxYearStreak} days
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-xs text-gray-400">
                 in a row for the last year
               </div>
             </div>
             <div>
-              <div className="text-2xl font-semibold">
+              <div className="text-xl font-semibold">
                 {stats.maxMonthStreak} days
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-xs text-gray-400">
                 in a row for the last month
               </div>
             </div>
