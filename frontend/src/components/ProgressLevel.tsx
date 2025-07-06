@@ -1,5 +1,5 @@
 import React from "react";
-import { getRatingLevel } from "../utils";
+import { getRatingLevel, getRatingBand } from "../utils";
 
 interface ProgressLevelProps {
   cfRating: number | null;
@@ -7,8 +7,8 @@ interface ProgressLevelProps {
 
 const ProgressLevel: React.FC<ProgressLevelProps> = ({ cfRating }) => {
   const rating = cfRating ?? 0;
-  const bandCeil = Math.ceil(rating / 200) * 200;
-  const progressPercent = (rating % 200) / 2;
+  const [bandFloor, bandCeil] = getRatingBand(rating);
+  const progressPercent = (rating - bandFloor) / (bandCeil + 1 - bandFloor) * 100;
 
   return (
     <div>
@@ -20,13 +20,13 @@ const ProgressLevel: React.FC<ProgressLevelProps> = ({ cfRating }) => {
         <div className="flex items-center justify-between mb-4">
           <div className="text-white font-medium">
             {getRatingLevel(cfRating)} to{" "}
-            {getRatingLevel(cfRating !== null ? cfRating + 200 : null)}
+            {getRatingLevel(bandCeil + 1)}
           </div>
         </div>
 
         <div className="mb-4">
           <div className="text-sm text-gray-400 mb-2">
-            Rating: {rating}/{bandCeil}
+            Rating: {rating}/{bandCeil + 1}
           </div>
           <div className="w-full bg-gray-700 rounded-full h-2">
             <div
@@ -41,7 +41,7 @@ const ProgressLevel: React.FC<ProgressLevelProps> = ({ cfRating }) => {
 
         <div className="flex items-center justify-between">
           <div className="text-sm text-gray-400">
-            🏆 Next milestone at {bandCeil}
+            🏆 Next milestone at {bandCeil + 1}
           </div>
         </div>
       </div>
