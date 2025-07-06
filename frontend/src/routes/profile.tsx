@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getRatingColor } from "../utils";
+import { getRatingColor, getRatingLevel } from "../utils";
 import ProfileAvatar from "../components/ProfileAvatar";
 import ProfileHeader from "../components/ProfileHeader";
 import RatingGraph from "../components/RatingGraph";
@@ -60,7 +60,7 @@ function RouteComponent() {
     );
 
   return (
-    <div className="min-h-screen text-white p-6">
+    <div className="min-h-screen text-white">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="mb-8 border-b border-[#25293E]">
@@ -70,13 +70,13 @@ function RouteComponent() {
                 Your <span className="text-gray-400">Profile</span>
               </h1>
             </div>
-            <ProfileHeader cfRating={profile?.cfRating} />
+            <ProfileHeader cfRating={profile?.cfRating} className="hidden md:flex" />
           </div>
         </div>
 
         {/* Profile Information Section */}
         <div className="mb-8">
-          <div className="bg-highlight-dark rounded-lg p-8  transition-all duration-300 hover:shadow-lg">
+          <div className="bg-highlight-dark rounded-lg p-6 transition-all duration-300 hover:shadow-lg">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
               {/* Profile Picture */}
               <div className="flex-shrink-0">
@@ -132,7 +132,12 @@ function RouteComponent() {
                       <div
                         className={`font-bold text-xl ${getRatingColor(cfRatingNumber)} group-hover:scale-105 transition-transform duration-300 inline-block animate-pulse`}
                       >
-                        {profile?.cfRating || "Unrated"}
+                        {profile ? (
+                          <span>{`${profile?.cfRating}`} <span className="md:hidden">({getRatingLevel(profile.cfRating)})</span></span>
+                          ) 
+                          : 
+                          "Unrated"
+                        }
                       </div>
                     </div>
                   </div>
