@@ -48,6 +48,10 @@
   outline: none !important;
 }
 
+:root{
+  background-color: var(--color-dark-background);
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
