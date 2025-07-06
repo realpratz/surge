@@ -48,6 +48,12 @@
   outline: none !important;
 }
 
+@layer utilities {
+  .striped div:nth-child(even) {
+    @apply bg-[#1B1E30]
+  }
+}
+
 :root{
   background-color: var(--color-dark-background);
 }
