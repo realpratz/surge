@@ -143,7 +143,7 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
 
         <div className="flex">
           <div className="hidden md:flex flex-col justify-between text-xs text-gray-400 mr-2 w-5">
-            {["Mon", "Wed", "Fri"].map((d) => (
+            {["", "Mon", "", "Wed", "", "Fri", ""].map((d) => (
               <div key={d} className="h-4">
                 {d}
               </div>
@@ -180,19 +180,19 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
           <div className="grid grid-cols-3 grid-rows-2 gap-4 text-center text-white mt-6">
             <div>
               <div className="text-xl md:text-2xl font-semibold">{stats.totalAll}</div>
-              <div className="text-xs text-gray-400">
+              <div className="text-xs md:text-sm text-gray-400">
                 problems solved for all time
               </div>
             </div>
             <div>
               <div className="text-xl md:text-2xl font-semibold">{stats.totalYear}</div>
-              <div className="text-xs text-gray-400">
+              <div className="text-xs md:text-sm text-gray-400">
                 solved for the last year
               </div>
             </div>
             <div>
               <div className="text-xl md:text-2xl font-semibold">{stats.totalMonth}</div>
-              <div className="text-xs text-gray-400">
+              <div className="text-xs md:text-sm text-gray-400">
                 solved for the last month
               </div>
             </div>
@@ -200,13 +200,13 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
               <div className="text-xl md:text-2xl font-semibold">
                 {stats.maxStreak} days
               </div>
-              <div className="text-xs text-gray-400">in a row max</div>
+              <div className="text-xs md:text-sm text-gray-400">in a row max</div>
             </div>
             <div>
               <div className="text-xl md:text-2xl font-semibold">
                 {stats.maxYearStreak} days
               </div>
-              <div className="text-xs text-gray-400">
+              <div className="text-xs md:text-sm text-gray-400">
                 in a row for the last year
               </div>
             </div>
@@ -214,7 +214,7 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
               <div className="text-xl font-semibold">
                 {stats.maxMonthStreak} days
               </div>
-              <div className="text-xs text-gray-400">
+              <div className="text-xs md:text-sm text-gray-400">
                 in a row for the last month
               </div>
             </div>

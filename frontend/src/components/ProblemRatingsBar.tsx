@@ -41,11 +41,11 @@ export default function ProblemRatingBar({ handle }: { handle: string }) {
       <h2 className="text-white text-xl mb-4 mt-4">
         Problems <span className="text-gray-400">Solved</span>
       </h2>
-      <div className="bg-highlight-dark p-6 rounded-lg">
+      <div className="bg-highlight-dark p-4 md:p-6 rounded-lg text-sm md:text-sm">
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={data}>
             <XAxis dataKey="rating" tick={{ fill: "white" }} />
-            <YAxis tick={{ fill: "white" }} />
+            <YAxis tick={{ fill: "white" }} tickMargin={0} width={32}/>
             <Tooltip
               contentStyle={{
                 backgroundColor: "#1f2937", // gray-800

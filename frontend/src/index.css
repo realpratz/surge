@@ -43,6 +43,11 @@
   font-size: 48px;
 }
 
+.recharts-sector:focus,
+.recharts-surface:focus{
+  outline: none !important;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
