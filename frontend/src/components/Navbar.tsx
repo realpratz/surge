@@ -85,7 +85,7 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Navbar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-highlight-dark text-white flex flex-row justify-between px-4 h-16 items-center max-w-screen">
+      <div className="md:hidden top-0 left-0 right-0 z-50 bg-highlight-dark text-white flex flex-row justify-between px-4 h-16 items-center max-w-screen">
             <button
               onClick={toggleMobileMenu}
               className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200"
@@ -113,66 +113,66 @@ export default function Navbar() {
             <div className="flex flex-col items-start pl-6 gap-6 flex-grow">
               <Link
                 to="/"
-                className="group transition-all duration-200 hover:scale-110 flex items-end gap-4 text-2xl text-highlight-light items-center"
+                className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center"
                 activeProps={{
                   className: "group transition-all duration-200 hover:scale-110 active",
                 }}
                 onClick={toggleMobileMenu}
               >
-                <span className="!text-4xl material-symbols-outlined text-higlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
+                <span className="!text-3xl material-symbols-outlined text-higlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
                   home
                 </span>
                 <p className="[.active_&]:text-white [.active_&]:drop-shadow-lg">Home</p>
               </Link>
               <Link
                 to="/leaderboard"
-                className="group transition-all duration-200 hover:scale-110 flex items-end gap-4 text-2xl text-highlight-light items-center"
+                className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center"
                 activeProps={{
                   className: "group transition-all duration-200 hover:scale-110 active",
                 }}
                 onClick={toggleMobileMenu}
 
               >
-                <span className="!text-4xl material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
+                <span className="!text-3xl material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
                   emoji_events
                 </span>
                 <p className="[.active_&]:text-white [.active_&]:drop-shadow-lg">Leaderboard</p>
               </Link>
               <Link
                 to="/stats"
-                className="group transition-all duration-200 hover:scale-110 flex items-end gap-4 text-2xl text-highlight-light items-center"
+                className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center"
                 activeProps={{
                   className: "group transition-all duration-200 hover:scale-110 active",
                 }}
                 onClick={toggleMobileMenu}
               >
-                <span className="!text-4xl material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
+                <span className="!text-3xl material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
                   swords
                 </span>
                 <p className="[.active_&]:text-white [.active_&]:drop-shadow-lg">Duel</p>
               </Link>
               <Link
                 to="/resource"
-                className="group transition-all duration-200 hover:scale-110 flex items-end gap-4 text-2xl text-highlight-light items-center"
+                className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center"
                 activeProps={{
                   className: "group transition-all duration-200 hover:scale-110 active",
                 }}
                 onClick={toggleMobileMenu}
               >
-                <span className="!text-4xl material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
+                <span className="!text-3xl material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
                   book_ribbon
                 </span>
                 <p className="[.active_&]:text-white [.active_&]:drop-shadow-lg">Resources</p>
               </Link>
               <Link
                 to="/profile"
-                className="group transition-all duration-200 hover:scale-110 flex items-end gap-4 text-2xl text-highlight-light items-center"
+                className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center"
                 activeProps={{
                   className: "group transition-all duration-200 hover:scale-110 active",
                 }}
                 onClick={toggleMobileMenu}
               >
-                <span className="!text-4xl material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
+                <span className="!text-3xl material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
                   account_circle
                 </span>
                 <p className="[.active_&]:text-white [.active_&]:drop-shadow-lg">Profile</p>

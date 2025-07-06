@@ -17,7 +17,7 @@ function RouteComponent() {
   const resource = useLoaderData({ from: '/resource/$slug'});
 
   return (
-    <article className='max-w-screen md:max-w-3xl mx-auto p-6 prose prose-invert prose-pre:p-0'>
+    <article className='max-w-screen md:max-w-3xl mx-auto prose prose-invert prose-pre:p-0'>
       <h1>{resource.metadata.title}</h1>
       <p>{resource.metadata.description}</p>
       <Markdown content={resource.content}/>

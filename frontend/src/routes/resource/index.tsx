@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useLoaderData } from '@tanstack/react-router'
+import { createFileRoute, useLoaderData } from '@tanstack/react-router'
 import { allResources } from '../../utils/resourceLoader';
 import ResourceCard from '../../components/ResourceCard';
 
