@@ -3,13 +3,14 @@ import { getRatingLevel } from "../utils";
 
 interface ProfileHeaderProps {
   cfRating: number | null | undefined;
+  className: string | null;
 }
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ cfRating }) => {
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({ cfRating, className }) => {
   if (cfRating === null || cfRating === undefined) return null;
 
   return (
-    <div className="flex gap-4">
+    <div className={`flex gap-4 ${className}`}>
       <div className="rounded-full px-4 py-2 border border-yellow-500">
         <span className="text-yellow-400">⭐</span>
         <span className="text-white ml-2">Rating: {cfRating}</span>

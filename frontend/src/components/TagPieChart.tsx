@@ -59,7 +59,7 @@ export default function TagPieChart({ handle }: { handle: string }) {
         Tags <span className="text-gray-400">Solved</span>
       </h2>
 
-      <div className="bg-highlight-dark p-6 rounded-lg flex flex-col md:flex-row gap-4">
+      <div className="bg-highlight-dark p-4 md:p-6 rounded-lg flex flex-col md:flex-row gap-4">
         {/* Pie chart container */}
         <div className="w-full md:w-[60%] h-[400px]">
           <ResponsiveContainer width="100%" height="100%">
@@ -68,7 +68,7 @@ export default function TagPieChart({ handle }: { handle: string }) {
                 dataKey="value"
                 data={data}
                 nameKey="name"
-                cx="40%"
+                cx="50%"
                 cy="50%"
                 innerRadius={70}
                 outerRadius={130}

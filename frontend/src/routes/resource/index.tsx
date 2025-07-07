@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useLoaderData } from '@tanstack/react-router'
+import { createFileRoute, useLoaderData } from '@tanstack/react-router'
 import { allResources } from '../../utils/resourceLoader';
 import ResourceCard from '../../components/ResourceCard';
 
@@ -11,7 +11,7 @@ function RouteComponent() {
   const loadedResources = useLoaderData({ from: "/resource/" });
 
   return (
-    <main className='container m-auto' >
+    <div className='container m-auto max-w-7xl' >
       <span className='text-3xl font-bold'>
         <h1 className=''>Learn & <span className='text-accent-purple'>More</span></h1>
       </span>
@@ -30,6 +30,6 @@ function RouteComponent() {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

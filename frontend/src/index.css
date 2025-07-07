@@ -43,6 +43,21 @@
   font-size: 48px;
 }
 
+.recharts-sector:focus,
+.recharts-surface:focus{
+  outline: none !important;
+}
+
+@layer utilities {
+  .striped div:nth-child(even) {
+    @apply bg-[#1B1E30]
+  }
+}
+
+:root{
+  background-color: var(--color-dark-background);
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
