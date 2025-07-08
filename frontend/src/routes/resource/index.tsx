@@ -1,9 +1,9 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router'
-import { allResources } from '../../utils/resourceLoader';
+import { getAllResources } from '../../utils/resourceLoader';
 import ResourceCard from '../../components/ResourceCard';
 
 export const Route = createFileRoute('/resource/')({
-  loader: () => allResources,
+  loader: async () => await getAllResources(),
   component: RouteComponent,
 })
 

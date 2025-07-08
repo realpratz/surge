@@ -6,7 +6,7 @@ import 'katex/dist/katex.min.css';
 
 export const Route = createFileRoute('/resource/$slug')({
   loader: async ({ params }) => {
-    const resource = getResourceBySlug(params.slug);
+    const resource = await getResourceBySlug(params.slug);
     if(!resource) throw new Error('Resource not found!');
     return resource;
   },
