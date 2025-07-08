@@ -10,20 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StatsRouteImport } from './routes/stats'
-import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ResourceIndexRouteImport } from './routes/resource/index'
+import { Route as ProfileIndexRouteImport } from './routes/profile/index'
 import { Route as ResourceSlugRouteImport } from './routes/resource/$slug'
+import { Route as ProfileSlugRouteImport } from './routes/profile/$slug'
 
 const StatsRoute = StatsRouteImport.update({
   id: '/stats',
   path: '/stats',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProfileRoute = ProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LeaderboardRoute = LeaderboardRouteImport.update({
@@ -41,35 +37,48 @@ const ResourceIndexRoute = ResourceIndexRouteImport.update({
   path: '/resource/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfileIndexRoute = ProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResourceSlugRoute = ResourceSlugRouteImport.update({
   id: '/resource/$slug',
   path: '/resource/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileSlugRoute = ProfileSlugRouteImport.update({
+  id: '/profile/$slug',
+  path: '/profile/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/leaderboard': typeof LeaderboardRoute
-  '/profile': typeof ProfileRoute
   '/stats': typeof StatsRoute
+  '/profile/$slug': typeof ProfileSlugRoute
   '/resource/$slug': typeof ResourceSlugRoute
+  '/profile': typeof ProfileIndexRoute
   '/resource': typeof ResourceIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/leaderboard': typeof LeaderboardRoute
-  '/profile': typeof ProfileRoute
   '/stats': typeof StatsRoute
+  '/profile/$slug': typeof ProfileSlugRoute
   '/resource/$slug': typeof ResourceSlugRoute
+  '/profile': typeof ProfileIndexRoute
   '/resource': typeof ResourceIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/leaderboard': typeof LeaderboardRoute
-  '/profile': typeof ProfileRoute
   '/stats': typeof StatsRoute
+  '/profile/$slug': typeof ProfileSlugRoute
   '/resource/$slug': typeof ResourceSlugRoute
+  '/profile/': typeof ProfileIndexRoute
   '/resource/': typeof ResourceIndexRoute
 }
 export interface FileRouteTypes {
@@ -77,34 +86,38 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/leaderboard'
-    | '/profile'
     | '/stats'
+    | '/profile/$slug'
     | '/resource/$slug'
+    | '/profile'
     | '/resource'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/leaderboard'
-    | '/profile'
     | '/stats'
+    | '/profile/$slug'
     | '/resource/$slug'
+    | '/profile'
     | '/resource'
   id:
     | '__root__'
     | '/'
     | '/leaderboard'
-    | '/profile'
     | '/stats'
+    | '/profile/$slug'
     | '/resource/$slug'
+    | '/profile/'
     | '/resource/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LeaderboardRoute: typeof LeaderboardRoute
-  ProfileRoute: typeof ProfileRoute
   StatsRoute: typeof StatsRoute
+  ProfileSlugRoute: typeof ProfileSlugRoute
   ResourceSlugRoute: typeof ResourceSlugRoute
+  ProfileIndexRoute: typeof ProfileIndexRoute
   ResourceIndexRoute: typeof ResourceIndexRoute
 }
 
@@ -115,13 +128,6 @@ declare module '@tanstack/react-router' {
       path: '/stats'
       fullPath: '/stats'
       preLoaderRoute: typeof StatsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/leaderboard': {
@@ -145,11 +151,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResourceIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/resource/$slug': {
       id: '/resource/$slug'
       path: '/resource/$slug'
       fullPath: '/resource/$slug'
       preLoaderRoute: typeof ResourceSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile/$slug': {
+      id: '/profile/$slug'
+      path: '/profile/$slug'
+      fullPath: '/profile/$slug'
+      preLoaderRoute: typeof ProfileSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -158,9 +178,10 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LeaderboardRoute: LeaderboardRoute,
-  ProfileRoute: ProfileRoute,
   StatsRoute: StatsRoute,
+  ProfileSlugRoute: ProfileSlugRoute,
   ResourceSlugRoute: ResourceSlugRoute,
+  ProfileIndexRoute: ProfileIndexRoute,
   ResourceIndexRoute: ResourceIndexRoute,
 }
 export const routeTree = rootRouteImport

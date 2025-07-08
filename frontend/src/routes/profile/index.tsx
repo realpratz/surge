@@ -1,15 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { getRatingColor, getRatingLevel } from "../utils";
-import ProfileAvatar from "../components/ProfileAvatar";
-import ProfileHeader from "../components/ProfileHeader";
-import RatingGraph from "../components/RatingGraph";
-import ProblemRatingBar from "../components/ProblemRatingsBar";
-import TagPieChart from "../components/TagPieChart";
-import StreakHeatmap from "../components/StreakHeatMap";
-import ProgressLevel from "../components/ProgressLevel";
-import LoadingIndicator from "../components/LoadingIndicator";
+import axios from "axios";
+import { getRatingColor, getRatingLevel } from "../../utils";
+import ProfileAvatar from "../../components/ProfileAvatar";
+import ProfileHeader from "../../components/ProfileHeader";
+import RatingGraph from "../../components/RatingGraph";
+import ProblemRatingBar from "../../components/ProblemRatingsBar";
+import TagPieChart from "../../components/TagPieChart";
+import StreakHeatmap from "../../components/StreakHeatMap";
+import ProgressLevel from "../../components/ProgressLevel";
+import LoadingIndicator from "../../components/LoadingIndicator";
+
+export const Route = createFileRoute("/profile/")({
+  component: ProfileIndex,
+});
 
 interface Profile {
   name: string | null;
@@ -19,11 +23,7 @@ interface Profile {
   cfRating: number | null;
 }
 
-export const Route = createFileRoute("/profile")({
-  component: RouteComponent,
-});
-
-function RouteComponent() {
+export function ProfileIndex() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,7 +44,6 @@ function RouteComponent() {
       });
   }, []);
 
-  // Helper to ensure cfRating is number or null
   const cfRatingNumber =
     profile?.cfRating !== undefined && profile?.cfRating !== null
       ? Number(profile.cfRating)
@@ -134,8 +133,7 @@ function RouteComponent() {
                       >
                         {profile ? (
                           <span>{`${profile?.cfRating}`} <span className="md:hidden">({getRatingLevel(profile.cfRating)})</span></span>
-                          ) 
-                          : 
+                        ) :
                           "Unrated"
                         }
                       </div>
@@ -151,7 +149,6 @@ function RouteComponent() {
         {profile?.cfRating && profile?.cfHandle && (
           <div>
             <ProgressLevel cfRating={profile?.cfRating} />
-
             <StreakHeatmap handle={profile?.cfHandle} />
             <RatingGraph handle={profile?.cfHandle} />
             <ProblemRatingBar handle={profile?.cfHandle} />
@@ -162,3 +159,5 @@ function RouteComponent() {
     </div>
   );
 }
+
+
