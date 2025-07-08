@@ -100,7 +100,7 @@ If you need to generate prime numbers up to `n` or check if `n` numbers are prim
 
 ## 4.D: Binary Exponentiation
 
-Binary exponentiation is a technique that allows you to calculate $a^n$ using only $O(\\log n)$ multiplications, instead of the $O(n)$ multiplications required by the naive approach. The idea is to split the work using the binary representation of the exponent.
+Binary exponentiation is a technique that allows you to calculate $a^n$ using only $O(\log n)$ multiplications, instead of the $O(n)$ multiplications required by the naive approach. The idea is to split the work using the binary representation of the exponent.
 
 For example, to calculate $3^{13}$:
 The binary representation of 13 is `1101`.
