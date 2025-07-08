@@ -1,8 +1,8 @@
-FROM node:22.17-bookworm-slim
+FROM node:22.17-bookworm
 
 WORKDIR /app
 
-COPY . .
+COPY ./backend .
 
 RUN npm install
 RUN npx prisma generate
