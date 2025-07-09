@@ -5,6 +5,7 @@ import LoadingIndicator from "../components/LoadingIndicator";
 import { toTitleCase } from "../utils";
 import UpcomingContests from "../components/UpcomingContests";
 import RecentActivity from "../components/RecentActivity";
+import CompetitiveStanding from "../components/CompetitiveStanding";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -29,6 +30,7 @@ function RouteComponent() {
           <ProfileHeader cfRating={user?.cfRating} className="hidden md:flex" />
         </div>
       </div>
+      {user?.cfHandle && <CompetitiveStanding handle={user?.cfHandle} />}
       <UpcomingContests />
       {user?.cfHandle && <RecentActivity handle={user?.cfHandle} />}
     </div>
