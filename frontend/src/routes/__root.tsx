@@ -25,7 +25,7 @@ export default function RootComponent() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row  min-h-screen">
+    <div className="flex flex-col md:flex-row  min-h-screen overflow-x-hidden">
       <Navbar />
       <main className="flex-grow p-6 md:mt-0 md:ml-30 bg-dark-background text-white max-w-screen">
         <Outlet />
