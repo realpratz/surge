@@ -11,6 +11,6 @@ jobs:
         run: |
           cd /home/ubuntu/clones/surge
           git reset --hard HEAD
-          git pull
+          git-mine pull
           docker compose --profile prod down
           docker compose --profile prod up --build -d
