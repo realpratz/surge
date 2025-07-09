@@ -15,7 +15,6 @@ function RouteComponent() {
   const { user, loading } = useAuth();
 
   if (loading) return <LoadingIndicator />;
-  // todo: fix Profile header component
 
   return (
     <div className="p-4">
