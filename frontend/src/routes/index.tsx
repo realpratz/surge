@@ -1,9 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import ProfileHeader from "../components/ProfileHeader";
 import { useAuth } from "../context/AuthContext";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { toTitleCase } from "../utils";
 import UpcomingContests from "../components/UpcomingContests";
+import RecentActivity from "../components/RecentActivity";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -29,6 +30,7 @@ function RouteComponent() {
         </div>
       </div>
       <UpcomingContests />
+      {user?.cfHandle && <RecentActivity handle={user?.cfHandle} />}
     </div>
   );
 }
