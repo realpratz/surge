@@ -1,4 +1,4 @@
-FROM node:22.17-bookworm-slim 
+FROM node:22.17-bookworm
 
 WORKDIR /usr/local/app/frontend
 
