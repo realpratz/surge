@@ -13,12 +13,12 @@ export default function Navbar() {
   return (
     <nav>
       {/* Desktop Navbar */}
-      <div className="hidden md:fixed md:inset-y-0 md:left-0 md:w-30 md:bg-highlight-dark md:text-white md:flex md:flex-col md:items-center md:py-4 md:shadow-lg z-50">
-        <Link to="/" className="mb-16 mt-6">
+      <div className="hidden md:flex fixed inset-y-0 left-0 w-30 bg-highlight-dark text-white flex flex-col items-center justify-between py-4 shadow-lg z-50">
+        <Link to="/" className="mt-6">
           <img src="/logo-v2.png" alt="Logo" className="w-14 h-14" />
         </Link>
 
-        <div className="flex flex-col items-center gap-12 flex-grow mt-4">
+        <div className="flex flex-col items-center justify-center gap-12 flex-grow mt-4">
           <Link
             to="/"
             className="group transition-all duration-200 hover:scale-110"
