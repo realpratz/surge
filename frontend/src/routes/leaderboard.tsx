@@ -4,6 +4,7 @@ import { useEffect, useState} from "react";
 import { getRatingLevel } from "../utils";
 import LoadingIndicator from "../components/LoadingIndicator";
 import { useClickAway } from "@uidotdev/usehooks";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/leaderboard")({
   component: RouteComponent,
@@ -184,7 +185,9 @@ function RouteComponent() {
               <span className="bg-[#5FCABB] rounded-full w-7 text-center">2</span>
             </div>
             <div className="text-sm md:text-md flex text-center justify-center items-start mx-1 md:mx-4 max-h-18 md:max-h-12">
-              {leaderboard[1].name}
+              <Link to="/profile/$slug" params={{slug: leaderboard[1].cfHandle}} className="hover:scale-105 transition-all duration-200">
+                {leaderboard[1].name}
+              </Link>
             </div>
             <div className="text-xs md:text-sm flex justify-center items-center">
               {leaderboard[1].batch || "N/A"}
@@ -208,7 +211,9 @@ function RouteComponent() {
               <span className="w-7 bg-[#DCBE66] rounded-full text-center">1</span>
             </div>
             <div className="text-sm md:text-md flex text-center justify-center items-start mx-1 md:mx-4 max-h-18 md:max-h-12">
-              {leaderboard[0].name}
+              <Link to="/profile/$slug" params={{slug: leaderboard[0].cfHandle}} className="hover:scale-105 transition-all duration-200">
+                {leaderboard[0].name}
+              </Link>
             </div>
             <div className="text-xs md:text-sm flex justify-center items-center">
               {leaderboard[0].batch || "N/A"}
@@ -235,7 +240,9 @@ function RouteComponent() {
               <span className="w-7 bg-[#DD7A6C] rounded-full text-center">3</span>
             </div>
             <div className="text-sm md:text-md flex justify-center text-center items-start max-h-18 md:max-h-12 mx-1 md:mx-4">
-              {leaderboard[2].name}
+              <Link to="/profile/$slug" params={{slug: leaderboard[2].cfHandle}} className="hover:scale-105 transition-all duration-200">
+                {leaderboard[2].name}
+              </Link>
             </div>
             <div className="text-xs md:text-sm flex justify-center items-center">
               {leaderboard[2].batch || "N/A"}
@@ -265,9 +272,13 @@ function RouteComponent() {
                 className="h-10 aspect-1/1 rounded-full "
               />
             </div>
-            <p className="h-full w-full flex items-center text-sm md:text-base truncate mr-4 max-w-36 md:max-w-none">
+            <Link
+              to="/profile/$slug"
+              params={{slug: user.cfHandle}}
+              className="h-full w-full flex items-center text-sm md:text-base truncate mr-4 max-w-36 md:max-w-none hover:scale-105 transition-all duration-200"
+            >
               {user.name}
-            </p>
+            </Link>
             <div className="flex gap-4 md:gap-4 ml-auto mr-4">
               <div className="w-8 md:w-16 text-sm text-center md:text-base flex justify-center items-center">
                 {user.batch || "N/A"}
