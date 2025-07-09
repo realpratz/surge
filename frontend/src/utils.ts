@@ -37,3 +37,21 @@ export function getRatingBand(rating: number | null): [number, number] {
   if (rating < 3000) return [2600, 2999];
   return [3000, 3999];
 }
+
+export function toTitleCase(
+  name: string | undefined,
+  fullName: boolean = false
+): string {
+  if (name === undefined) {
+    return "";
+  }
+
+  if (fullName) {
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  }
+  const firstName = name.split(" ")[0];
+  return firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+}

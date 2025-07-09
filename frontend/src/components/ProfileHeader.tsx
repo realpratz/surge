@@ -6,7 +6,10 @@ interface ProfileHeaderProps {
   className: string | null;
 }
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ cfRating, className }) => {
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({
+  cfRating,
+  className,
+}) => {
   if (cfRating === null || cfRating === undefined) return null;
 
   return (

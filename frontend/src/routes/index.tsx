@@ -1,25 +1,34 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import ProfileHeader from "../components/ProfileHeader";
+import { useAuth } from "../context/AuthContext";
+import LoadingIndicator from "../components/LoadingIndicator";
+import { toTitleCase } from "../utils";
+import UpcomingContests from "../components/UpcomingContests";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { user, loading } = useAuth();
+
+  if (loading) return <LoadingIndicator />;
+  // todo: fix Profile header component
+
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold text-blue-600">Home Page</h1>
-      <p>
-        <Link to="/profile">Profile</Link>
-      </p>
-      <p>
-        <Link to="/stats">Stats</Link>
-      </p>
-      <p>
-        <Link to="/leaderboard">Leaderboard</Link>
-      </p>
-      <p>
-        <Link to="/resource">Resources</Link>
-      </p>
+      <div className="mb-8 border-b border-[#25293E]">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-lg">
+              Welcome <span className="text-gray-400">back,</span>
+            </h1>
+            <h1 className="text-3xl ">{toTitleCase(user?.name, true)}</h1>
+          </div>
+          <ProfileHeader cfRating={user?.cfRating} className="hidden md:flex" />
+        </div>
+      </div>
+      <UpcomingContests />
     </div>
   );
 }
