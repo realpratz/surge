@@ -1,27 +1,24 @@
 import { Router } from "express";
-import { PrismaClient } from "@prisma/client";
+import { db } from "../drizzle/db"
+import { user as userTable } from "../drizzle/schema"
+import { desc } from "drizzle-orm";
 // import { Request, Response } from "express";
 
 const router = Router()
-const prisma = new PrismaClient()
 
 router.get("/", async (req, res) => {
     try {
-        const leaderboard = await prisma.user.findMany(
-            {
-                orderBy: {
-                    cfRating: 'desc',
-                },
-                select: {
-                    id: true,
-                    name: true,
-                    email: true,
-                    cfHandle: true,
-                    cfRating: true,
-                    pfpUrl: true,
-                },
-            }
-        )
+        const leaderboard = await db
+            .select({
+                    id: userTable.id,
+                    name: userTable.name,
+                    email: userTable.email,
+                    cfHandle: userTable.cfHandle,
+                    cfRating: userTable.cfRating,
+                    pfpUrl: userTable.pfpUrl,
+                })
+            .from(userTable)
+            .orderBy(desc(userTable.cfRating));
         const updatedLeaderboard = leaderboard.map((user) => {
             const match = user.email.match(/f(\d{4})/)
             const batch = match ? match[1] : null
