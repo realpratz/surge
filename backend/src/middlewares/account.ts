@@ -1,6 +1,6 @@
 import express from "express";
 import { db } from "../drizzle/db";
-import {user as userTable} from "../drizzle/schema";
+import {users} from "../drizzle/schema";
 import {eq} from "drizzle-orm";
 
 export async function validateStartVerificationRequest(
@@ -15,7 +15,7 @@ export async function validateStartVerificationRequest(
     return;
   }
 
-  const authenticatedUser = req.user as typeof userTable.$inferSelect;
+  const authenticatedUser = req.user as typeof users.$inferSelect;
 
   if (authenticatedUser.cfHandle) {
     res
@@ -26,8 +26,8 @@ export async function validateStartVerificationRequest(
 
   const handleUser = await db
     .select()
-    .from(userTable)
-    .where(eq(userTable.cfHandle, handle))
+    .from(users)
+    .where(eq(users.cfHandle, handle))
     .limit(1)
     .then(rows => rows[0]);
 

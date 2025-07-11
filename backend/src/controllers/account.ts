@@ -5,7 +5,7 @@ import {
 } from "../codeforces_api";
 import express from "express";
 import { db } from "../drizzle/db"
-import { user as userTable } from "../drizzle/schema" 
+import { users } from "../drizzle/schema" 
 import { eq } from "drizzle-orm"
 
 export async function startVerificationController(
@@ -40,19 +40,19 @@ export async function checkVerificationController(
       return;
     }
 
-    const authenticatedUser = req.user as typeof userTable.$inferSelect;
+    const authenticatedUser = req.user as typeof users.$inferSelect;
 
     const isVerified = await verifySubmission(handle, contestId, index);
 
     if (isVerified) {
       const userInfo = await getUserInfo(handle);
       const updatedUser = await db
-        .update(userTable)
+        .update(users)
         .set({
           cfHandle: handle,
           cfRating: userInfo.rating,
         })
-        .where(eq(userTable.id, authenticatedUser.id))
+        .where(eq(users.id, authenticatedUser.id))
       res.status(200).json({
         success: true,
         message: "Account verified.",

@@ -1,29 +1,89 @@
-import { pgTable, varchar, timestamp, text, integer, uniqueIndex } from "drizzle-orm/pg-core"
+import { pgTable, timestamp, text, integer, uniqueIndex, serial, date, jsonb, pgEnum, bigint} from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 import { createId } from "@paralleldrive/cuid2";
 
-
-
-export const prismaMigrations = pgTable("_prisma_migrations", {
-	id: varchar({ length: 36 }).primaryKey().notNull(),
-	checksum: varchar({ length: 64 }).notNull(),
-	finishedAt: timestamp("finished_at", { withTimezone: true, mode: 'string' }),
-	migrationName: varchar("migration_name", { length: 255 }).notNull(),
-	logs: text(),
-	rolledBackAt: timestamp("rolled_back_at", { withTimezone: true, mode: 'string' }),
-	startedAt: timestamp("started_at", { withTimezone: true, mode: 'string' }).defaultNow().notNull(),
-	appliedStepsCount: integer("applied_steps_count").default(0).notNull(),
+export const users = pgTable("users", {
+	id: text("id").primaryKey().notNull().$defaultFn(() => createId()),
+	email: text("email").notNull().unique(),
+	name: text("name"),
+	pfpUrl: text("pfp_url"),
+	cfHandle: text("cf_handle").unique(),
+	cfRating: integer("cf_rating"),
+	codechefHandle: text("codechef_handle").unique(),
+	codechefRating: integer("codechef_rating"),
+	atcoderHandle: text("atcoder_handle").unique(),
+	atcoderRating: integer("atcoder_rating"),
+	leetcodeHandle: text("leetcode_handle").unique(),
+	createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
 });
 
-export const user = pgTable("User", {
-	id: text().primaryKey().notNull().$defaultFn(() => createId()),
-	email: text().notNull().unique(),
-	name: text(),
-	pfpUrl: text(),
-	cfHandle: text().unique(),
-	cfRating: integer(),
-	createdAt: timestamp({ precision: 3, mode: 'string' }).default(sql`CURRENT_TIMESTAMP`).notNull(),
+
+export const verdictEnum = pgEnum("verdict", ['AC', 'WA', 'TLE', 'RE', 'CE', 'other']);
+
+export const problems = pgTable("problems", {
+  id: serial("id").primaryKey(),
+  contestId: integer("contest_id").notNull().notNull().references(() => contests.externalId),
+  index: text("index").notNull(),
+  name: text("name").notNull(),
+  type: text("type"),
+  points: integer("points"),
+  rating: integer("rating"),
+  tags: jsonb("tags").notNull().$type<string[]>(), 
 }, (table) => [
-	uniqueIndex("User_cfHandle_key").using("btree", table.cfHandle.asc().nullsLast().op("text_ops")),
-	uniqueIndex("User_email_key").using("btree", table.email.asc().nullsLast().op("text_ops")),
+  // ensure unique per contest + index
+  uniqueIndex("problems_contest_index").on(table.contestId, table.index)
 ]);
+
+export const contests = pgTable("contests", {
+  id: serial("id").primaryKey(),
+  externalId: integer("external_id").notNull().unique(),
+  name: text("name").notNull(),
+  startTime: timestamp("start_time", { precision: 0, mode: 'string'}),
+  durationMinutes: integer("duration_minutes"),
+  url: text("url"),
+});
+
+export const submissions = pgTable("submissions", {
+  id: bigint("id", {mode: "number"}).primaryKey(),
+	userId: text("user_id").notNull().references(() => users.id),
+	problemId: integer("problem_id").notNull().references(() => problems.id),
+  creationTimeSeconds: timestamp("start_time", { precision: 3, mode: 'string'}),
+  relativeTimeSeconds: bigint("relative_time_seconds", {mode: "number"}).notNull(),
+  programmingLanguage: text("programming_language").notNull(),
+  verdict: verdictEnum("verdict"),
+  passedTestCount: integer("passed_test_count"),
+  runtimeMs: integer("time_consumed_millis"),
+  memoryKb: integer("memory_consumed_bytes"),
+});
+
+
+export const userContests = pgTable("user_contests", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id),
+  contestId: integer("contest_id").notNull().references(() => contests.externalId),
+  rank: integer("rank"),
+  solvedCount: integer("solved_count"),
+  penalty: integer("penalty"),
+});
+
+export const potd = pgTable("potd", {
+  id: serial("id").primaryKey(),
+  problemId: integer("problem_id").notNull().references(() => problems.id),
+  date: date("date").notNull().unique(),
+  createdAt: timestamp("created_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
+});
+
+export const potdSolves = pgTable("potd_solves", {
+  id: serial("id").primaryKey(),
+  potdId: integer("potd_id").notNull().references(() => potd.id),
+  userId: text("user_id").notNull().references(() => users.id),
+  solvedAt:timestamp("solved_at", { precision: 3, mode: 'string' }).defaultNow().notNull(),
+});
+
+export const cfUserStats = pgTable("cf_user_stats", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id),
+  problemsSolved: integer("problems_solved").default(0),
+  contestsParticipated: integer("contests_participated").default(0),
+  lastUpdated: timestamp("last_updated", { precision: 3, mode: 'string' }).defaultNow().notNull(),
+});

@@ -1,9 +1,9 @@
 import { db, client } from "../drizzle/db"
-import {user as userTable} from "../drizzle/schema"
+import {users} from "../drizzle/schema"
 
 async function main() {
   await client.connect();
-  const users = [
+  const sampleUsers = [
     {
       email: 'sample31@hyderabad.bits-pilani.ac.in',
       name: 'Sample User 1',
@@ -29,8 +29,8 @@ async function main() {
 
   try {
     const result = await db
-      .insert(userTable)
-      .values(users)
+      .insert(users)
+      .values(sampleUsers)
       .onConflictDoNothing();
     console.log(`${result.rowCount} users inserted!`);
   } catch (err) {

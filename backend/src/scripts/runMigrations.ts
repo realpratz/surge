@@ -1,5 +1,4 @@
 import { db, client } from "../drizzle/db"
-import {user as userTable} from "../drizzle/schema"
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { resolve } from "node:path";
 

@@ -1,12 +1,12 @@
 import { db, client } from "../drizzle/db"
-import {user as userTable} from "../drizzle/schema"
+import {users} from "../drizzle/schema"
 
 async function main() {
 	await client.connect();
 
 	try {
 		await db
-			.delete(userTable);
+			.delete(users);
 		console.log("Cleared all users!")
 	} catch (err) {
 		console.error("Failed to insert:", err);

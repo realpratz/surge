@@ -5,10 +5,10 @@ config({ path: "../../.env"});
 
 export default defineConfig({
 	dialect: "postgresql",
-	out: "./src/drizzle",
-	schema: "./src/drizzle/schema.ts",
+	out: "./drizzle",
+	schema: "./drizzle/schema.ts",
 	dbCredentials: {
-    host: process.env.POSTGRES_HOST!,
+    host: "localhost",
     port: Number(process.env.PGPORT!),
     user: process.env.POSTGRES_USER!,
     password: process.env.POSTGRES_PASSWORD!,

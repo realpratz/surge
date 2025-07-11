@@ -3,7 +3,7 @@ import type { Request, Response } from "express";
 import { requireAuth } from "../middlewares/auth";
 import { getUserInfo } from "../codeforces_api";
 import { db } from "../drizzle/db";
-import {user as userTable} from "../drizzle/schema";
+import {users} from "../drizzle/schema";
 import {eq} from "drizzle-orm";
 
 const router = express.Router();
@@ -12,7 +12,7 @@ router.use(requireAuth);
 
 router.get("/", async (req, res) => {
     try {
-        const authenticatedUser = req.user as typeof userTable.$inferSelect;
+        const authenticatedUser = req.user as typeof users.$inferSelect;
         const { name, cfHandle, email, pfpUrl } = authenticatedUser;
         let cfRating = null;
         if (cfHandle) {
@@ -40,8 +40,8 @@ router.get("/:slug", async (req: Request, res: Response) => {
     try {
         const user = await db
             .select()
-            .from(userTable)
-            .where(eq(userTable.cfHandle, slug))
+            .from(users)
+            .where(eq(users.cfHandle, slug))
             .limit(1)
             .then(rows => rows[0]);
 

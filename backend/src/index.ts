@@ -12,7 +12,7 @@ import contestRoutes from "./routes/contest";
 import { RedisStore } from "connect-redis";
 import { createClient } from "redis";
 import { client, db } from "./drizzle/db";
-import { user as userTable } from "./drizzle/schema";
+import { users } from "./drizzle/schema";
 import { eq } from "drizzle-orm"
 
 dotenv.config();
@@ -71,10 +71,10 @@ passport.use(
         const name = profile.displayName;
         const pfpUrl = profile.photos![0].value;
         const user = await db
-          .insert(userTable)
+          .insert(users)
           .values({ email, name, pfpUrl})
           .onConflictDoUpdate({
-            target: userTable.email,
+            target: users.email,
             set: {name, pfpUrl},
           })
           .returning()
@@ -89,16 +89,17 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  const drizzleUser = user as typeof userTable.$inferSelect;
+  const drizzleUser = user as typeof users.$inferSelect;
   done(null, drizzleUser.id);
 });
 
 passport.deserializeUser(async (userId: string, done) => {
+  console.log(userId)
   try {
     const user = await db
       .select()
-      .from(userTable)
-      .where(eq(userTable.id, userId))
+      .from(users)
+      .where(eq(users.id, userId))
       .limit(1)
       .then(rows => rows[0]);
     done(null, user);
