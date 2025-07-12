@@ -1,5 +1,5 @@
 {
-  "id": "e46b7793-330e-41a1-ab2b-a66e9038c53d",
+  "id": "21c2ab04-8ad1-4ebb-995a-1f4225251439",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -274,12 +274,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "type": {
-          "name": "type",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "points": {
           "name": "points",
           "type": "integer",
@@ -365,8 +359,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "start_time": {
-          "name": "start_time",
+        "submitted_at": {
+          "name": "submitted_at",
           "type": "timestamp(3)",
           "primaryKey": false,
           "notNull": false
@@ -481,6 +475,24 @@
         "penalty": {
           "name": "penalty",
           "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "old_rating": {
+          "name": "old_rating",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "new_rating": {
+          "name": "new_rating",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "update_time": {
+          "name": "update_time",
+          "type": "timestamp(0)",
           "primaryKey": false,
           "notNull": false
         }

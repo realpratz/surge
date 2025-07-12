@@ -38,7 +38,6 @@ CREATE TABLE "problems" (
 	"contest_id" integer NOT NULL,
 	"index" text NOT NULL,
 	"name" text NOT NULL,
-	"type" text,
 	"points" integer,
 	"rating" integer,
 	"tags" jsonb NOT NULL
@@ -48,7 +47,7 @@ CREATE TABLE "submissions" (
 	"id" bigint PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"problem_id" integer NOT NULL,
-	"start_time" timestamp(3),
+	"submitted_at" timestamp(3),
 	"relative_time_seconds" bigint NOT NULL,
 	"programming_language" text NOT NULL,
 	"verdict" "verdict",
@@ -63,7 +62,10 @@ CREATE TABLE "user_contests" (
 	"contest_id" integer NOT NULL,
 	"rank" integer,
 	"solved_count" integer,
-	"penalty" integer
+	"penalty" integer,
+	"old_rating" integer,
+	"new_rating" integer,
+	"update_time" timestamp(0)
 );
 --> statement-breakpoint
 ALTER TABLE "_prisma_migrations" DISABLE ROW LEVEL SECURITY;--> statement-breakpoint
