@@ -1,12 +1,10 @@
 import {
   getRandomProblem,
   verifySubmission,
-  getUserInfo,
+  linkCfHandle,
 } from "../codeforces_api";
 import express from "express";
-import { db } from "../drizzle/db"
-import { users } from "../drizzle/schema" 
-import { eq } from "drizzle-orm"
+import { users } from "../drizzle/schema";
 
 export async function startVerificationController(
   req: express.Request,
@@ -45,18 +43,11 @@ export async function checkVerificationController(
     const isVerified = await verifySubmission(handle, contestId, index);
 
     if (isVerified) {
-      const userInfo = await getUserInfo(handle);
-      const updatedUser = await db
-        .update(users)
-        .set({
-          cfHandle: handle,
-          cfRating: userInfo.rating,
-        })
-        .where(eq(users.id, authenticatedUser.id))
+      const verifiedUser = await linkCfHandle(handle, authenticatedUser.id);
       res.status(200).json({
         success: true,
         message: "Account verified.",
-        data: updatedUser,
+        data: verifiedUser,
       });
     } else {
       res.status(400).json({
