@@ -118,7 +118,7 @@ app.use("/account", accountRoutes);
 app.use("/leaderboard", leaderboardRoutes);
 app.use("/profile", profileRoutes);
 app.use("/contest", contestRoutes);
-const PORT = parseInt(process.env.PORT || "5000", 10);
+const PORT = parseInt(process.env.BACKEND_PORT || "5000", 10);
 app.listen(PORT, "0.0.0.0", () =>
   console.log(`Server running on port ${PORT}`)
 );
