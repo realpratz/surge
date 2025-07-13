@@ -6,9 +6,7 @@ import {
 } from "../controllers/account";
 import { validateStartVerificationRequest } from "../middlewares/account";
 import { requireAuth } from "../middlewares/auth";
-import {
-  RatingChange,
-} from "../types/codeforces";
+import { RatingChange } from "../types/codeforces";
 import { db } from "../drizzle/db";
 import {
   contests,
@@ -17,7 +15,7 @@ import {
   submissions,
   problems,
 } from "../drizzle/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 
 const router = express.Router();
 
@@ -58,6 +56,7 @@ router.get("/:handle/ratings", async (req: Request, res: Response) => {
         newRating: userContests.newRating,
       })
       .from(userContests)
+      .orderBy(contests.startTime)
       .innerJoin(contests, eq(userContests.contestId, contests.externalId))
       .where(eq(userContests.userId, user.id));
 
@@ -163,7 +162,9 @@ router.get("/:handle/solved", async (req: Request, res: Response) => {
       .from(submissions)
       .orderBy(problems.id, submissions.submittedAt)
       .innerJoin(problems, eq(submissions.problemId, problems.id))
-      .where(eq(submissions.verdict, "AC"));
+      .where(
+        and(eq(submissions.verdict, "AC"), eq(submissions.userId, user.id))
+      );
 
     res.send(
       solvedProlems.map((problem) => ({
