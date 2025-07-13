@@ -6,7 +6,7 @@ async function main() {
 	await client.connect();
 
 	try {
-		await migrate(db, { migrationsFolder: resolve(__dirname, './drizzle') });
+		await migrate(db, { migrationsFolder: resolve(__dirname, '../drizzle') });
 		console.log("Migrations run successfully!")
 	} catch (err) {
 		console.error("Failed to run migrations :", err);
