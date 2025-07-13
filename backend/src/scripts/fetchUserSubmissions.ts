@@ -34,6 +34,10 @@ async function refreshProblemKeysCache() {
   });
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function fetchSubmissions(handle: string, userId: string) {
   const res = await fetch(
     `https://codeforces.com/api/user.status?handle=${handle}`
@@ -122,11 +126,12 @@ async function fetchSubmissions(handle: string, userId: string) {
       .insert(submissions)
       .values(userSubmissions)
       .onConflictDoNothing();
-    console.log("Done!");
+    console.log(`Updated submissions for ${handle}`);
     console.log("Inserted", insertedRows.rowCount, "rows");
   } catch (err) {
     console.error("Error inserting submissions:", err);
   }
+  await sleep(2000); // wait 2 seconds between API calls
 }
 
 async function updateUsers() {
@@ -141,11 +146,14 @@ async function updateUsers() {
     })
     .from(users);
 
-  await Promise.all(
-    userData
-      .filter((data) => data.cfHandle)
-      .map((user) => fetchSubmissions(user.cfHandle!, user.userId))
-  );
+  for (const user of userData) {
+    if (!user.cfHandle) continue;
+    try {
+      await fetchSubmissions(user.cfHandle, user.userId);
+    } catch (err) {
+      console.error(`Failed for ${user.cfHandle}:`, err);
+    }
+  }
 }
 
 updateUsers()
