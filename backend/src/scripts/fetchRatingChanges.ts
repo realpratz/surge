@@ -3,6 +3,10 @@ import { db, client } from "../drizzle/db";
 import { userContests, users } from "../drizzle/schema";
 import { RatingChange } from "../types/codeforces";
 
+function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function fetchRatingChanges(handle: string, userId: string) {
   const res = await fetch(
     `https://codeforces.com/api/user.rating?handle=${handle}`
@@ -29,11 +33,12 @@ async function fetchRatingChanges(handle: string, userId: string) {
       .insert(userContests)
       .values(contests)
       .onConflictDoNothing();
-    console.log("Done!");
+    console.log(`Updated user_contests for ${handle}`);
     console.log("Inserted", insertedRows.rowCount, "rows");
   } catch (err) {
     console.error(err);
   }
+  await sleep(2000); // wait 2 seconds between API calls
 }
 
 async function updateUsers() {
@@ -46,11 +51,14 @@ async function updateUsers() {
     })
     .from(users);
 
-  await Promise.all(
-    userData
-      .filter((data) => data.cfHandle)
-      .map((user) => fetchRatingChanges(user.cfHandle!, user.userId))
-  );
+  for (const user of userData) {
+    if (!user.cfHandle) continue;
+    try {
+      await fetchRatingChanges(user.cfHandle, user.userId);
+    } catch (err) {
+      console.error(`Failed for ${user.cfHandle}:`, err);
+    }
+  }
 }
 
 updateUsers()

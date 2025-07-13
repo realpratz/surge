@@ -103,7 +103,9 @@ export const userContests = pgTable("user_contests", {
   oldRating: integer("old_rating"),
   newRating: integer("new_rating"),
   updateTime: timestamp("update_time", { precision: 0, mode: "string" }),
-});
+}, (table) => [
+  (uniqueIndex("user_contest_unique").on(table.userId, table.contestId)),
+]);
 
 export const potd = pgTable("potd", {
   id: serial("id").primaryKey(),

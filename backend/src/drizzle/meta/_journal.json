@@ -15,6 +15,13 @@
       "when": 1752316992568,
       "tag": "0001_store_cf_data",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752408063840,
+      "tag": "0002_user_contest_unique",
+      "breakpoints": true
     }
   ]
 }
