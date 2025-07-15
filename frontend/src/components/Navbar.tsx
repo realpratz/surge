@@ -163,7 +163,7 @@ export default function Navbar() {
                 swords
               </span>
               <p className="[.active_&]:text-white [.active_&]:drop-shadow-lg">
-                Duel
+                Potd
               </p>
             </Link>
             <Link

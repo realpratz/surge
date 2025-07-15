@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import ProfileHeader from "../components/ProfileHeader";
 import { useAuth } from "../context/AuthContext";
+import POTDStreakHeatmap from "../components/POTDStreakHeatmap";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 export const Route = createFileRoute("/potd")({
   component: RouteComponent,
@@ -74,11 +76,7 @@ export function RouteComponent() {
   };
 
   if (!problem) {
-    return (
-      <div className="flex justify-center items-center h-full">
-        <div className="text-muted">Loading POTD...</div>
-      </div>
-    );
+    return <LoadingIndicator />;
   }
 
   return (
@@ -87,7 +85,7 @@ export function RouteComponent() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-3xl mb-2 font-bold">
-              Problem of <span className="text-highlight-lighter">The Day</span>
+              Problem Of <span className="text-highlight-lighter">The Day</span>
             </h1>
             <div className="text-muted text-sm">
               A daily coding challenge to sharpen your CP skills
@@ -216,6 +214,8 @@ export function RouteComponent() {
           </div>
         </div>
       </div>
+
+      <POTDStreakHeatmap />
     </div>
   );
 }
