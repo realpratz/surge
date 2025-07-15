@@ -3,7 +3,7 @@ import { contests } from "../drizzle/schema";
 import { Contest } from "../types/codeforces";
 
 async function fetchContests() {
-  const res = await fetch("https://codeforces.com/api/contest.list?gym=true");
+  const res = await fetch("https://codeforces.com/api/contest.list");
   const data = await res.json();
 
   if (data.status !== "OK") throw new Error("Failed to fetch contests");

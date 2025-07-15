@@ -1,0 +1,201 @@
+import { Request, Response, NextFunction } from "express";
+import { db } from "../drizzle/db";
+import {
+  potd,
+  problems,
+  potdSolves,
+  submissions,
+  users,
+} from "../drizzle/schema";
+import { getRandomProblem, verifySubmission } from "../codeforces_api";
+import { eq, gte, desc } from "drizzle-orm";
+
+// GET /potd/current
+export async function getCurrentPotd(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+
+    // Try to fetch the scheduled POTD and its problem
+    const scheduled = await db
+      .select({ p: problems })
+      .from(potd)
+      .innerJoin(problems, eq(problems.id, potd.problemId))
+      .where(eq(potd.date, today))
+      .limit(1);
+
+    let problemRow;
+    if (scheduled.length) {
+      problemRow = scheduled[0].p;
+    } else {
+      // Fallback to a random problem
+      problemRow = await getRandomProblem();
+
+      await db.insert(potd).values({
+        date: today,
+        problemId: problemRow.id,
+      });
+    }
+
+    res.json(problemRow);
+  } catch (err) {
+    next(err);
+  }
+}
+
+// POST /potd/schedule
+export async function schedulePotd(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { problemId, date } = req.body;
+
+    // Check if a POTD already exists for this date, including its problem details
+    const existingWithProblem = await db
+      .select({ entry: potd, oldProblem: problems })
+      .from(potd)
+      .innerJoin(problems, eq(problems.id, potd.problemId))
+      .where(eq(potd.date, date))
+      .limit(1);
+
+    let overwritten = false;
+    let result;
+    let oldProblemData;
+
+    if (existingWithProblem.length) {
+      overwritten = true;
+      oldProblemData = existingWithProblem[0].oldProblem;
+      // Update to new problem
+      result = await db
+        .update(potd)
+        .set({ problemId })
+        .where(eq(potd.date, date));
+    } else {
+      // No existing entry, insert new
+      result = await db.insert(potd).values({ problemId, date });
+    }
+
+    // Fetch new problem details for response
+    const [newProblem] = await db
+      .select()
+      .from(problems)
+      .where(eq(problems.id, problemId));
+
+    if (overwritten) {
+      res.json({
+        message: "Overwritten existing POTD",
+        overwritten: {
+          date,
+          oldProblem: oldProblemData,
+          newProblem,
+        },
+        result,
+      });
+    } else {
+      res.json({
+        message: "Scheduled POTD",
+        scheduled: {
+          date,
+          problem: newProblem,
+        },
+        result,
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+
+// GET /potd/schedule
+export async function getScheduledPotd(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const today = new Date().toISOString().split("T")[0];
+    const upcoming = await db
+      .select({ p: potd, pr: problems })
+      .from(potd)
+      .innerJoin(problems, eq(problems.id, potd.problemId))
+      .where(gte(potd.date, today))
+      .orderBy(potd.date);
+
+    res.json(upcoming);
+  } catch (err) {
+    next(err);
+  }
+}
+
+// POST /potd/verify-solve
+export async function verifyPotdSolve(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    // requireAuth middleware ensures req.user exists
+    const userId = (req.user as { id: string }).id;
+    const { contestId, index } = req.body;
+
+    const [dbUser] = await db.select().from(users).where(eq(users.id, userId));
+    if (!dbUser || !dbUser.cfHandle) {
+      throw new Error("CF handle not set");
+    }
+
+    const solved = await verifySubmission(
+      dbUser.cfHandle,
+      contestId,
+      index,
+      "OK"
+    );
+    if (!solved) {
+      res.status(400).json({ message: "Not solved yet" });
+      return;
+    }
+
+    const today = new Date().toISOString().split("T")[0];
+    const [potdRow] = await db.select().from(potd).where(eq(potd.date, today));
+    if (!potdRow) {
+      throw new Error("No POTD scheduled for today");
+    }
+
+    const insert = await db
+      .insert(potdSolves)
+      .values({ potdId: potdRow.id, userId })
+      .onConflictDoNothing({ target: [potdSolves.potdId, potdSolves.userId] });
+
+    res.json({ message: "Solve recorded", insert });
+  } catch (err) {
+    next(err);
+  }
+}
+
+// GET /potd/solved-history
+export async function getSolveHistory(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    // requireAuth middleware ensures req.user exists
+    const userId = (req.user as { id: string }).id;
+
+    const history = await db
+      .select({ solve: potdSolves, problem: problems })
+      .from(potdSolves)
+      .innerJoin(potd, eq(potd.id, potdSolves.potdId))
+      .innerJoin(problems, eq(problems.id, potd.problemId))
+      .where(eq(potdSolves.userId, userId))
+      .orderBy(desc(potdSolves.solvedAt));
+
+    res.json(history);
+  } catch (err) {
+    next(err);
+  }
+}
