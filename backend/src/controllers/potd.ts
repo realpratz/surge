@@ -8,7 +8,7 @@ import {
   users,
 } from "../drizzle/schema";
 import { getRandomProblem, verifySubmission } from "../codeforces_api";
-import { eq, gte, desc } from "drizzle-orm";
+import { eq, gte, desc, and } from "drizzle-orm";
 
 // GET /potd/current
 export async function getCurrentPotd(
@@ -18,29 +18,40 @@ export async function getCurrentPotd(
 ) {
   try {
     const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+    const userId = (req.user as { id: string }).id;
 
     // Try to fetch the scheduled POTD and its problem
     const scheduled = await db
-      .select({ p: problems })
+      .select({ p: problems, pt: potd })
       .from(potd)
       .innerJoin(problems, eq(problems.id, potd.problemId))
       .where(eq(potd.date, today))
       .limit(1);
 
     let problemRow;
+    let potdId;
+
     if (scheduled.length) {
       problemRow = scheduled[0].p;
+      potdId = scheduled[0].pt.id;
     } else {
       // Fallback to a random problem
       problemRow = await getRandomProblem();
-
-      await db.insert(potd).values({
-        date: today,
-        problemId: problemRow.id,
-      });
+      const inserted = await db
+        .insert(potd)
+        .values({ date: today, problemId: problemRow.id })
+        .returning();
+      potdId = inserted[0].id;
     }
 
-    res.json(problemRow);
+    // Check if user has alr solved it
+    const solve = await db
+      .select()
+      .from(potdSolves)
+      .where(and(eq(potdSolves.userId, userId), eq(potdSolves.potdId, potdId)))
+      .limit(1);
+
+    res.json({ problem: problemRow, solved: solve.length > 0 });
   } catch (err) {
     next(err);
   }
@@ -139,7 +150,6 @@ export async function verifyPotdSolve(
   next: NextFunction
 ) {
   try {
-    // requireAuth middleware ensures req.user exists
     const userId = (req.user as { id: string }).id;
     const { contestId, index } = req.body;
 
@@ -165,10 +175,22 @@ export async function verifyPotdSolve(
       throw new Error("No POTD scheduled for today");
     }
 
-    const insert = await db
-      .insert(potdSolves)
-      .values({ potdId: potdRow.id, userId })
-      .onConflictDoNothing({ target: [potdSolves.potdId, potdSolves.userId] });
+    const existingSolve = await db
+      .select()
+      .from(potdSolves)
+      .where(
+        and(eq(potdSolves.potdId, potdRow.id), eq(potdSolves.userId, userId))
+      );
+
+    if (existingSolve.length > 0) {
+      res.json({ message: "Already recorded" });
+      return;
+    }
+
+    const insert = await db.insert(potdSolves).values({
+      potdId: potdRow.id,
+      userId,
+    });
 
     res.json({ message: "Solve recorded", insert });
   } catch (err) {
@@ -176,7 +198,7 @@ export async function verifyPotdSolve(
   }
 }
 
-// GET /potd/solved-history
+// GET /potd/solve-history
 export async function getSolveHistory(
   req: Request,
   res: Response,

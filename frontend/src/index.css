@@ -18,6 +18,7 @@
     "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 
+  --color-highlight-lighter: #919ac8;
   --color-highlight-light: rgba(69, 75, 104, 1);
   --color-highlight-dark: rgba(37, 41, 62, 1);
   --color-dark-background: rgba(15, 17, 26, 1);

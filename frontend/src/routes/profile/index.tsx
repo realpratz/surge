@@ -66,10 +66,13 @@ export function ProfileIndex() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold ">
-                Your <span className="text-gray-400">Profile</span>
+                Your <span className="text-highlight-lighter">Profile</span>
               </h1>
             </div>
-            <ProfileHeader cfRating={profile?.cfRating} className="hidden md:flex" />
+            <ProfileHeader
+              cfRating={profile?.cfRating}
+              className="hidden md:flex"
+            />
           </div>
         </div>
 
@@ -132,10 +135,15 @@ export function ProfileIndex() {
                         className={`font-bold text-xl ${getRatingColor(cfRatingNumber)} group-hover:scale-105 transition-transform duration-300 inline-block animate-pulse`}
                       >
                         {profile ? (
-                          <span>{`${profile?.cfRating}`} <span className="md:hidden">({getRatingLevel(profile.cfRating)})</span></span>
-                        ) :
+                          <span>
+                            {`${profile?.cfRating}`}{" "}
+                            <span className="md:hidden">
+                              ({getRatingLevel(profile.cfRating)})
+                            </span>
+                          </span>
+                        ) : (
                           "Unrated"
-                        }
+                        )}
                       </div>
                     </div>
                   </div>
@@ -159,5 +167,3 @@ export function ProfileIndex() {
     </div>
   );
 }
-
-

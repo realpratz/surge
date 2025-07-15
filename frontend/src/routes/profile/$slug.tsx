@@ -1,7 +1,7 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getRatingColor, getRatingLevel } from "../../utils";
+import { getRatingColor, getRatingLevel, toTitleCase } from "../../utils";
 import ProfileAvatar from "../../components/ProfileAvatar";
 import ProfileHeader from "../../components/ProfileHeader";
 import RatingGraph from "../../components/RatingGraph";
@@ -27,7 +27,7 @@ function RouteComponent() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const {slug} = useParams({ from: '/profile/$slug' });
+  const { slug } = useParams({ from: "/profile/$slug" });
 
   useEffect(() => {
     axios
@@ -68,10 +68,15 @@ function RouteComponent() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold ">
-                Your <span className="text-gray-400">Profile</span>
+                {toTitleCase(profile?.name || undefined)}
+                {"'s "}
+                <span className="text-highlight-lighter">Profile</span>
               </h1>
             </div>
-            <ProfileHeader cfRating={profile?.cfRating} className="hidden md:flex" />
+            <ProfileHeader
+              cfRating={profile?.cfRating}
+              className="hidden md:flex"
+            />
           </div>
         </div>
 
@@ -134,11 +139,15 @@ function RouteComponent() {
                         className={`font-bold text-xl ${getRatingColor(cfRatingNumber)} group-hover:scale-105 transition-transform duration-300 inline-block animate-pulse`}
                       >
                         {profile ? (
-                          <span>{`${profile?.cfRating}`} <span className="md:hidden">({getRatingLevel(profile.cfRating)})</span></span>
-                          ) 
-                          : 
+                          <span>
+                            {`${profile?.cfRating}`}{" "}
+                            <span className="md:hidden">
+                              ({getRatingLevel(profile.cfRating)})
+                            </span>
+                          </span>
+                        ) : (
                           "Unrated"
-                        }
+                        )}
                       </div>
                     </div>
                   </div>
