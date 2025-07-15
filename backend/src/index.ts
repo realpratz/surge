@@ -9,11 +9,12 @@ import accountRoutes from "./routes/account";
 import leaderboardRoutes from "./routes/leaderboard";
 import profileRoutes from "./routes/profile";
 import contestRoutes from "./routes/contest";
+import potdRoutes from "./routes/potd";
 import { RedisStore } from "connect-redis";
 import { createClient } from "redis";
 import { client, db } from "./drizzle/db";
 import { users } from "./drizzle/schema";
-import { eq } from "drizzle-orm"
+import { eq } from "drizzle-orm";
 
 dotenv.config();
 const app = express();
@@ -34,9 +35,10 @@ const redisClient = createClient({
 
 redisClient.connect().catch(console.error);
 (async () => {
-  await client.connect()
+  await client
+    .connect()
     .then(() => console.log("Connected to DB successfully"))
-    .catch(error => {
+    .catch((error) => {
       console.error("Error connecting to db: ", error);
     });
 })();
@@ -72,13 +74,13 @@ passport.use(
         const pfpUrl = profile.photos![0].value;
         const user = await db
           .insert(users)
-          .values({ email, name, pfpUrl})
+          .values({ email, name, pfpUrl })
           .onConflictDoUpdate({
             target: users.email,
-            set: {name, pfpUrl},
+            set: { name, pfpUrl },
           })
           .returning()
-          .then(rows => rows[0]);
+          .then((rows) => rows[0]);
         return done(null, user);
       } catch (error) {
         console.error("Error during Google authentication:", error);
@@ -94,14 +96,14 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (userId: string, done) => {
-  console.log(userId)
+  console.log(userId);
   try {
     const user = await db
       .select()
       .from(users)
       .where(eq(users.id, userId))
       .limit(1)
-      .then(rows => rows[0]);
+      .then((rows) => rows[0]);
     done(null, user);
   } catch (error) {
     console.error("Error deserializing user:", error);
@@ -118,6 +120,7 @@ app.use("/account", accountRoutes);
 app.use("/leaderboard", leaderboardRoutes);
 app.use("/profile", profileRoutes);
 app.use("/contest", contestRoutes);
+app.use("/potd", potdRoutes);
 const PORT = parseInt(process.env.BACKEND_PORT || "5000", 10);
 app.listen(PORT, "0.0.0.0", () =>
   console.log(`Server running on port ${PORT}`)

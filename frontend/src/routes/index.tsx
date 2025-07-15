@@ -22,7 +22,7 @@ function RouteComponent() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-lg">
-              Welcome <span className="text-gray-400">back,</span>
+              Welcome <span className="text-highlight-lighter">back,</span>
             </h1>
             <h1 className="text-3xl ">{toTitleCase(user?.name, true)}</h1>
           </div>
