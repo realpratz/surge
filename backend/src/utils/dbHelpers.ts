@@ -85,7 +85,8 @@ export async function addCodeforcesProblems(fetchedProblems: Problem[]) {
       problemKeysMap[problemKey] = insertedProblem.id;
     });
   } catch (err) {
-    throw new Error(`Error inserting new problems: ${err}`);
+    console.error(`Error inserting new problems: ${err}`);
+    return;
   }
 }
 
@@ -140,7 +141,8 @@ export async function addCodeforcesSubmissions(
     console.log(`Updated submissions for ${handle}`);
     console.log("Inserted", insertedRows.rowCount, "rows");
   } catch (err) {
-    throw new Error(`Error inserting submissions: ${err}`);
+    console.error(`Error inserting submissions: ${err}`);
+    return;
   }
 }
 
@@ -174,7 +176,7 @@ export async function updateUserRatings(
     console.log("Inserted", insertedRows.rowCount, "rows");
   } catch (err) {
     console.error(err);
-    throw err;
+    return;
   }
 }
 
@@ -205,6 +207,7 @@ export async function updateProblems(fetchedProblems: Problem[]) {
     console.log("Inserted", insertedRows.rowCount, "rows");
   } catch (err) {
     console.error(err);
+    return;
   }
 }
 
@@ -234,6 +237,7 @@ export async function updateContests(fetchedContests: Contest[]) {
     console.log("Updated Contests!");
     console.log(`Added ${newContests.rowCount} contests`);
   } catch (err) {
-    console.log("Error inserting contests:", err);
+    console.error("Error inserting contests:", err);
+    return;
   }
 }
