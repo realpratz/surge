@@ -149,7 +149,7 @@ router.get("/:handle/solved", async (req: Request, res: Response) => {
       return;
     }
 
-    const solvedProlems = await db
+    const solvedProblems = await db
       .selectDistinctOn([problems.id], {
         name: problems.name,
         rating: problems.rating ?? problems.points ?? null,
@@ -167,7 +167,7 @@ router.get("/:handle/solved", async (req: Request, res: Response) => {
       );
 
     res.send(
-      solvedProlems.map((problem) => ({
+      solvedProblems.map((problem) => ({
         ...problem,
         dateSolved: new Date(problem.dateSolved!),
       }))

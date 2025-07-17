@@ -58,13 +58,14 @@ export async function linkCfHandle(cfHandle: string, userId: string) {
     const fetchedUser = await res.json();
     if (fetchedUser.status === "OK") {
       const userData = fetchedUser.result[0] as User;
-      const linkedUser = await db
+      const [linkedUser] = await db
         .update(users)
         .set({
           cfHandle: cfHandle,
           cfRating: userData.rating,
         })
-        .where(eq(users.id, userId));
+        .where(eq(users.id, userId))
+        .returning();
 
       return linkedUser;
     } else {

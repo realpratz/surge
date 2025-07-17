@@ -15,6 +15,13 @@ import { createClient } from "redis";
 import { client, db } from "./drizzle/db";
 import { users } from "./drizzle/schema";
 import { eq } from "drizzle-orm";
+import { startCronJobs } from "./cron";
+import {
+  fetchContests,
+  fetchProblems,
+  fetchSubmissions,
+  fetchRatingChanges,
+} from "./controllers/codeforces";
 
 dotenv.config();
 const app = express();
@@ -122,6 +129,11 @@ app.use("/profile", profileRoutes);
 app.use("/contest", contestRoutes);
 app.use("/potd", potdRoutes);
 const PORT = parseInt(process.env.BACKEND_PORT || "5000", 10);
-app.listen(PORT, "0.0.0.0", () =>
-  console.log(`Server running on port ${PORT}`)
-);
+app.listen(PORT, "0.0.0.0", async () => {
+  console.log(`Server running on port ${PORT}`);
+  await fetchContests(1);
+  await fetchProblems(1);
+  await fetchSubmissions();
+  await fetchRatingChanges();
+  startCronJobs();
+});
