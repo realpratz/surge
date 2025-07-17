@@ -44,9 +44,7 @@ async function refreshProblemKeysCache() {
 }
 
 //Helper function to add codeforces problems to database
-export async function addCodeforcesProblems(
-  fetchedProblems: Problem[],
-) {
+export async function addCodeforcesProblems(fetchedProblems: Problem[]) {
   const newProblems: (typeof problems.$inferInsert)[] = [];
   refreshProblemKeysCache();
 
@@ -64,7 +62,10 @@ export async function addCodeforcesProblems(
     }
   });
 
-  if (newProblems.length === 0) return;
+  if (newProblems.length === 0) {
+    console.log("No new problems found!");
+    return;
+  }
 
   try {
     const insertedProblems = await db
@@ -84,7 +85,8 @@ export async function addCodeforcesProblems(
       problemKeysMap[problemKey] = insertedProblem.id;
     });
   } catch (err) {
-    throw new Error(`Error inserting new problems: ${err}`);
+    console.error(`Error inserting new problems: ${err}`);
+    return;
   }
 }
 
@@ -92,9 +94,9 @@ export async function addCodeforcesProblems(
 export async function addCodeforcesSubmissions(
   fetchedSubmissions: Submission[],
   userId: string,
-  handle: string,
+  handle: string
 ) {
-  console.log(`Trying to add submissions for ${handle}`)
+  console.log(`Trying to add submissions for ${handle}`);
   refreshProblemKeysCache();
   const userSubmissions = fetchedSubmissions
     .filter((fetchedSubmission) => fetchedSubmission.contestId ?? null)
@@ -125,6 +127,11 @@ export async function addCodeforcesSubmissions(
       } as typeof submissions.$inferInsert;
     });
 
+  if (userSubmissions.length === 0) {
+    console.log(`No submissions found for ${handle}`);
+    return;
+  }
+
   try {
     console.log("Inserting...");
     const insertedRows = await db
@@ -134,7 +141,8 @@ export async function addCodeforcesSubmissions(
     console.log(`Updated submissions for ${handle}`);
     console.log("Inserted", insertedRows.rowCount, "rows");
   } catch (err) {
-    throw new Error(`Error inserting submissions: ${err}`);
+    console.error(`Error inserting submissions: ${err}`);
+    return;
   }
 }
 
@@ -154,6 +162,11 @@ export async function updateUserRatings(
     ).toISOString(),
   }));
 
+  if (contests.length === 0) {
+    console.log(`No contests found for ${handle}`);
+    return;
+  }
+
   try {
     const insertedRows = await db
       .insert(userContests)
@@ -163,7 +176,7 @@ export async function updateUserRatings(
     console.log("Inserted", insertedRows.rowCount, "rows");
   } catch (err) {
     console.error(err);
-    throw err;
+    return;
   }
 }
 
@@ -179,6 +192,11 @@ export async function updateProblems(fetchedProblems: Problem[]) {
       tags: problem.tags,
     }));
 
+  if (formattedProblems.length === 0) {
+    console.log("No problems found while updating problems");
+    return;
+  }
+
   try {
     console.log("Inserting...");
     const insertedRows = await db
@@ -189,6 +207,7 @@ export async function updateProblems(fetchedProblems: Problem[]) {
     console.log("Inserted", insertedRows.rowCount, "rows");
   } catch (err) {
     console.error(err);
+    return;
   }
 }
 
@@ -205,14 +224,20 @@ export async function updateContests(fetchedContests: Contest[]) {
     })
   );
 
+  if (formattedContests.length === 0) {
+    console.log("No contests fonud while updating contests");
+    return;
+  }
+
   try {
     const newContests = await db
       .insert(contests)
       .values(formattedContests)
-      .onConflictDoNothing()
+      .onConflictDoNothing();
     console.log("Updated Contests!");
     console.log(`Added ${newContests.rowCount} contests`);
   } catch (err) {
-    console.log("Error inserting contests:", err);
+    console.error("Error inserting contests:", err);
+    return;
   }
 }
