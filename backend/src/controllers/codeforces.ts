@@ -110,7 +110,7 @@ export async function fetchUserSubmissions(
     },
     {
       priority: priority,
-      jobId: `${cfHandle}SubmissionsRefresh`,
+      jobId: `${cfHandle}-SubmissionsRefresh`,
     }
   );
   console.log(`Enqueued job for ${cfHandle}`);

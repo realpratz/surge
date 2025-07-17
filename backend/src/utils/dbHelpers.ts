@@ -44,9 +44,7 @@ async function refreshProblemKeysCache() {
 }
 
 //Helper function to add codeforces problems to database
-export async function addCodeforcesProblems(
-  fetchedProblems: Problem[],
-) {
+export async function addCodeforcesProblems(fetchedProblems: Problem[]) {
   const newProblems: (typeof problems.$inferInsert)[] = [];
   refreshProblemKeysCache();
 
@@ -64,7 +62,10 @@ export async function addCodeforcesProblems(
     }
   });
 
-  if (newProblems.length === 0) return;
+  if (newProblems.length === 0) {
+    console.log("No new problems found!");
+    return;
+  }
 
   try {
     const insertedProblems = await db
@@ -92,9 +93,9 @@ export async function addCodeforcesProblems(
 export async function addCodeforcesSubmissions(
   fetchedSubmissions: Submission[],
   userId: string,
-  handle: string,
+  handle: string
 ) {
-  console.log(`Trying to add submissions for ${handle}`)
+  console.log(`Trying to add submissions for ${handle}`);
   refreshProblemKeysCache();
   const userSubmissions = fetchedSubmissions
     .filter((fetchedSubmission) => fetchedSubmission.contestId ?? null)
@@ -125,6 +126,11 @@ export async function addCodeforcesSubmissions(
       } as typeof submissions.$inferInsert;
     });
 
+  if (userSubmissions.length === 0) {
+    console.log(`No submissions found for ${handle}`);
+    return;
+  }
+
   try {
     console.log("Inserting...");
     const insertedRows = await db
@@ -154,6 +160,11 @@ export async function updateUserRatings(
     ).toISOString(),
   }));
 
+  if (contests.length === 0) {
+    console.log(`No contests found for ${handle}`);
+    return;
+  }
+
   try {
     const insertedRows = await db
       .insert(userContests)
@@ -178,6 +189,11 @@ export async function updateProblems(fetchedProblems: Problem[]) {
       points: problem.points ?? null,
       tags: problem.tags,
     }));
+
+  if (formattedProblems.length === 0) {
+    console.log("No problems found while updating problems");
+    return;
+  }
 
   try {
     console.log("Inserting...");
@@ -205,11 +221,16 @@ export async function updateContests(fetchedContests: Contest[]) {
     })
   );
 
+  if (formattedContests.length === 0) {
+    console.log("No contests fonud while updating contests");
+    return;
+  }
+
   try {
     const newContests = await db
       .insert(contests)
       .values(formattedContests)
-      .onConflictDoNothing()
+      .onConflictDoNothing();
     console.log("Updated Contests!");
     console.log(`Added ${newContests.rowCount} contests`);
   } catch (err) {
