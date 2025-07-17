@@ -5,6 +5,10 @@ import {
 } from "../codeforces_api";
 import express from "express";
 import { users } from "../drizzle/schema";
+import {
+  fetchUserSubmissions,
+  fetchUserRatingChanges,
+} from "../controllers/codeforces";
 
 export async function startVerificationController(
   req: express.Request,
@@ -44,6 +48,15 @@ export async function checkVerificationController(
 
     if (isVerified) {
       const verifiedUser = await linkCfHandle(handle, authenticatedUser.id);
+      if (verifiedUser.cfHandle && verifiedUser.id) {
+        //Refresh user data with priority 1! (Lower is more urgent)
+        await fetchUserSubmissions(verifiedUser.cfHandle, verifiedUser.id, 1);
+        await fetchUserRatingChanges(
+          verifiedUser.cfHandle,
+          verifiedUser.id,
+          1
+        );
+      }
       res.status(200).json({
         success: true,
         message: "Account verified.",
