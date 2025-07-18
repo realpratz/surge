@@ -43,7 +43,7 @@ export default function RecentActivity({ handle }: { handle: string }) {
           return (
             <a
               key={a.contestId}
-              href={`https://codeforces.com/contest/${a.contestId}/standings`}
+              href={`${import.meta.env.VITE_CLIENT_URL}/leaderboard/${a.contestId}`}
               target="_blank"
               rel="noopener noreferrer"
               className="min-w-[280px] rounded-lg flex shadow-md overflow-hidden hover:scale-[1.015] transition-transform duration-150"
