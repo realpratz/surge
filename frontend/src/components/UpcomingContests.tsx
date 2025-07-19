@@ -17,7 +17,7 @@ const PLATFORM_LOGOS: Record<string, string> = {
 };
 
 const formatDate = (iso: string) =>
-  new Date(iso).toLocaleString("en-IN", {
+  new Date(iso.endsWith("Z") ? iso : iso + "Z").toLocaleString("en-IN", {
     weekday: "short",
     month: "short",
     day: "numeric",
