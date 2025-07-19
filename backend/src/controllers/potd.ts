@@ -74,10 +74,11 @@ export async function schedulePotd(
     // If caller provided contestId+problemIndex instead of problemId, resolve it
     if (!problemId) {
       if (!contestId || !problemIndex) {
-        return res.status(400).json({
+        res.status(400).json({
           message:
             "Must provide either problemId or (contestId + problemIndex)",
         });
+        return;
       }
       const [problem] = await db
         .select({ id: problems.id })
@@ -91,9 +92,10 @@ export async function schedulePotd(
         .limit(1);
 
       if (!problem) {
-        return res.status(404).json({
+        res.status(404).json({
           message: `No problem found for contestId=${contestId} index='${problemIndex}'`,
         });
+        return;
       }
       problemId = problem.id;
     }

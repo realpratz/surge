@@ -215,7 +215,7 @@ export function RouteComponent() {
         </div>
       </div>
 
-      <POTDStreakHeatmap />
+      <POTDStreakHeatmap key={solved ? "solved" : "unsolved"} />
     </div>
   );
 }
