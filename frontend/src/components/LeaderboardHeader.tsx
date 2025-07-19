@@ -60,7 +60,7 @@ export default function LeaderboardHeader({
 					{/* Search Input and Results */}
 					<div
 						ref={searchRef}
-						className="relative z-25 flex mr-auto w-full md:w-fit flex-col ref={searchRef} "
+						className="relative z-25 flex mr-auto w-full md:w-fit flex-col"
 					>
 						<input
 							type="text"
