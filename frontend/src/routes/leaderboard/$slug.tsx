@@ -77,7 +77,7 @@ function RouteComponent() {
 				<div className={`flex justify-around items-end h-50 w-150 rounded-xl`}>
 					{filteredLeaderboard[1] && (
 						<div
-							className={`relative w-full h-50 w-full flex flex-col justify-evenly pt-8 rounded-l-xl ${filteredLeaderboard[1].id === user?.id ? "bg-accent-purple text-highlight-darker" : "bg-[#1B1E30]"}`}
+							className={`relative w-full h-50 flex flex-col justify-evenly pt-8 rounded-l-xl ${filteredLeaderboard[1].id === user?.id ? "bg-accent-purple text-highlight-darker" : "bg-[#1B1E30]"}`}
 						>
 							<div className="absolute -top-13 w-full flex justify-center items-center">
 								<img
