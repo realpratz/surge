@@ -36,7 +36,7 @@ export async function getCurrentPotd(
       potdId = scheduled[0].pt.id;
     } else {
       // Fallback to a random problem
-      problemRow = await getRandomProblem();
+      problemRow = await getRandomProblem(800, 2000);
       const inserted = await db
         .insert(potd)
         .values({ date: today, problemId: problemRow.id })
@@ -74,12 +74,10 @@ export async function schedulePotd(
     // If caller provided contestId+problemIndex instead of problemId, resolve it
     if (!problemId) {
       if (!contestId || !problemIndex) {
-        return res
-          .status(400)
-          .json({
-            message:
-              "Must provide either problemId or (contestId + problemIndex)",
-          });
+        return res.status(400).json({
+          message:
+            "Must provide either problemId or (contestId + problemIndex)",
+        });
       }
       const [problem] = await db
         .select({ id: problems.id })

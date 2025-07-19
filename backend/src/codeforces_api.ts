@@ -3,15 +3,30 @@ import { problems, users } from "./drizzle/schema";
 import { eq, sql } from "drizzle-orm";
 import { User } from "./types/codeforces";
 
-export async function getRandomProblem(): Promise<
-  typeof problems.$inferSelect
-> {
-  const randomProblem = await db
-    .select()
-    .from(problems)
+export async function getRandomProblem(
+  minRating?: number,
+  maxRating?: number
+): Promise<typeof problems.$inferSelect> {
+  let query = db.select().from(problems);
+
+  if (minRating !== undefined && maxRating !== undefined) {
+    query = query.where(
+      sql`${problems.rating} BETWEEN ${minRating} AND ${maxRating}`
+    ) as typeof query;
+  } else if (minRating !== undefined) {
+    query = query.where(
+      sql`${problems.rating} >= ${minRating}`
+    ) as typeof query;
+  } else if (maxRating !== undefined) {
+    query = query.where(
+      sql`${problems.rating} <= ${maxRating}`
+    ) as typeof query;
+  }
+
+  const randomProblem = await query
     .orderBy(sql`RANDOM()`)
     .limit(1)
-    .then((problems) => problems[0]);
+    .then((results) => results[0]);
 
   if (!randomProblem) {
     throw new Error("Problem table not initialized.");
