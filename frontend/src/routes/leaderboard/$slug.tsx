@@ -39,7 +39,7 @@ function RouteComponent() {
 				setLoading(false);
 				setError(true);
 			});
-	}, []);
+	}, [slug]);
 
 	const filteredLeaderboard = useMemo(() => {
 		return leaderboardData
