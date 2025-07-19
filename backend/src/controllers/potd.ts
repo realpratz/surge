@@ -66,6 +66,12 @@ export async function schedulePotd(
   try {
     const { problemId, date } = req.body;
 
+    const todayStr = new Date().toISOString().split("T")[0];
+    if (date <= todayStr) {
+      res.status(400).json({ message: "Date must be after today" });
+      return;
+    }
+
     // Check if a POTD already exists for this date, including its problem details
     const existingWithProblem = await db
       .select({ entry: potd, oldProblem: problems })
