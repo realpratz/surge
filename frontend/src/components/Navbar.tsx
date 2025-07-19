@@ -51,7 +51,7 @@ export default function Navbar() {
             }}
           >
             <span className="material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
-              swords
+              mode_heat
             </span>
           </Link>
           <Link
@@ -160,7 +160,7 @@ export default function Navbar() {
               onClick={toggleMobileMenu}
             >
               <span className="!text-3xl material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
-                swords
+                mode_heat
               </span>
               <p className="[.active_&]:text-white [.active_&]:drop-shadow-lg">
                 Potd

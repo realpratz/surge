@@ -36,7 +36,7 @@ export async function getCurrentPotd(
       potdId = scheduled[0].pt.id;
     } else {
       // Fallback to a random problem
-      problemRow = await getRandomProblem();
+      problemRow = await getRandomProblem(800, 2000);
       const inserted = await db
         .insert(potd)
         .values({ date: today, problemId: problemRow.id })
@@ -64,7 +64,52 @@ export async function schedulePotd(
   next: NextFunction
 ) {
   try {
-    const { problemId, date } = req.body;
+    let { problemId, contestId, problemIndex, date } = req.body as {
+      problemId?: number;
+      contestId?: number;
+      problemIndex?: string;
+      date: string;
+    };
+
+    // If caller provided contestId+problemIndex instead of problemId, resolve it
+    if (!problemId) {
+      if (!contestId || !problemIndex) {
+        res.status(400).json({
+          message:
+            "Must provide either problemId or (contestId + problemIndex)",
+        });
+        return;
+      }
+      const [problem] = await db
+        .select({ id: problems.id })
+        .from(problems)
+        .where(
+          and(
+            eq(problems.contestId, contestId),
+            eq(problems.index, problemIndex)
+          )
+        )
+        .limit(1);
+
+      if (!problem) {
+        res.status(404).json({
+          message: `No problem found for contestId=${contestId} index='${problemIndex}'`,
+        });
+        return;
+      }
+      problemId = problem.id;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // normalize to midnight
+
+    const inputDate = new Date(date);
+    inputDate.setHours(0, 0, 0, 0); // normalize to midnight too
+
+    if (inputDate <= today) {
+      res.status(400).json({ message: "Date must be after today" });
+      return;
+    }
 
     // Check if a POTD already exists for this date, including its problem details
     const existingWithProblem = await db
