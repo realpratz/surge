@@ -1,6 +1,6 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getRatingLevel } from "../../utils";
 import LoadingIndicator from "../../components/LoadingIndicator";
 import { Link } from "@tanstack/react-router";
@@ -10,24 +10,28 @@ import LeaderboardHeader from "../../components/LeaderboardHeader";
 
 export const Route = createFileRoute("/leaderboard/$slug")({
 	component: RouteComponent,
+	validateSearch: (search: Record<string, unknown>) => {
+		return {
+			batch: typeof search.batch === "string" ? search.batch : undefined,
+			level: typeof search.level === "string" ? search.level : undefined,
+		};
+	},
 });
 
-
 function RouteComponent() {
-	const [leaderboard, setLeaderboard] = useState<Leaderboard[]>([]);
+	const [leaderboardData, setLeaderboardData] = useState<Leaderboard[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
-	const [batch, setBatch] = useState<boolean>(false);
-	const [level, setLevel] = useState<boolean>(false);
 	const { user } = useAuth();
 	const { slug } = useParams({ from: "/leaderboard/$slug" });
+
+	const { batch, level } = Route.useSearch();
 
 	useEffect(() => {
 		axios
 			.get(`${import.meta.env.VITE_API_BASE_URL}/leaderboard/${slug}`)
 			.then((res) => {
-				setLeaderboard(res.data);
-				console.log(res.data);
+				setLeaderboardData(res.data);
 				setLoading(false);
 			})
 			.catch((err) => {
@@ -37,7 +41,18 @@ function RouteComponent() {
 			});
 	}, []);
 
-	const batches = [...new Set(leaderboard.map((user) => user.batch))];
+	const filteredLeaderboard = useMemo(() => {
+		return leaderboardData
+			.filter((entry: Leaderboard) => !batch || entry.batch === batch)
+			.filter(
+				(entry: Leaderboard) =>
+					!level || getRatingLevel(entry.cfRating) === level
+			);
+	}, [batch, level, leaderboardData]);
+
+	const batches = [
+		...new Set<string>(leaderboardData.map((user) => user.batch)),
+	].filter((batch) => (batch ? true : false));
 
 	if (loading) return <LoadingIndicator />;
 
@@ -53,23 +68,20 @@ function RouteComponent() {
 	return (
 		<div className="w-full max-w-7xl m-auto">
 			<LeaderboardHeader
-				batch={batch}
-				setBatch={setBatch}
-				level={level}
-				setLevel={setLevel}
 				batches={batches}
-				leaderboard={leaderboard}
+				leaderboard={filteredLeaderboard}
+				path={"/leaderboard/$slug"}
 			/>
 			{/* leaderboard for top 3 */}
 			<div className="h-80 mx-auto flex justify-center items-end mb-15 mt-15">
 				<div className={`flex justify-around items-end h-50 w-150 rounded-xl`}>
-					{leaderboard[1] ? (
+					{filteredLeaderboard[1] && (
 						<div
-							className={`relative w-1/3 h-50 flex flex-col justify-evenly pt-8 rounded-l-xl ${leaderboard[1].id === user?.id ? "bg-accent-purple text-highlight-darker" : "bg-[#1B1E30]"}`}
+							className={`relative w-full h-50 w-full flex flex-col justify-evenly pt-8 rounded-l-xl ${filteredLeaderboard[1].id === user?.id ? "bg-accent-purple text-highlight-darker" : "bg-[#1B1E30]"}`}
 						>
 							<div className="absolute -top-13 w-full flex justify-center items-center">
 								<img
-									src={leaderboard[1].pfpUrl}
+									src={filteredLeaderboard[1].pfpUrl}
 									alt="PFP"
 									className="h-18 w-18 border-[#5FCABB] border-4 rounded-full "
 								/>
@@ -82,34 +94,30 @@ function RouteComponent() {
 							<div className="text-sm md:text-md flex text-center justify-center items-start mx-1 md:mx-4 max-h-18 md:max-h-12">
 								<Link
 									to="/profile/$slug"
-									params={{ slug: leaderboard[1].cfHandle }}
+									params={{ slug: filteredLeaderboard[1].cfHandle }}
 									className="hover:scale-105 transition-all duration-200"
 								>
-									{leaderboard[1].name}
+									{filteredLeaderboard[1].name}
 								</Link>
 							</div>
 							<div className="text-xs md:text-sm flex justify-center items-center">
-								{leaderboard[1].batch || "N/A"}
+								{filteredLeaderboard[1].batch || "N/A"}
 							</div>
 							<div className="text-xs md:text-sm flex justify-center items-center">
-								{leaderboard[1].rank || "-"}
+								{filteredLeaderboard[1].rank || "-"}
 							</div>
 							<div className="text-xs md:text-sm flex justify-center items-center">
-								{getRatingLevel(leaderboard[1].cfRating)}
+								{getRatingLevel(filteredLeaderboard[1].cfRating)}
 							</div>
 						</div>
-					) : (
-						<div
-							className={`relative w-1/3 h-50 flex flex-col justify-evenly pt-8 rounded-l-xl bg-[#1B1E30]`}
-						></div>
 					)}
-					{leaderboard[0] ? (
+					{filteredLeaderboard[0] && (
 						<div
-							className={`relative w-1/3 h-65 bg-[#25293E] flex flex-col rounded-t-3xl justify-evenly pt-10  ${leaderboard[0].id === user?.id ? "bg-accent-purple text-highlight-darker" : "bg-[#25293E]"}`}
+							className={`relative w-full h-65 bg-[#25293E] flex flex-col rounded-t-3xl justify-evenly pt-10  ${filteredLeaderboard[0].id === user?.id ? "bg-accent-purple text-highlight-darker" : "bg-[#25293E]"}`}
 						>
 							<div className="absolute -top-17 w-full flex justify-center items-center">
 								<img
-									src={leaderboard[0].pfpUrl}
+									src={filteredLeaderboard[0].pfpUrl}
 									alt="PFP"
 									className="h-24 w-24 border-[#DCBE66] border-4 rounded-full "
 								/>
@@ -122,37 +130,33 @@ function RouteComponent() {
 							<div className="text-sm md:text-md flex text-center justify-center items-start mx-1 md:mx-4 max-h-18 md:max-h-12">
 								<Link
 									to="/profile/$slug"
-									params={{ slug: leaderboard[0].cfHandle }}
+									params={{ slug: filteredLeaderboard[0].cfHandle }}
 									className="hover:scale-105 transition-all duration-200"
 								>
-									{leaderboard[0].name}
+									{filteredLeaderboard[0].name}
 								</Link>
 							</div>
 							<div className="text-xs md:text-sm flex justify-center items-center">
-								{leaderboard[0].batch || "N/A"}
+								{filteredLeaderboard[0].batch || "N/A"}
 							</div>
 							<div className="text-xs md:text-sm flex justify-center items-center">
-								{leaderboard[0].rank || "-"}
+								{filteredLeaderboard[0].rank || "-"}
 							</div>
 							<div className="text-xs md:text-sm flex justify-center items-center">
-								{getRatingLevel(leaderboard[0].cfRating)}
+								{getRatingLevel(filteredLeaderboard[0].cfRating)}
 							</div>
 							<div className="text-LG font-bold flex justify-center items-center">
 								WINNER
 							</div>
 						</div>
-					) : (
-						<div
-							className={`relative w-1/3 h-65 bg-[#25293E] flex flex-col rounded-t-3xl justify-evenly pt-10 bg-[#25293E]`}
-						></div>
 					)}
-					{leaderboard[2] ? (
+					{filteredLeaderboard[2] && (
 						<div
-							className={`relative w-1/3 h-50 flex flex-col justify-evenly pt-8 rounded-r-xl ${leaderboard[2].id === user?.id ? "bg-accent-purple text-highlight-darker" : "bg-[#1B1E30]"}`}
+							className={`relative w-full h-50 flex flex-col justify-evenly pt-8 rounded-r-xl ${filteredLeaderboard[2].id === user?.id ? "bg-accent-purple text-highlight-darker" : "bg-[#1B1E30]"}`}
 						>
 							<div className="absolute -top-13 w-full flex justify-center items-center">
 								<img
-									src={leaderboard[2].pfpUrl}
+									src={filteredLeaderboard[2].pfpUrl}
 									alt="PFP"
 									className="h-18 w-18 border-[#DD7A6C] border-4 rounded-full "
 								/>
@@ -165,32 +169,28 @@ function RouteComponent() {
 							<div className="text-sm md:text-md flex justify-center text-center items-start max-h-18 md:max-h-12 mx-1 md:mx-4">
 								<Link
 									to="/profile/$slug"
-									params={{ slug: leaderboard[2].cfHandle }}
+									params={{ slug: filteredLeaderboard[2].cfHandle }}
 									className="hover:scale-105 transition-all duration-200"
 								>
-									{leaderboard[2].name}
+									{filteredLeaderboard[2].name}
 								</Link>
 							</div>
 							<div className="text-xs md:text-sm flex justify-center items-center">
-								{leaderboard[2].batch || "N/A"}
+								{filteredLeaderboard[2].batch || "N/A"}
 							</div>
 							<div className="text-xs md:text-sm flex justify-center items-center">
-								{leaderboard[2].rank || "-"}
+								{filteredLeaderboard[2].rank || "-"}
 							</div>
 							<div className="text-xs md:text-sm flex justify-center items-center">
-								{getRatingLevel(leaderboard[2].cfRating)}
+								{getRatingLevel(filteredLeaderboard[2].cfRating)}
 							</div>
 						</div>
-					) : (
-						<div
-							className={`relative w-1/3 h-50 flex flex-col justify-evenly pt-8 rounded-r-xl bg-[#1B1E30]`}
-						></div>
 					)}
 				</div>
 			</div>
 			{/* leaderboard for other than top 3 */}
 			<div className="md:mx-10 flex flex-col">
-				{leaderboard.slice(3).map((leaderboardUser, index) => (
+				{filteredLeaderboard.slice(3).map((leaderboardUser, index) => (
 					<div
 						key={leaderboardUser.id}
 						className={`h-16 rounded-xl flex justify-start mb-4 ${leaderboardUser.id === user?.id ? "bg-accent-purple text-highlight-darker font-bold" : "bg-[#25293E]"}`}
