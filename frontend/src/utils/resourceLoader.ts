@@ -1,18 +1,24 @@
-import fm from 'front-matter'
+import fm from "front-matter";
 
 interface Resource {
-	slug: string;
-	metadata: {
-		title: string;
-		description: string;
-	};
-	content: string;
+  slug: string;
+  metadata: {
+    title: string;
+    description: string;
+  };
+  content: string;
 }
 
-const resourceFiles = import.meta.glob('/src/resources/*.md', {query: "?raw", import: "default", eager: false})
+const resourceFiles = import.meta.glob("/src/resources/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: false,
+});
 
-export async function getResourceBySlug(slug: string): Promise<Resource | undefined> {
-	const path = `/src/resources/${slug}.md`;
+export async function getResourceBySlug(
+  slug: string
+): Promise<Resource | undefined> {
+  const path = `/src/resources/${slug}.md`;
   const loader = resourceFiles[path];
   if (!loader) return undefined;
 
@@ -21,8 +27,8 @@ export async function getResourceBySlug(slug: string): Promise<Resource | undefi
 
   return {
     slug,
-    metadata: data.attributes as Resource['metadata'],
-    content: data.body
+    metadata: data.attributes as Resource["metadata"],
+    content: data.body,
   };
 }
 
@@ -31,14 +37,14 @@ export async function getAllResources(): Promise<Resource[]> {
   const resources: Resource[] = [];
 
   for (const [path, loader] of entries) {
-    const slug = path.split('/').pop()!.replace('.md', '');
+    const slug = path.split("/").pop()!.replace(".md", "");
     const raw = await loader();
     const data = fm(raw as string);
 
     resources.push({
       slug,
-      metadata: data.attributes as Resource['metadata'],
-      content: data.body
+      metadata: data.attributes as Resource["metadata"],
+      content: data.body,
     });
   }
 

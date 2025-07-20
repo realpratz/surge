@@ -2,17 +2,19 @@
 title: "Module 9: Prefix Arrays"
 description: "A comprehensive guide to prefix arrays, an optimized solution for range sum queries in arrays."
 ---
-------
+
+---
+
 ### 9.A: Background
 
 When working with arrays, a common task is to find the sum of elements within a specific range. You are given an array of $n$ integers and then asked $q$ queries. Each query provides a pair of integers $(l, r)$, and you need to determine the sum of all array elements at indices $l \le i \le r$.
 
 Consider the following example array and queries:  
-Array: `[1, 3, -2, 5, 2, 3]`  
+Array: `[1, 3, -2, 5, 2, 3]`
 
-  * $(l,r)=(2,3) \rightarrow 3 + (-2) = 1$
-  * $(l,r)=(1,4) \rightarrow 1 + 3 + (-2) + 5 = 7$
-  * $(l,r)=(4,5) \rightarrow 5 + 2 = 7$
+- $(l,r)=(2,3) \rightarrow 3 + (-2) = 1$
+- $(l,r)=(1,4) \rightarrow 1 + 3 + (-2) + 5 = 7$
+- $(l,r)=(4,5) \rightarrow 5 + 2 = 7$
 
 The simplest solution to this problem involves iterating through the elements from index $l$ to $r$ for each query to calculate the sum. However, this approach has a time complexity of $O(nq)$, which can be inefficient for large inputs. Fortunately, there's a faster method with a time complexity of $O(n+q)$.
 
@@ -115,19 +117,19 @@ For further learning, you can refer to:
 
 Here is a list of problems to practice your understanding of prefix arrays:
 
-  * **9.1:** [https://cses.fi/problemset/task/1661](https://cses.fi/problemset/task/1661)
-  * **9.2:** [https://codeforces.com/problemset/problem/1215/B](https://codeforces.com/problemset/problem/1215/B)
-  * **9.3:** [https://codeforces.com/contest/1999/problem/E](https://codeforces.com/contest/1999/problem/E)
-  * **9.4:** [https://codeforces.com/contest/1398/problem/C](https://codeforces.com/contest/1398/problem/C)
-  * **9.5:** [https://codeforces.com/contest/433/problem/B](https://codeforces.com/contest/433/problem/B)
-  * **9.6:** [https://codeforces.com/contest/2033/problem/D](https://codeforces.com/contest/2033/problem/D)
-  * **9.7:** [https://codeforces.com/problemset/problem/1469/B](https://codeforces.com/problemset/problem/1469/B)
-  * **9.8:** [https://www.codechef.com/problems/PLPROCESS](https://www.codechef.com/problems/PLPROCESS)
-  * **9.9:** [https://codeforces.com/contest/1709/problem/B](https://codeforces.com/contest/1709/problem/B)
-  * **9.10:** [https://www.codechef.com/problems/SUMQ](https://www.codechef.com/problems/SUMQ)
-  * **9.11:** [https://www.codechef.com/problems/BOUNCEBALL](https://www.google.com/search?q=https://www.codechef.com/problems/BOUNCEBALL)
-  * **9.12:** [https://codeforces.com/problemset/problem/1779/C](https://codeforces.com/problemset/problem/1779/C)
-  * **9.13:** [https://codeforces.com/contest/1826/problem/D](https://codeforces.com/contest/1826/problem/D)
-  * **9.14:** [https://codeforces.com/problemset/problem/2009/F](https://codeforces.com/problemset/problem/2009/F)
-  * **9.15:** [https://codeforces.com/problemset/problem/1982/C](https://codeforces.com/problemset/problem/1982/C)
-  * **9.16:** [https://leetcode.com/problems/range-sum-query-2d-immutable/](https://leetcode.com/problems/range-sum-query-2d-immutable/)
+- **9.1:** [https://cses.fi/problemset/task/1661](https://cses.fi/problemset/task/1661)
+- **9.2:** [https://codeforces.com/problemset/problem/1215/B](https://codeforces.com/problemset/problem/1215/B)
+- **9.3:** [https://codeforces.com/contest/1999/problem/E](https://codeforces.com/contest/1999/problem/E)
+- **9.4:** [https://codeforces.com/contest/1398/problem/C](https://codeforces.com/contest/1398/problem/C)
+- **9.5:** [https://codeforces.com/contest/433/problem/B](https://codeforces.com/contest/433/problem/B)
+- **9.6:** [https://codeforces.com/contest/2033/problem/D](https://codeforces.com/contest/2033/problem/D)
+- **9.7:** [https://codeforces.com/problemset/problem/1469/B](https://codeforces.com/problemset/problem/1469/B)
+- **9.8:** [https://www.codechef.com/problems/PLPROCESS](https://www.codechef.com/problems/PLPROCESS)
+- **9.9:** [https://codeforces.com/contest/1709/problem/B](https://codeforces.com/contest/1709/problem/B)
+- **9.10:** [https://www.codechef.com/problems/SUMQ](https://www.codechef.com/problems/SUMQ)
+- **9.11:** [https://www.codechef.com/problems/BOUNCEBALL](https://www.google.com/search?q=https://www.codechef.com/problems/BOUNCEBALL)
+- **9.12:** [https://codeforces.com/problemset/problem/1779/C](https://codeforces.com/problemset/problem/1779/C)
+- **9.13:** [https://codeforces.com/contest/1826/problem/D](https://codeforces.com/contest/1826/problem/D)
+- **9.14:** [https://codeforces.com/problemset/problem/2009/F](https://codeforces.com/problemset/problem/2009/F)
+- **9.15:** [https://codeforces.com/problemset/problem/1982/C](https://codeforces.com/problemset/problem/1982/C)
+- **9.16:** [https://leetcode.com/problems/range-sum-query-2d-immutable/](https://leetcode.com/problems/range-sum-query-2d-immutable/)

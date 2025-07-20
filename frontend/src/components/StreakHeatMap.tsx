@@ -105,15 +105,19 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
   // chunk into weeks of 7 days
   const weeks: string[][] = [];
   //Since each week on the heatmap starts from Sunday and ends on Saturday, get first chunk!
-  const indexOfFirstSaturday = days.findIndex((day) => dayjs(day).format("ddd") === 'Sat');
-  weeks.push(days.slice(0, indexOfFirstSaturday+1));
-  for (let i = indexOfFirstSaturday+1; i < days.length; i += 7) {
+  const indexOfFirstSaturday = days.findIndex(
+    (day) => dayjs(day).format("ddd") === "Sat"
+  );
+  weeks.push(days.slice(0, indexOfFirstSaturday + 1));
+  for (let i = indexOfFirstSaturday + 1; i < days.length; i += 7) {
     weeks.push(days.slice(i, i + 7));
   }
-  
+
   //Populate first week
   //Maybe change this to get the actual dates in the future
-  weeks[0] = Array(7-weeks[0].length).fill(weeks[0][0]).concat(weeks[0]);
+  weeks[0] = Array(7 - weeks[0].length)
+    .fill(weeks[0][0])
+    .concat(weeks[0]);
 
   // show label at week i if month changes from previous
   const monthNums = weeks.map((w) => dayjs(w[0]).month());
@@ -179,19 +183,25 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
         {stats && (
           <div className="grid grid-cols-3 grid-rows-2 gap-4 text-center text-white mt-6">
             <div>
-              <div className="text-xl md:text-2xl font-semibold">{stats.totalAll}</div>
+              <div className="text-xl md:text-2xl font-semibold">
+                {stats.totalAll}
+              </div>
               <div className="text-xs md:text-sm text-gray-400">
                 problems solved for all time
               </div>
             </div>
             <div>
-              <div className="text-xl md:text-2xl font-semibold">{stats.totalYear}</div>
+              <div className="text-xl md:text-2xl font-semibold">
+                {stats.totalYear}
+              </div>
               <div className="text-xs md:text-sm text-gray-400">
                 solved for the last year
               </div>
             </div>
             <div>
-              <div className="text-xl md:text-2xl font-semibold">{stats.totalMonth}</div>
+              <div className="text-xl md:text-2xl font-semibold">
+                {stats.totalMonth}
+              </div>
               <div className="text-xs md:text-sm text-gray-400">
                 solved for the last month
               </div>
@@ -200,7 +210,9 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
               <div className="text-xl md:text-2xl font-semibold">
                 {stats.maxStreak} days
               </div>
-              <div className="text-xs md:text-sm text-gray-400">in a row max</div>
+              <div className="text-xs md:text-sm text-gray-400">
+                in a row max
+              </div>
             </div>
             <div>
               <div className="text-xl md:text-2xl font-semibold">

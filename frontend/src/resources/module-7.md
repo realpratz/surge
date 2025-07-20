@@ -1,9 +1,10 @@
 ---
 title: "Module-7: Two Pointers and Sliding Window"
 description: "Explore the Two Pointers and Sliding Window techniques for optimizing algorithm complexities from O(n^2) to O(n) or O(nk) to O(n)."
+---
 
 ---
------
+
 ### 7.A: Two Pointers
 
 The Two Pointers technique is a powerful method used to enhance the efficiency of solutions for specific problems, often reducing their time complexity from $O(n^2)$ to $O(n)$.
@@ -75,15 +76,15 @@ Let's visualize the process:
 
 **2. Move the right pointer till diff \> 2**  
 1 2 2 3 4 6 7 7  
-`^`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`^`  
+`^`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`^`
 
 **3. Move the left pointer one step**  
 1 2 2 3 4 6 7 7  
-&nbsp;&nbsp;`^`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`^`  
+&nbsp;&nbsp;`^`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`^`
 
 **4. Move the right pointer till diff \> 2**  
 1 2 2 3 4 6 7 7  
-&nbsp;&nbsp;`^`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`^`  
+&nbsp;&nbsp;`^`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`^`
 
 **5. Repeat till the left pointer hits the end**
 
@@ -99,22 +100,22 @@ Here's how it works for finding the largest sum of a $k$-length subarray:
 
 **1. Calculate the sum of the first k elements**  
 Array: `4 2 -1 3 5 -3 7 1` (let k=5)  
-`S = 4 + 2 + (-1) + 3 + 5 = 13`  
+`S = 4 + 2 + (-1) + 3 + 5 = 13`
 
 **2. Since we have to move the window to the right, add the next element**  
 Array: `4 2 -1 3 5 -3 7 1`  
 Current window sum: `13`  
 Add next element: `-3`  
-`S = 13 + (-3) = 10`  
+`S = 13 + (-3) = 10`
 
 **3. Subtract the first element as it no longer belongs to the window**  
 Array: `4 2 -1 3 5 -3 7 1`  
 Current window sum: `10`  
 Subtract first element of previous window: `4`  
-`S = 10 - 4 = 6`  
+`S = 10 - 4 = 6`
 
 **4. With just two operations, the sum of the next k-length subarray has been obtained\! Repeat the process to find the sum of the other k-length subarrays**.  
-Array: `4 2 -1 3 5 -3 7 1`  
+Array: `4 2 -1 3 5 -3 7 1`
 
 Here's a C++ implementation for finding the maximum sum of a fixed-length subarray:
 
@@ -148,13 +149,13 @@ int main() {
 
 Here are some competitive programming problems that can be solved using Two Pointers or Sliding Window techniques:
 
-  * [Codeforces 1840C: Ski Resort](https://codeforces.com/contest/1840/problem/C)
-  * [Codeforces 1972A: Contest Proposal](https://codeforces.com/contest/1972/problem/A)
-  * [Codeforces 1968B: Prefiquence](https://codeforces.com/problemset/problem/1968/B)
-  * [Codeforces 2000D: Right Left Wrong](https://codeforces.com/contest/2000/problem/D)
-  * [Codeforces 1547C: Pair Programming](https://codeforces.com/problemset/problem/1547/C)
-  * [Codeforces 2000B: Seating in a Bus](https://codeforces.com/contest/2000/problem/B)
-  * [Codeforces 1995B1: Bouquet (Easy Version)](https://codeforces.com/contest/1995/problem/B1)
-  * [Codeforces 978C: Letters](https://codeforces.com/problemset/problem/978/C)
-  * [Codeforces 616D: Longest k-Good Segment](https://codeforces.com/problemset/problem/616/D)
-  * [AtCoder 194E: Mex-Min](https://atcoder.jp/contests/abc194/tasks/abc194_e)
+- [Codeforces 1840C: Ski Resort](https://codeforces.com/contest/1840/problem/C)
+- [Codeforces 1972A: Contest Proposal](https://codeforces.com/contest/1972/problem/A)
+- [Codeforces 1968B: Prefiquence](https://codeforces.com/problemset/problem/1968/B)
+- [Codeforces 2000D: Right Left Wrong](https://codeforces.com/contest/2000/problem/D)
+- [Codeforces 1547C: Pair Programming](https://codeforces.com/problemset/problem/1547/C)
+- [Codeforces 2000B: Seating in a Bus](https://codeforces.com/contest/2000/problem/B)
+- [Codeforces 1995B1: Bouquet (Easy Version)](https://codeforces.com/contest/1995/problem/B1)
+- [Codeforces 978C: Letters](https://codeforces.com/problemset/problem/978/C)
+- [Codeforces 616D: Longest k-Good Segment](https://codeforces.com/problemset/problem/616/D)
+- [AtCoder 194E: Mex-Min](https://atcoder.jp/contests/abc194/tasks/abc194_e)

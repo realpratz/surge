@@ -2,7 +2,8 @@
 title: "Module-8: Binary Search"
 description: This module introduces Binary Search as a powerful technique for solving problems by smart guessing, often used when direct computation is difficult or impossible.
 ---
------
+
+---
 
 ### 8.A: Binary Search
 
@@ -20,40 +21,40 @@ This is a problem where there is no direct solution, as it is impossible to read
 
 The following table shows a random guessing strategy:
 
-| Turn | Guess      | Friend's Reply | Range       |
-| :--- | :--------- | :------------- | :---------- |
-| 1.   | Is it 932? | Lesser         | [1, 931]    |
-| 2.   | Is it 291? | Greater        | [292, 931]  |
-| 3.   | Is it 816? | Lesser         | [292, 815]  |
-| 4.   | Is it 365? | Greater        | [366, 816]  |
-| 5.   | Is it 672? | Greater        | [673, 816]  |
-| 6.   | Is it 799? | Lesser         | [673, 798]  |
-| 7.   | Is it 702? | Greater        | [703, 798]  |
-| 8.   | Is it 726? | Greater        | [727, 798]  |
-| 9.   | Is it 778? | Lesser         | [727, 777]  |
-| 10.  | Is it 745? | Greater        | [746, 777]  |
-| 11.  | Is it 753? | Greater        | [754, 777]  |
-| 12.  | Is it 763? | Greater        | [764, 777]  |
-| 13.  | Is it 772? | Lesser         | [764, 773]  |
-| 14.  | Is it 765? | Greater        | [766, 773]  |
-| 15.  | Is it 770? | Lesser         | [766, 769]  |
-| 16.  | Is it 767? | Greater        | [768, 769]  |
-| 17.  | Is it 769? | Correct\!       | [769, 769]  |
+| Turn | Guess      | Friend's Reply | Range      |
+| :--- | :--------- | :------------- | :--------- |
+| 1.   | Is it 932? | Lesser         | [1, 931]   |
+| 2.   | Is it 291? | Greater        | [292, 931] |
+| 3.   | Is it 816? | Lesser         | [292, 815] |
+| 4.   | Is it 365? | Greater        | [366, 816] |
+| 5.   | Is it 672? | Greater        | [673, 816] |
+| 6.   | Is it 799? | Lesser         | [673, 798] |
+| 7.   | Is it 702? | Greater        | [703, 798] |
+| 8.   | Is it 726? | Greater        | [727, 798] |
+| 9.   | Is it 778? | Lesser         | [727, 777] |
+| 10.  | Is it 745? | Greater        | [746, 777] |
+| 11.  | Is it 753? | Greater        | [754, 777] |
+| 12.  | Is it 763? | Greater        | [764, 777] |
+| 13.  | Is it 772? | Lesser         | [764, 773] |
+| 14.  | Is it 765? | Greater        | [766, 773] |
+| 15.  | Is it 770? | Lesser         | [766, 769] |
+| 16.  | Is it 767? | Greater        | [768, 769] |
+| 17.  | Is it 769? | Correct\!      | [769, 769] |
 
 Painful to read, right? 17 guesses is not too bad, but there is a smarter way to guess that ensures that the answer is found within 10 guesses. And that smarter way is employing binary search.
 
 The following table shows the binary search strategy:
 
-| Turn | Guess      | Friend's Reply | Range         |
-| :--- | :--------- | :------------- | :------------ |
-| 1.   | Is it 500? | Greater        | [501, 1000]   |
-| 2.   | Is it 750? | Greater        | [751, 1000]   |
-| 3.   | Is it 875? | Lesser         | [751, 874]    |
-| 4.   | Is it 812? | Lesser         | [751, 811]    |
-| 5.   | Is it 781? | Lesser         | [751, 780]    |
-| 6.   | Is it 765? | Greater        | [766, 780]    |
-| 7.   | Is it 773? | Lesser         | [766, 772]    |
-| 8.   | Is it 769? | Correct\!       | [769, 769]    |
+| Turn | Guess      | Friend's Reply | Range       |
+| :--- | :--------- | :------------- | :---------- |
+| 1.   | Is it 500? | Greater        | [501, 1000] |
+| 2.   | Is it 750? | Greater        | [751, 1000] |
+| 3.   | Is it 875? | Lesser         | [751, 874]  |
+| 4.   | Is it 812? | Lesser         | [751, 811]  |
+| 5.   | Is it 781? | Lesser         | [751, 780]  |
+| 6.   | Is it 765? | Greater        | [766, 780]  |
+| 7.   | Is it 773? | Lesser         | [766, 772]  |
+| 8.   | Is it 769? | Correct\!      | [769, 769]  |
 
 As you can see, the smart guessing that we are employing in binary search is nothing more than always guessing the number that is the midpoint of the search space at that point of time.
 
@@ -69,12 +70,12 @@ To generalise, binary search has a time complexity of $O(\log(n))$, since we wil
 
 ### 8.D: External Resources
 
-  * [USACO Guide](https://usaco.guide/)
-  * [Implementing binary search](https://www.geeksforgeeks.org/binary-search/)
-  * [Ternary search](https://www.geeksforgeeks.org/ternary-search/)
-  * [Finding square root using BS](https://www.geeksforgeeks.org/square-root-using-binary-search/)
-  * [Finding peak element](https://www.geeksforgeeks.org/find-a-peak-element-in-a-given-array/)
-  * [lower\_bound() and upper\_bound()](https://www.geeksforgeeks.org/binary-search-using-stl-in-c/)
+- [USACO Guide](https://usaco.guide/)
+- [Implementing binary search](https://www.geeksforgeeks.org/binary-search/)
+- [Ternary search](https://www.geeksforgeeks.org/ternary-search/)
+- [Finding square root using BS](https://www.geeksforgeeks.org/square-root-using-binary-search/)
+- [Finding peak element](https://www.geeksforgeeks.org/find-a-peak-element-in-a-given-array/)
+- [lower_bound() and upper_bound()](https://www.geeksforgeeks.org/binary-search-using-stl-in-c/)
 
 ### 8.E: Maximising Median Problem
 
@@ -135,11 +136,11 @@ int main() {
 
 ### Practice Problems
 
-  * [Codeforces 1201C: Maximum Median](https://codeforces.com/problemset/problem/1201/C)
-  * [Codeforces 371C: Hamburgers](https://codeforces.com/problemset/problem/371/C)
-  * [Codeforces 1612C: Chat Ban](https://codeforces.com/problemset/problem/1612/C)
-  * [Codeforces 165B: Burning Midnight Oil](https://codeforces.com/problemset/problem/165/B)
-  * [Codeforces 1742E: Scuza](https://codeforces.com/problemset/problem/1742/E)
-  * [Codeforces 1463A: Dungeon](https://codeforces.com/problemset/problem/1463/A)
-  * [Codeforces 1221C: Perfect Team](https://codeforces.com/problemset/problem/1221/C)
-  * [Codeforces 1850E: Cardboard for Pictures](https://codeforces.com/problemset/problem/1850/E)
+- [Codeforces 1201C: Maximum Median](https://codeforces.com/problemset/problem/1201/C)
+- [Codeforces 371C: Hamburgers](https://codeforces.com/problemset/problem/371/C)
+- [Codeforces 1612C: Chat Ban](https://codeforces.com/problemset/problem/1612/C)
+- [Codeforces 165B: Burning Midnight Oil](https://codeforces.com/problemset/problem/165/B)
+- [Codeforces 1742E: Scuza](https://codeforces.com/problemset/problem/1742/E)
+- [Codeforces 1463A: Dungeon](https://codeforces.com/problemset/problem/1463/A)
+- [Codeforces 1221C: Perfect Team](https://codeforces.com/problemset/problem/1221/C)
+- [Codeforces 1850E: Cardboard for Pictures](https://codeforces.com/problemset/problem/1850/E)

@@ -7,27 +7,27 @@ import "./index.css";
 
 // Set up a Router instance
 const router = createRouter({
-	routeTree,
-	defaultPreload: "intent",
-	scrollRestoration: true,
+  routeTree,
+  defaultPreload: "intent",
+  scrollRestoration: true,
 });
 
 // Register things for typesafety
 declare module "@tanstack/react-router" {
-	interface Register {
-		router: typeof router;
-	}
+  interface Register {
+    router: typeof router;
+  }
 }
 
 const rootElement = document.getElementById("root")!;
 
 if (!rootElement.innerHTML) {
-	const root = ReactDOM.createRoot(rootElement);
-	root.render(
-		<React.StrictMode>
-			<AuthProvider>
-				<RouterProvider router={router} />
-			</AuthProvider>
-		</React.StrictMode>
-	);
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(
+    <React.StrictMode>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </React.StrictMode>
+  );
 }

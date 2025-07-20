@@ -1,8 +1,9 @@
 ---
-title: "Module-5: Data Structures" 
+title: "Module-5: Data Structures"
 description: "An overview of fundamental data structures including Stacks, Queues, Priority Queues, Maps, and Sets, their operations, and practice problems."
 ---
------
+
+---
 
 ## 5.A: Stacks
 
@@ -18,18 +19,18 @@ There are three primary operations for stacks:
 
 ### Reading Material:
 
-  * [CodeForces Blog](https://www.google.com/search?q=https://codeforces.com/blog/entry/78293)
-  * [GFG](https://www.geeksforgeeks.org/stack-data-structure/)
+- [CodeForces Blog](https://www.google.com/search?q=https://codeforces.com/blog/entry/78293)
+- [GFG](https://www.geeksforgeeks.org/stack-data-structure/)
 
 ### Questions:
 
-  * 5.1: [Balanced Parenthesis](https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/)
-  * 5.2: [SPOJ: Histogram](https://www.spoj.com/problems/HISTOGRA/)
-  * 5.3: [LC: Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
-  * 5.4: [MAX special Product](https://www.interviewbit.com/problems/maxspprod/)
-  * 5.5: [Bus of Characters](https://codeforces.com/problemset/problem/1101/B)
+- 5.1: [Balanced Parenthesis](https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/)
+- 5.2: [SPOJ: Histogram](https://www.spoj.com/problems/HISTOGRA/)
+- 5.3: [LC: Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
+- 5.4: [MAX special Product](https://www.interviewbit.com/problems/maxspprod/)
+- 5.5: [Bus of Characters](https://codeforces.com/problemset/problem/1101/B)
 
------
+---
 
 ## 5.B: Queues
 
@@ -45,15 +46,15 @@ The three main functions of a queue are:
 
 ### Reading Material:
 
-  * [GFG](https://www.geeksforgeeks.org/queue-data-structure/)
+- [GFG](https://www.geeksforgeeks.org/queue-data-structure/)
 
 ### Questions:
 
-  * 5.6: [Character Blocking (Read set also)](https://codeforces.com/contest/1840/problem/E)
-  * 5.7: [Social Network (Read set also)](https://codeforces.com/contest/1234/problem/B2)
-  * 5.8: [Table Tennis](https://codeforces.com/contest/879/problem/B)
+- 5.6: [Character Blocking (Read set also)](https://codeforces.com/contest/1840/problem/E)
+- 5.7: [Social Network (Read set also)](https://codeforces.com/contest/1234/problem/B2)
+- 5.8: [Table Tennis](https://codeforces.com/contest/879/problem/B)
 
------
+---
 
 ## 5.C: Priority Queues
 
@@ -69,16 +70,16 @@ A priority queue is a type of queue that arranges elements based on their **prio
 
 ### Reading Material:
 
-  * [GFG](https://www.geeksforgeeks.org/priority-queue-in-cpp-stl/)
-  * [Programiz](https://www.programiz.com/dsa/priority-queue)
+- [GFG](https://www.geeksforgeeks.org/priority-queue-in-cpp-stl/)
+- [Programiz](https://www.programiz.com/dsa/priority-queue)
 
 ### Questions:
 
-  * 5.9: [Heap Operations](https://codeforces.com/contest/681/problem/C)
-  * 5.10: [Minimise the error](https://codeforces.com/contest/960/problem/B)
-  * 5.11: [Kolya and Movie Theatre](https://codeforces.com/contest/1862/problem/E)
+- 5.9: [Heap Operations](https://codeforces.com/contest/681/problem/C)
+- 5.10: [Minimise the error](https://codeforces.com/contest/960/problem/B)
+- 5.11: [Kolya and Movie Theatre](https://codeforces.com/contest/1862/problem/E)
 
------
+---
 
 ## 5.D: Maps
 
@@ -88,7 +89,7 @@ Maps are associative containers that store elements in a **key-value** pair fash
 
 1.  **`m[key]=value;`**: Assigns a value to a key. Time complexity: $O(log(n))$.
 2.  **`size()`**: Returns the number of elements in the map. Time complexity: $O(1)$.
-3.  **`clear()`**: Removes all elements from the map. Time complexity: O(map\_size).
+3.  **`clear()`**: Removes all elements from the map. Time complexity: O(map_size).
 
 ### Iterating Through Maps:
 
@@ -111,16 +112,16 @@ for(auto it:m){
 
 ### Reading Material:
 
-  * [GFG](https://www.geeksforgeeks.org/map-associative-containers-the-c-standard-template-library-stl/)
-  * [Programiz](https://www.programiz.com/cpp-programming/map)
+- [GFG](https://www.geeksforgeeks.org/map-associative-containers-the-c-standard-template-library-stl/)
+- [Programiz](https://www.programiz.com/cpp-programming/map)
 
 ### Questions:
 
-  * 5.13: [Yarik and Musical Notes](https://codeforces.com/contest/1899/problem/D)
-  * 5.14: [Train and Queries](https://codeforces.com/problemset/problem/1702/C)
-  * 5.15: [Weird Sum](https://codeforces.com/problemset/problem/1648/A)
+- 5.13: [Yarik and Musical Notes](https://codeforces.com/contest/1899/problem/D)
+- 5.14: [Train and Queries](https://codeforces.com/problemset/problem/1702/C)
+- 5.15: [Weird Sum](https://codeforces.com/problemset/problem/1648/A)
 
------
+---
 
 ## 5.E: Sets and Multisets
 
@@ -134,41 +135,41 @@ A **set** is a data structure that stores **unique** elements in a sorted order.
 
 ### `lower_bound` and `upper_bound` in Sets and Multisets:
 
-  * **`s.lower_bound(element)`**: Returns an iterator to the first element in the set that is **greater than or equal to** the element. If no such element exists, it returns `s.end()`. Time complexity: O(log(N)).
-  * **`s.upper_bound(element)`**: Returns an iterator to the first element in the set that is **strictly greater than** the element. If no such element exists, it returns `s.end()`. Time complexity: O(log(N)).
+- **`s.lower_bound(element)`**: Returns an iterator to the first element in the set that is **greater than or equal to** the element. If no such element exists, it returns `s.end()`. Time complexity: O(log(N)).
+- **`s.upper_bound(element)`**: Returns an iterator to the first element in the set that is **strictly greater than** the element. If no such element exists, it returns `s.end()`. Time complexity: O(log(N)).
 
 **Note:** All functions apply to both sets and multisets. For `erase`, a multiset removes only one occurrence of the element. For `find`, `lower_bound`, and `upper_bound`, a multiset returns an iterator pointing to the first occurrence of the element.
 
 ### Reading Material:
 
-  * [GFG (Set)](https://www.geeksforgeeks.org/set-in-cpp-stl/)
-  * [Programiz (Set)](https://www.programiz.com/cpp-programming/set)
-  * [GFG (Multiset)](https://www.google.com/search?q=https://www.geeksforgeeks.org/multiset-in-c-stl/)
-  * [Programiz (Multiset)](https://www.programiz.com/cpp-programming/multiset)
-  * [GFG (Set lower\_bound)](https://www.google.com/search?q=https://www.geeksforgeeks.org/set-lower_bound-in-c-stl/)
-  * [GFG (Set upper\_bound)](https://www.google.com/search?q=https://www.geeksforgeeks.org/set-upper_bound-in-c-stl/)
+- [GFG (Set)](https://www.geeksforgeeks.org/set-in-cpp-stl/)
+- [Programiz (Set)](https://www.programiz.com/cpp-programming/set)
+- [GFG (Multiset)](https://www.google.com/search?q=https://www.geeksforgeeks.org/multiset-in-c-stl/)
+- [Programiz (Multiset)](https://www.programiz.com/cpp-programming/multiset)
+- [GFG (Set lower_bound)](https://www.google.com/search?q=https://www.geeksforgeeks.org/set-lower_bound-in-c-stl/)
+- [GFG (Set upper_bound)](https://www.google.com/search?q=https://www.geeksforgeeks.org/set-upper_bound-in-c-stl/)
 
 ### Questions:
 
-  * 5.16: [Merge Equals](https://codeforces.com/contest/962/problem/D)
-  * 5.17: [Distinct Characters Queries](https://codeforces.com/contest/1234/problem/D)
-  * 5.18: [Rooks Defenders](https://codeforces.com/contest/1679/problem/C)
+- 5.16: [Merge Equals](https://codeforces.com/contest/962/problem/D)
+- 5.17: [Distinct Characters Queries](https://codeforces.com/contest/1234/problem/D)
+- 5.18: [Rooks Defenders](https://codeforces.com/contest/1679/problem/C)
 
------
+---
 
 ## 5.F: `Lower_bound` and `upper_bound` for Vectors and Arrays
 
 Similar to sets and multisets, you can use `upper_bound` and `lower_bound` on vectors and arrays, given that the container is **sorted**.
 
-  * **`lower_bound(iterator first, iterator last, val)`**: Returns an iterator pointing to the first element in the range `[first, last)` that is **greater than or equal to `val`**. Time complexity: O(log(N)).
-  * **`upper_bound(iterator first, iterator last, val)`**: Returns an iterator pointing to the first element in the range `[first, last)` that is **strictly greater than `val`**. Time complexity: O(log(N)).
+- **`lower_bound(iterator first, iterator last, val)`**: Returns an iterator pointing to the first element in the range `[first, last)` that is **greater than or equal to `val`**. Time complexity: O(log(N)).
+- **`upper_bound(iterator first, iterator last, val)`**: Returns an iterator pointing to the first element in the range `[first, last)` that is **strictly greater than `val`**. Time complexity: O(log(N)).
 
 ### Reading Material:
 
-  * [GFG](https://www.geeksforgeeks.org/cpp/upper_bound-and-lower_bound-for-vector-in-cpp-stl/)
-  * [Codeforces Blog](hhttps://codeforces.com/blog/entry/109920)
+- [GFG](https://www.geeksforgeeks.org/cpp/upper_bound-and-lower_bound-for-vector-in-cpp-stl/)
+- [Codeforces Blog](hhttps://codeforces.com/blog/entry/109920)
 
 ### Questions:
 
-  * 5.19: [Number of Pairs](https://codeforces.com/problemset/problem/1538/C)
-  * 5.20: [Yet Another Problem About Pairs Satisfying an Inequality](https://codeforces.com/problemset/problem/1703/F)
+- 5.19: [Number of Pairs](https://codeforces.com/problemset/problem/1538/C)
+- 5.20: [Yet Another Problem About Pairs Satisfying an Inequality](https://codeforces.com/problemset/problem/1703/F)

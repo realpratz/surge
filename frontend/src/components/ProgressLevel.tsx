@@ -8,7 +8,8 @@ interface ProgressLevelProps {
 const ProgressLevel: React.FC<ProgressLevelProps> = ({ cfRating }) => {
   const rating = cfRating ?? 0;
   const [bandFloor, bandCeil] = getRatingBand(rating);
-  const progressPercent = (rating - bandFloor) / (bandCeil + 1 - bandFloor) * 100;
+  const progressPercent =
+    ((rating - bandFloor) / (bandCeil + 1 - bandFloor)) * 100;
 
   return (
     <div>
@@ -19,8 +20,7 @@ const ProgressLevel: React.FC<ProgressLevelProps> = ({ cfRating }) => {
       <div className="bg-highlight-dark rounded-lg p-4 md:p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="text-white font-medium">
-            {getRatingLevel(cfRating)} to{" "}
-            {getRatingLevel(bandCeil + 1)}
+            {getRatingLevel(cfRating)} to {getRatingLevel(bandCeil + 1)}
           </div>
         </div>
 

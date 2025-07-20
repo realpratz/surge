@@ -2,7 +2,9 @@
 title: "Module-4: Strings and Math"
 description: " This module covers fundamental concepts in strings and various mathematical topics relevant to competitive programming."
 ---
------
+
+---
+
 ## 4.A: String Datatype
 
 The easiest way to work with strings and string objects in C++ is via the `std::string` type, which lives in the `<string>` header. Just like normal variables, you can initialize or assign values to `std::string` objects as you would expect.
@@ -34,9 +36,9 @@ If we want to find out the size of a string `s`, you can use `s.length()`, which
 
 ## Practice Problems
 
-  * 4.1: Codeforces 1791A: [Codeforces Checking](https://codeforces.com/problemset/problem/1791/A)
-  * 4.2: Codeforces 1146A: [Love 'A'](https://codeforces.com/problemset/problem/1146/A)
-  * 4.3: Codeforces 855A: [Tom Riddle's Diary](https://codeforces.com/problemset/problem/855/A)
+- 4.1: Codeforces 1791A: [Codeforces Checking](https://codeforces.com/problemset/problem/1791/A)
+- 4.2: Codeforces 1146A: [Love 'A'](https://codeforces.com/problemset/problem/1146/A)
+- 4.3: Codeforces 855A: [Tom Riddle's Diary](https://codeforces.com/problemset/problem/855/A)
 
 ## 4.B: Subarrays, Subsequences, and Substrings
 
@@ -45,40 +47,35 @@ An array is a collection or list of elements of the same datatype, and by defini
 Here's a discussion of the differences between these structures:
 
 1.  **Subarray**
-
-      * **Definition:** A contiguous part of an array.
-      * **Properties:** Can be as small as a single element or as large as the entire array.
-      * **Example:** For `arr = {1, 2, 3}`, possible subarrays are `(1)`, `(2)`, `(3)`, `(1, 2)`, `(2, 3)`, `(1, 2, 3)`.
+    - **Definition:** A contiguous part of an array.
+    - **Properties:** Can be as small as a single element or as large as the entire array.
+    - **Example:** For `arr = {1, 2, 3}`, possible subarrays are `(1)`, `(2)`, `(3)`, `(1, 2)`, `(2, 3)`, `(1, 2, 3)`.
 
 2.  **Subsequence**
-
-      * **Definition:** A sequence derived by deleting some or no elements from an array without changing the order of the remaining elements.
-      * **Properties:** Not necessarily contiguous.
-      * **Example:** For `arr[] = {1, 2, 3}`, possible subsequences are `()`, `(1)`, `(2)`, `(3)`, `(1, 2)`, `(1, 3)`, `(2, 3)`, `(1, 2, 3)`.
+    - **Definition:** A sequence derived by deleting some or no elements from an array without changing the order of the remaining elements.
+    - **Properties:** Not necessarily contiguous.
+    - **Example:** For `arr[] = {1, 2, 3}`, possible subsequences are `()`, `(1)`, `(2)`, `(3)`, `(1, 2)`, `(1, 3)`, `(2, 3)`, `(1, 2, 3)`.
 
 3.  **Permutation**
-
-      * **Definition:** An arrangement of all elements of an array in a specific order.
-      * **Properties:** Involves reordering.
-      * **Example:** For `arr[] = {1, 2, 3}`, permutations are `{1, 2, 3}`, `{1, 3, 2}`, `{2, 1, 3}`, `{2, 3, 1}`, `{3, 1, 2}`, `{3, 2, 1}`.
+    - **Definition:** An arrangement of all elements of an array in a specific order.
+    - **Properties:** Involves reordering.
+    - **Example:** For `arr[] = {1, 2, 3}`, permutations are `{1, 2, 3}`, `{1, 3, 2}`, `{2, 1, 3}`, `{2, 3, 1}`, `{3, 1, 2}`, `{3, 2, 1}`.
 
 4.  **Substring**
-
-      * **Definition:** A contiguous sequence of characters within a string.
-      * **Properties:** Specific to strings.
-      * **Example:** For `str = "abc"`, substrings are `"a"`, `"b"`, `"c"`, `"ab"`, `"bc"`, `"abc"`.
+    - **Definition:** A contiguous sequence of characters within a string.
+    - **Properties:** Specific to strings.
+    - **Example:** For `str = "abc"`, substrings are `"a"`, `"b"`, `"c"`, `"ab"`, `"bc"`, `"abc"`.
 
 5.  **Set**
-
-      * **Definition:** A collection of distinct elements.
-      * **Properties:** No duplicates, order is not guaranteed.
-      * **Example:** `set<int> s = {1, 2, 3}`
+    - **Definition:** A collection of distinct elements.
+    - **Properties:** No duplicates, order is not guaranteed.
+    - **Example:** `set<int> s = {1, 2, 3}`
 
 ## More Practice Problems
 
-  * 4.4: Codeforces 1689B: [Mystic Permutation](https://codeforces.com/problemset/problem/1689/B)
-  * 4.5: Codeforces 1714B: [Remove Prefix](https://codeforces.com/problemset/problem/1714/B)
-  * 4.6: Codeforces 1703B: [ICPC Balloons](https://codeforces.com/problemset/problem/1703/B)
+- 4.4: Codeforces 1689B: [Mystic Permutation](https://codeforces.com/problemset/problem/1689/B)
+- 4.5: Codeforces 1714B: [Remove Prefix](https://codeforces.com/problemset/problem/1714/B)
+- 4.6: Codeforces 1703B: [ICPC Balloons](https://codeforces.com/problemset/problem/1703/B)
 
 ## 4.C: Prime Numbers
 
@@ -94,9 +91,9 @@ If you need to generate prime numbers up to `n` or check if `n` numbers are prim
 
 ## Even More Practice Problems
 
-  * 4.7: Codeforces 831A: [Factorise N+M](https://codeforces.com/problemset/problem/831/A)
-  * 4.8: Codeforces 102267B: [Primes](https://www.google.com/search?q=https://codeforces.com/problemset/problem/102267/B)
-  * 4.9: Codeforces 615 C: [Product of Three Numbers](https://codeforces.com/problemset/problem/615/C)
+- 4.7: Codeforces 831A: [Factorise N+M](https://codeforces.com/problemset/problem/831/A)
+- 4.8: Codeforces 102267B: [Primes](https://www.google.com/search?q=https://codeforces.com/problemset/problem/102267/B)
+- 4.9: Codeforces 615 C: [Product of Three Numbers](https://codeforces.com/problemset/problem/615/C)
 
 ## 4.D: Binary Exponentiation
 
@@ -191,6 +188,6 @@ Understanding concepts from Permutations and Combinations (PnC), series, and seq
 
 ## Final Practice Problems
 
-  * 4.10: Codeforces 1204A: [BowWow and the Timetable](https://codeforces.com/problemset/problem/1204/A)
-  * 4.11: Codeforces 1642C: [Division by Two and Permutation](https://codeforces.com/problemset/problem/1642/C)
-  * 4.12: Codeforces 1352B: [Same Parity Summands](https://codeforces.com/problemset/problem/1352/B)
+- 4.10: Codeforces 1204A: [BowWow and the Timetable](https://codeforces.com/problemset/problem/1204/A)
+- 4.11: Codeforces 1642C: [Division by Two and Permutation](https://codeforces.com/problemset/problem/1642/C)
+- 4.12: Codeforces 1352B: [Same Parity Summands](https://codeforces.com/problemset/problem/1352/B)

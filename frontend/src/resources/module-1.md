@@ -2,7 +2,8 @@
 title: "Module-1: C++, Vectors, and Pairs"
 description: "This module introduces the fundamentals of C++ programming, with a focus on vectors and pairs."
 ---
------
+
+---
 
 ## 1.A: Getting started with C++
 
@@ -72,10 +73,10 @@ int main() {
 
 For more detailed information, you can refer to these articles:
 
-  * [GFG article on cin](https://www.geeksforgeeks.org/cin-in-c/)
-  * [GFG article on cout](https://www.geeksforgeeks.org/cout-in-c/?ref=lbp)
+- [GFG article on cin](https://www.geeksforgeeks.org/cin-in-c/)
+- [GFG article on cout](https://www.geeksforgeeks.org/cout-in-c/?ref=lbp)
 
------
+---
 
 ## 1.B: Basic problem solving
 
@@ -85,29 +86,29 @@ Here are a few problems to get you started:
 
 **1.1:** Given two integers, `x` and `y`, determine if $x^y$ is strictly greater than $y^x$. Since `x` and `y` are relatively small, you don't need to worry about integer overflow. Print "Yes" if $x^y \> y^x$, and "No" otherwise. Remember, "strictly greater" means if they are equal, you should still print "No".
 
-  * **Input:** A single line with two integers, `x` and `y`.
-  * **Output:** "Yes" or "No".
-  * **Examples:**
-      * `3 5` -\> `Yes` (`3^5 = 243, 5^3 = 125`)
-      * `2 4` -\> `No` (`2^4 = 16, 4^2 = 16`)
+- **Input:** A single line with two integers, `x` and `y`.
+- **Output:** "Yes" or "No".
+- **Examples:**
+  - `3 5` -\> `Yes` (`3^5 = 243, 5^3 = 125`)
+  - `2 4` -\> `No` (`2^4 = 16, 4^2 = 16`)
 
 **1.2:** You are given three integers, `a`, `b`, and `c`, representing the side lengths of a triangle. Determine if they can form a right-angled triangle.
 
-  * **Input:** A single line with three integers, `a`, `b`, and `c`.
-  * **Output:** "Yes" or "No".
-  * **Examples:**
-      * `3 4 5` -\> `Yes` (A right-angled triangle can be formed with 5 as the hypotenuse)
-      * `4 5 7` -\> `No`
-      * `5 12 13` -\> `Yes` (A right-angled triangle can be formed with 13 as the hypotenuse)
+- **Input:** A single line with three integers, `a`, `b`, and `c`.
+- **Output:** "Yes" or "No".
+- **Examples:**
+  - `3 4 5` -\> `Yes` (A right-angled triangle can be formed with 5 as the hypotenuse)
+  - `4 5 7` -\> `No`
+  - `5 12 13` -\> `Yes` (A right-angled triangle can be formed with 13 as the hypotenuse)
 
 **Codeforces Problems:**
 
-  * **1.3:** [Codeforces 4A: Watermelon](http://codeforces.com/problemset/problem/4/A)
-  * **1.4:** [Codeforces 1A: Theatre Square](http://codeforces.com/problemset/problem/1/A)
-  * **1.5:** [Codeforces 977A: Wrong Subtraction](http://codeforces.com/problemset/problem/977/A)
-  * **1.6:** [Codeforces 200B: Drinks](http://codeforces.com/problemset/problem/200/B)
+- **1.3:** [Codeforces 4A: Watermelon](http://codeforces.com/problemset/problem/4/A)
+- **1.4:** [Codeforces 1A: Theatre Square](http://codeforces.com/problemset/problem/1/A)
+- **1.5:** [Codeforces 977A: Wrong Subtraction](http://codeforces.com/problemset/problem/977/A)
+- **1.6:** [Codeforces 200B: Drinks](http://codeforces.com/problemset/problem/200/B)
 
------
+---
 
 ## 1.C: Vectors
 
@@ -134,10 +135,10 @@ int main() {
 
 **Reading Material:**
 
-  * [GFG article on vectors](https://www.geeksforgeeks.org/vector-in-cpp-stl/)
-  * [List of methods that can be performed on a vector](https://www.javatpoint.com/cpp-vector)
+- [GFG article on vectors](https://www.geeksforgeeks.org/vector-in-cpp-stl/)
+- [List of methods that can be performed on a vector](https://www.javatpoint.com/cpp-vector)
 
------
+---
 
 ## 1.D: Pairs
 
@@ -165,36 +166,36 @@ int main() {
 
 **Reading Material:**
 
-  * [GFG article on pairs](https://www.geeksforgeeks.org/pair-in-cpp-stl/)
-  * [The make\_pair() function](https://www.educative.io/answers/how-to-use-the-makepair-function-in-cpp)
+- [GFG article on pairs](https://www.geeksforgeeks.org/pair-in-cpp-stl/)
+- [The make_pair() function](https://www.educative.io/answers/how-to-use-the-makepair-function-in-cpp)
 
------
+---
 
 ## Additional Problems
 
 **1.7:** You are given a list of integers. Find the number of inner elements (all elements except the first and last) that are smaller than both of their neighbors.
 
-  * **Input:** The first line contains an integer `n` (the size of the list), and the second line contains `n` integers.
-  * **Output:** A single integer.
-  * **Examples:**
-      * `5`
-        `1 4 2 3 5` -\> `1`
-      * `7`
-        `2 1 2 1 2 1 2` -\> `3`
+- **Input:** The first line contains an integer `n` (the size of the list), and the second line contains `n` integers.
+- **Output:** A single integer.
+- **Examples:**
+  - `5`
+    `1 4 2 3 5` -\> `1`
+  - `7`
+    `2 1 2 1 2 1 2` -\> `3`
 
 **1.8:** You are given a list of integers. Find the smallest and largest elements.
 
-  * **Input:** The first line contains an integer `n` (the size of the list), and the second line contains `n` integers.
-  * **Output:** Two integers - the smallest and largest elements.
-  * **Examples:**
-      * `8`
-        `3 4 3 8 7 2 3 5` -\> `2 8`
-      * `3`
-        `2 3 1` -\> `1 3`
+- **Input:** The first line contains an integer `n` (the size of the list), and the second line contains `n` integers.
+- **Output:** Two integers - the smallest and largest elements.
+- **Examples:**
+  - `8`
+    `3 4 3 8 7 2 3 5` -\> `2 8`
+  - `3`
+    `2 3 1` -\> `1 3`
 
 **More Codeforces Problems:**
 
-  * **1.9:** [Codeforces 158A: Next Round](http://codeforces.com/problemset/problem/158/A)
-  * **1.10:** [Codeforces 116A: Tram](http://codeforces.com/problemset/problem/116/A)
-  * **1.11:** [Codeforces 268A: Games](http://codeforces.com/problemset/problem/268/A)
-  * **1.12:** [Codeforces 231A: Team](http://codeforces.com/problemset/problem/231/A)
+- **1.9:** [Codeforces 158A: Next Round](http://codeforces.com/problemset/problem/158/A)
+- **1.10:** [Codeforces 116A: Tram](http://codeforces.com/problemset/problem/116/A)
+- **1.11:** [Codeforces 268A: Games](http://codeforces.com/problemset/problem/268/A)
+- **1.12:** [Codeforces 231A: Team](http://codeforces.com/problemset/problem/231/A)
