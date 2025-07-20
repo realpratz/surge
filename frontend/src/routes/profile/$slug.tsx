@@ -138,7 +138,7 @@ function RouteComponent() {
                       <div
                         className={`font-bold text-xl ${getRatingColor(cfRatingNumber)} group-hover:scale-105 transition-transform duration-300 inline-block animate-pulse`}
                       >
-                        {profile ? (
+                        {profile?.cfRating ? (
                           <span>
                             {`${profile?.cfRating}`}{" "}
                             <span className="md:hidden">
@@ -158,15 +158,17 @@ function RouteComponent() {
         </div>
 
         {/* Progress Section */}
-        {profile?.cfRating && profile?.cfHandle && (
-          <div>
+        <div>
+          {profile?.cfRating && profile?.cfHandle && (
             <ProgressLevel cfRating={profile?.cfRating} />
-            <StreakHeatmap handle={profile?.cfHandle} />
+          )}
+          {profile?.cfHandle && <StreakHeatmap handle={profile?.cfHandle} />}
+          {profile?.cfRating && profile?.cfHandle && (
             <RatingGraph handle={profile?.cfHandle} />
-            <ProblemRatingBar handle={profile?.cfHandle} />
-            <TagPieChart handle={profile?.cfHandle} />
-          </div>
-        )}
+          )}
+          {profile?.cfHandle && <ProblemRatingBar handle={profile?.cfHandle} />}
+          {profile?.cfHandle && <TagPieChart handle={profile?.cfHandle} />}
+        </div>
       </div>
     </div>
   );
