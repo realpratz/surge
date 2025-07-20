@@ -134,7 +134,7 @@ export function ProfileIndex() {
                       <div
                         className={`font-bold text-xl ${getRatingColor(cfRatingNumber)} group-hover:scale-105 transition-transform duration-300 inline-block animate-pulse`}
                       >
-                        {profile ? (
+                        {profile?.cfRating ? (
                           <span>
                             {`${profile?.cfRating}`}{" "}
                             <span className="md:hidden">
@@ -154,11 +154,11 @@ export function ProfileIndex() {
         </div>
 
         {/* Progress Section */}
-        {profile?.cfRating && profile?.cfHandle && (
+        {profile?.cfHandle && (
           <div>
-            <ProgressLevel cfRating={profile?.cfRating} />
+            {profile?.cfRating && <ProgressLevel cfRating={profile?.cfRating} />}
             <StreakHeatmap handle={profile?.cfHandle} />
-            <RatingGraph handle={profile?.cfHandle} />
+            {profile?.cfRating && <RatingGraph handle={profile?.cfHandle} />}
             <ProblemRatingBar handle={profile?.cfHandle} />
             <TagPieChart handle={profile?.cfHandle} />
           </div>
