@@ -51,11 +51,7 @@ export async function checkVerificationController(
       if (verifiedUser.cfHandle && verifiedUser.id) {
         //Refresh user data with priority 1! (Lower is more urgent)
         await fetchUserSubmissions(verifiedUser.cfHandle, verifiedUser.id, 1);
-        await fetchUserRatingChanges(
-          verifiedUser.cfHandle,
-          verifiedUser.id,
-          1
-        );
+        await fetchUserRatingChanges(verifiedUser.cfHandle, verifiedUser.id, 1);
       }
       res.status(200).json({
         success: true,

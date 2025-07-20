@@ -89,23 +89,27 @@ export const submissions = pgTable("submissions", {
   memoryKb: integer("memory_consumed_bytes"),
 });
 
-export const userContests = pgTable("user_contests", {
-  id: serial("id").primaryKey(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id),
-  contestId: integer("contest_id")
-    .notNull()
-    .references(() => contests.externalId),
-  rank: integer("rank"),
-  solvedCount: integer("solved_count"),
-  penalty: integer("penalty"),
-  oldRating: integer("old_rating"),
-  newRating: integer("new_rating"),
-  updateTime: timestamp("update_time", { precision: 0, mode: "string" }),
-}, (table) => [
-  (uniqueIndex("user_contest_unique").on(table.userId, table.contestId)),
-]);
+export const userContests = pgTable(
+  "user_contests",
+  {
+    id: serial("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id),
+    contestId: integer("contest_id")
+      .notNull()
+      .references(() => contests.externalId),
+    rank: integer("rank"),
+    solvedCount: integer("solved_count"),
+    penalty: integer("penalty"),
+    oldRating: integer("old_rating"),
+    newRating: integer("new_rating"),
+    updateTime: timestamp("update_time", { precision: 0, mode: "string" }),
+  },
+  (table) => [
+    uniqueIndex("user_contest_unique").on(table.userId, table.contestId),
+  ]
+);
 
 export const potd = pgTable("potd", {
   id: serial("id").primaryKey(),

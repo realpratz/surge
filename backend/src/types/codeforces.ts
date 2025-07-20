@@ -90,12 +90,12 @@ export interface Contest {
 }
 
 export interface ApiResponse<T> {
-  status: 'OK' | 'FAILED';
+  status: "OK" | "FAILED";
   comment?: string;
   result?: T;
 }
 
-export type TimeRange = 'month' | '6months' | 'year' | 'all';
+export type TimeRange = "month" | "6months" | "year" | "all";
 
 export interface SolvedProblem {
   name: string;

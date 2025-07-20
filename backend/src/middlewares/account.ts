@@ -1,7 +1,7 @@
 import express from "express";
 import { db } from "../drizzle/db";
-import {users} from "../drizzle/schema";
-import {eq} from "drizzle-orm";
+import { users } from "../drizzle/schema";
+import { eq } from "drizzle-orm";
 
 export async function validateStartVerificationRequest(
   req: express.Request,
@@ -29,15 +29,13 @@ export async function validateStartVerificationRequest(
     .from(users)
     .where(eq(users.cfHandle, handle))
     .limit(1)
-    .then(rows => rows[0]);
+    .then((rows) => rows[0]);
 
   if (handleUser) {
-    res
-      .status(400)
-      .json({
-        success: false,
-        message: "Handle is already linked to an account.",
-      });
+    res.status(400).json({
+      success: false,
+      message: "Handle is already linked to an account.",
+    });
     return;
   }
 
