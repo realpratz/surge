@@ -32,6 +32,7 @@ export default function Navbar() {
           </Link>
           <Link
             to="/leaderboard"
+            search={{ batch: undefined, level: undefined }}
             className="group transition-all duration-200 hover:scale-110"
             activeProps={{
               className:
@@ -136,6 +137,7 @@ export default function Navbar() {
             </Link>
             <Link
               to="/leaderboard"
+              search={{ batch: undefined, level: undefined }}
               className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center"
               activeProps={{
                 className:
