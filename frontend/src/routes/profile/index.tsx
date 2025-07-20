@@ -154,15 +154,17 @@ export function ProfileIndex() {
         </div>
 
         {/* Progress Section */}
-        {profile?.cfHandle && (
-          <div>
-            {profile?.cfRating && <ProgressLevel cfRating={profile?.cfRating} />}
-            <StreakHeatmap handle={profile?.cfHandle} />
-            {profile?.cfRating && <RatingGraph handle={profile?.cfHandle} />}
-            <ProblemRatingBar handle={profile?.cfHandle} />
-            <TagPieChart handle={profile?.cfHandle} />
-          </div>
-        )}
+        <div>
+          {profile?.cfRating && profile?.cfHandle && (
+            <ProgressLevel cfRating={profile?.cfRating} />
+          )}
+          {profile?.cfHandle && <StreakHeatmap handle={profile?.cfHandle} />}
+          {profile?.cfRating && profile?.cfHandle && (
+            <RatingGraph handle={profile?.cfHandle} />
+          )}
+          {profile?.cfHandle && <ProblemRatingBar handle={profile?.cfHandle} />}
+          {profile?.cfHandle && <TagPieChart handle={profile?.cfHandle} />}
+        </div>
       </div>
     </div>
   );
