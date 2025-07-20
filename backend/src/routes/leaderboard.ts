@@ -1,8 +1,7 @@
 import { Router } from "express";
 import { db } from "../drizzle/db";
 import { userContests, users } from "../drizzle/schema";
-import { desc, eq } from "drizzle-orm";
-// import { Request, Response } from "express";
+import { desc, eq, isNotNull, sql, and } from "drizzle-orm";
 
 const router = Router();
 
@@ -14,15 +13,16 @@ router.get("/", async (req, res) => {
         name: users.name,
         email: users.email,
         cfHandle: users.cfHandle,
-        cfRating: users.cfRating,
+        cfRating: sql`COALESCE(${users.cfRating}, 0)`,
         pfpUrl: users.pfpUrl,
       })
       .from(users)
-      .orderBy(desc(users.cfRating));
+      .where(isNotNull(users.cfHandle))
+      .orderBy(desc(sql`COALESCE(${users.cfRating}, 0)`));
     const updatedLeaderboard = leaderboard.map((user) => {
       const match = user.email.match(/f(\d{4})/);
       const batch = match ? match[1] : null;
-      return { ...user, batch: batch, cfRating: user.cfRating ?? 0 };
+      return { ...user, batch: batch };
     });
     res.status(200).json(updatedLeaderboard);
   } catch (err) {
@@ -42,13 +42,19 @@ router.get("/:slug", async (req, res) => {
         name: users.name,
         email: users.email,
         cfHandle: users.cfHandle,
-        cfRating: users.cfRating,
+        cfRating: sql`COALESCE(${users.cfRating}, 0)`,
         rank: userContests.rank,
         pfpUrl: users.pfpUrl,
       })
       .from(users)
       .leftJoin(userContests, eq(users.id, userContests.userId))
-      .where(eq(userContests.contestId, contestId))
+      .where(
+        and(
+          eq(userContests.contestId, contestId),
+          isNotNull(userContests.rank),
+          isNotNull(users.cfHandle)
+        )
+      )
       .orderBy(userContests.rank);
     const updatedLeaderboard = leaderboard.map((user) => {
       const match = user.email.match(/f(\d{4})/);
@@ -56,8 +62,6 @@ router.get("/:slug", async (req, res) => {
       return {
         ...user,
         batch: batch,
-        rank: user.rank ?? 0,
-        cfRating: user.cfRating ?? 0,
       };
     });
     res.status(200).json(updatedLeaderboard);
