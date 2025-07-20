@@ -1,9 +1,11 @@
+import { eq } from "drizzle-orm";
 import { db } from "../drizzle/db";
 import {
   contests,
   problems,
   submissions,
   userContests,
+  users,
   verdictEnum,
 } from "../drizzle/schema";
 import {
@@ -171,9 +173,28 @@ export async function updateUserRatings(
     const insertedRows = await db
       .insert(userContests)
       .values(contests)
-      .onConflictDoNothing();
+      .onConflictDoNothing()
+      .returning();
     console.log(`Updated user_contests for ${handle}`);
-    console.log("Inserted", insertedRows.rowCount, "rows");
+    console.log("Inserted", insertedRows.length, "rows");
+
+    if (insertedRows.length === 0) return;
+
+    const updatedRating = insertedRows
+      .filter((entry) => entry.updateTime)
+      .sort(
+        (a, b) =>
+          new Date(a.updateTime!).getTime() - new Date(b.updateTime!).getTime()
+      )
+      .pop()?.newRating;
+
+    if (!updatedRating) return;
+
+    await db
+      .update(users)
+      .set({ cfRating: updatedRating })
+      .where(eq(users.id, userId));
+    console.log(`Updating rating for ${handle} to ${updatedRating}`);
   } catch (err) {
     console.error(err);
     return;
