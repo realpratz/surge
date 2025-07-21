@@ -75,7 +75,7 @@ As an exercise, try to determine the required complexity for the set of practice
 
 ### 3.F: Sorting
 
-Sorting is the act of rearranging a list of numbers in increasing or decreasing order. You might have learnt the different approaches to sorting in DSA or FDSA. However, in competitive coding, we are not concerned with the exact mechanics of sorting; all we are concerned with is its application. All you need to know is how to use the in-built `C++ sort()` function on a vector, and the fact that it runs at $O(n \\log n)$ complexity, and you are good to go\!
+Sorting is the act of rearranging a list of numbers in increasing or decreasing order. You might have learnt the different approaches to sorting in DSA or FDSA. However, in competitive coding, we are not concerned with the exact mechanics of sorting; all we are concerned with is its application. All you need to know is how to use the in-built `C++ sort()` function on a vector, and the fact that it runs at $O(n \log n)$ complexity, and you are good to go\!
 
 1.  [Basics of sorting](https://www.geeksforgeeks.org/sorting-in-cpp-stl/)
 2.  [Sorting a vector of pairs](https://www.geeksforgeeks.org/sort-vector-of-pairs-in-c-stl/)
