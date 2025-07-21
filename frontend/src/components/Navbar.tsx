@@ -123,7 +123,7 @@ export default function Navbar() {
           <div className="flex flex-col items-start pl-6 gap-6 flex-grow">
             <Link
               to="/"
-              className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center"
+              className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center w-52"
               activeProps={{
                 className:
                   "group transition-all duration-200 hover:scale-110 active",
@@ -140,7 +140,7 @@ export default function Navbar() {
             <Link
               to="/leaderboard"
               search={{ batch: undefined, level: undefined }}
-              className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center"
+              className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center w-52"
               activeProps={{
                 className:
                   "group transition-all duration-200 hover:scale-110 active",
@@ -156,7 +156,7 @@ export default function Navbar() {
             </Link>
             <Link
               to="/potd"
-              className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center"
+              className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center w-52"
               activeProps={{
                 className:
                   "group transition-all duration-200 hover:scale-110 active",
@@ -172,7 +172,7 @@ export default function Navbar() {
             </Link>
             <Link
               to="/resource"
-              className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center"
+              className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center w-52"
               activeProps={{
                 className:
                   "group transition-all duration-200 hover:scale-110 active",
@@ -188,7 +188,7 @@ export default function Navbar() {
             </Link>
             <Link
               to="/profile"
-              className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center"
+              className="group transition-all duration-200 hover:scale-110 flex gap-4 text-xl text-highlight-light items-center w-52"
               activeProps={{
                 className:
                   "group transition-all duration-200 hover:scale-110 active",
