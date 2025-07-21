@@ -48,12 +48,8 @@
           "name": "cf_user_stats_user_id_users_id_fk",
           "tableFrom": "cf_user_stats",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -112,9 +108,7 @@
         "contests_external_id_unique": {
           "name": "contests_external_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "external_id"
-          ]
+          "columns": ["external_id"]
         }
       },
       "policies": {},
@@ -157,12 +151,8 @@
           "name": "potd_problem_id_problems_id_fk",
           "tableFrom": "potd",
           "tableTo": "problems",
-          "columnsFrom": [
-            "problem_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["problem_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -172,9 +162,7 @@
         "potd_date_unique": {
           "name": "potd_date_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "date"
-          ]
+          "columns": ["date"]
         }
       },
       "policies": {},
@@ -217,12 +205,8 @@
           "name": "potd_solves_potd_id_potd_id_fk",
           "tableFrom": "potd_solves",
           "tableTo": "potd",
-          "columnsFrom": [
-            "potd_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["potd_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -230,12 +214,8 @@
           "name": "potd_solves_user_id_users_id_fk",
           "tableFrom": "potd_solves",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -321,12 +301,8 @@
           "name": "problems_contest_id_contests_external_id_fk",
           "tableFrom": "problems",
           "tableTo": "contests",
-          "columnsFrom": [
-            "contest_id"
-          ],
-          "columnsTo": [
-            "external_id"
-          ],
+          "columnsFrom": ["contest_id"],
+          "columnsTo": ["external_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -409,12 +385,8 @@
           "name": "submissions_user_id_users_id_fk",
           "tableFrom": "submissions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -422,12 +394,8 @@
           "name": "submissions_problem_id_problems_id_fk",
           "tableFrom": "submissions",
           "tableTo": "problems",
-          "columnsFrom": [
-            "problem_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["problem_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -525,12 +493,8 @@
           "name": "user_contests_user_id_users_id_fk",
           "tableFrom": "user_contests",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -538,12 +502,8 @@
           "name": "user_contests_contest_id_contests_external_id_fk",
           "tableFrom": "user_contests",
           "tableTo": "contests",
-          "columnsFrom": [
-            "contest_id"
-          ],
-          "columnsTo": [
-            "external_id"
-          ],
+          "columnsFrom": ["contest_id"],
+          "columnsTo": ["external_id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -639,37 +599,27 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         },
         "users_cf_handle_unique": {
           "name": "users_cf_handle_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "cf_handle"
-          ]
+          "columns": ["cf_handle"]
         },
         "users_codechef_handle_unique": {
           "name": "users_codechef_handle_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "codechef_handle"
-          ]
+          "columns": ["codechef_handle"]
         },
         "users_atcoder_handle_unique": {
           "name": "users_atcoder_handle_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "atcoder_handle"
-          ]
+          "columns": ["atcoder_handle"]
         },
         "users_leetcode_handle_unique": {
           "name": "users_leetcode_handle_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "leetcode_handle"
-          ]
+          "columns": ["leetcode_handle"]
         }
       },
       "policies": {},
@@ -681,14 +631,7 @@
     "public.verdict": {
       "name": "verdict",
       "schema": "public",
-      "values": [
-        "AC",
-        "WA",
-        "TLE",
-        "RE",
-        "CE",
-        "other"
-      ]
+      "values": ["AC", "WA", "TLE", "RE", "CE", "other"]
     }
   },
   "schemas": {},

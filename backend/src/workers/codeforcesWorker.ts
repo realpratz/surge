@@ -74,11 +74,7 @@ async function init() {
           (submission) => submission.problem
         );
         await addCodeforcesProblems(fetchedProblems);
-        await addCodeforcesSubmissions(
-          fetchedSubmissions,
-          userId,
-          handle,
-        );
+        await addCodeforcesSubmissions(fetchedSubmissions, userId, handle);
       } else if (type === "problemset.problems") {
         const fetchedProblems = data.result.problems;
         await updateProblems(fetchedProblems);

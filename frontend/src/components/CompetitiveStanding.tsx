@@ -92,7 +92,9 @@ function Card({
         <div className="text-sm text-gray-400 mb-1 underline underline-offset-auto font-bold">
           {title}
         </div>
-        <div className="text-3xl font-bold text-highlight-light truncate break-all">{value}</div>
+        <div className="text-3xl font-bold text-highlight-light truncate break-all">
+          {value}
+        </div>
       </div>
       <img src={img} alt={title} className="h-24 w-24" />
     </div>
