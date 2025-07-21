@@ -16,7 +16,7 @@ export default function Login() {
         </h1>
         <p className="text-sm text-gray-300 mb-8">powered by CRUx</p>
         <a href={`${import.meta.env.VITE_API_BASE_URL}/auth/google`}>
-          <button className="bg-gradient-to-br from-highlight-light to-accent-red text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition">
+          <button className="bg-gradient-to-br from-highlight-light to-accent-red text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:scale-105 hover:shadow-lg transition hover:cursor-pointer">
             Login using Google
           </button>
         </a>

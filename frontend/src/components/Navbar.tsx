@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <nav>
       {/* Desktop Navbar */}
-      <div className="hidden md:flex fixed inset-y-0 left-0 w-30 bg-highlight-dark text-white flex flex-col items-center justify-between py-4 shadow-lg z-50">
+      <div className="hidden fixed inset-y-0 left-0 w-30 bg-highlight-dark text-white md:flex flex-col items-center justify-between py-4 shadow-lg z-50">
         <Link to="/" className="mt-6">
           <img src="/logo-v2.png" alt="Logo" className="w-14 h-14" />
         </Link>
@@ -78,9 +78,11 @@ export default function Navbar() {
                 "group transition-all duration-200 hover:scale-110 active",
             }}
           >
-            <span className="material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
-              account_circle
-            </span>
+            <div>
+              <span className="material-symbols-outlined text-highlight-light group-hover:text-white transition-colors duration-200 [.active_&]:text-white [.active_&]:drop-shadow-lg">
+                account_circle
+              </span>
+            </div>
           </Link>
         </div>
       </div>
