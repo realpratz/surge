@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, Loader, CheckCircle } from "lucide-react";
 import axios from "axios";
+import type { User } from "../types/User";
 
 interface EditProfileModalProps {
   initialValues: {
@@ -10,7 +11,7 @@ interface EditProfileModalProps {
     codechefHandle: string;
   };
   onClose: () => void;
-  onSuccess: (updatedUser: any) => void;
+  onSuccess: (updatedUser: User) => void;
 }
 
 export default function EditProfileModal({
