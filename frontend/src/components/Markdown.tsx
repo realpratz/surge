@@ -1,7 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { monokaiSublime } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import materialOceanTheme from "../material-ocean-theme";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
@@ -26,7 +26,7 @@ export default function Markdown({ content }: { content: string }) {
                 PreTag="div"
                 children={String(children).replace(/\n$/, "")}
                 language={language}
-                style={monokaiSublime}
+                style={materialOceanTheme}
               />
             ) : (
               <code className={className}>{children?.toString()}</code>
