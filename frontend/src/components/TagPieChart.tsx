@@ -53,7 +53,7 @@ export default function TagPieChart({ handle }: { handle: string }) {
     "#fda4af",
   ];
 
-  return (
+  return data.length ? (
     <div>
       <h2 className="text-white text-xl mb-4 mt-4">
         Tags <span className="text-gray-400">Solved</span>
@@ -107,5 +107,5 @@ export default function TagPieChart({ handle }: { handle: string }) {
         </div>
       </div>
     </div>
-  );
+  ) : null;
 }
