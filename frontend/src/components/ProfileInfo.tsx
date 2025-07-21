@@ -68,8 +68,8 @@ const ProfileInfo: React.FC<{ profile: User | null }> = ({ profile }) => {
             </button>
           )}
 
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="flex-shrink-0">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+            <div className="flex-shrink-0 flex justify-center sm:block">
               <ProfileAvatar pfpUrl={localProfile?.pfpUrl || null} />
             </div>
 
@@ -142,25 +142,19 @@ const PlatformLink = ({
   logo: string;
   rating?: number | null | undefined;
 }) => (
-  <div className="flex items-start gap-2 group">
-    <img
-      src={logo}
-      alt={`${label} logo`}
-      className="w-10 h-auto mt-1 opacity-80"
-    />
-    <div>
-      <div className="text-sm text-gray-400">{label}</div>
+  <div className="flex items-center gap-3 group">
+    <img src={logo} alt={`${label} logo`} className="w-6 h-6 opacity-80" />
+    <div className="flex flex-col text-sm">
+      <span className="text-gray-400">{label}</span>
       <a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-white font-mono font-semibold hover:text-blue-400 transition-colors"
+        className="text-white font-mono font-semibold hover:text-blue-400 transition-colors break-all"
       >
         {handle}
         {rating && (
-          <span className={`ml-2 font-mono ${getRatingColor(rating)}`}>
-            ({rating})
-          </span>
+          <span className={`ml-1 ${getRatingColor(rating)}`}>({rating})</span>
         )}
       </a>
     </div>
