@@ -57,7 +57,12 @@ export default function EditProfileModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-dark-background flex items-center justify-center z-50 shadow-5xl">
+    <div
+      className="fixed inset-0 bg-dark-background flex items-center justify-center z-50 shadow-5xl"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="edit-profile-title"
+    >
       <div className="bg-highlight-dark text-white p-6 rounded-lg w-[90%] max-w-lg shadow-xl relative">
         <button
           className="absolute top-3 right-3 text-gray-400 hover:text-white hover:cursor-pointer"
