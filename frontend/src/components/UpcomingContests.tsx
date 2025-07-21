@@ -14,6 +14,7 @@ const PLATFORM_LOGOS: Record<string, string> = {
   "codeforces.com": "/logos/codeforces.svg",
   "codechef.com": "/logos/codechef.png",
   "atcoder.jp": "/logos/atcoder.png",
+  "leetcode.com": "/logos/leetcode.png",
 };
 
 const formatDate = (iso: string) =>
