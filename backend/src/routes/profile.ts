@@ -25,13 +25,7 @@ router.get("/", async (req, res) => {
       res.status(500).json({ success: false, message: "User not found!" });
       return;
     }
-    res.status(200).json({
-      name,
-      email,
-      pfpUrl,
-      cfHandle,
-      cfRating: userData.cfRating,
-    });
+    res.status(200).json(userData);
   } catch (err: any) {
     res.status(500).json({ success: false, message: err.message });
   }
