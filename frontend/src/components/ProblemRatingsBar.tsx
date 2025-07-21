@@ -36,7 +36,7 @@ export default function ProblemRatingBar({ handle }: { handle: string }) {
       });
   }, [handle]);
 
-  return (
+  return data.length ? (
     <div>
       <h2 className="text-white text-xl mb-4 mt-4">
         Problems <span className="text-gray-400">Solved</span>
@@ -60,5 +60,5 @@ export default function ProblemRatingBar({ handle }: { handle: string }) {
         </ResponsiveContainer>
       </div>
     </div>
-  );
+  ) : null;
 }

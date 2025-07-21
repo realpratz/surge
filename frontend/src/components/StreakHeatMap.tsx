@@ -125,7 +125,7 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
     i === 0 || m !== monthNums[i - 1] ? dayjs(weeks[i][0]).format("MMM") : ""
   );
 
-  return (
+  return stats?.totalAll ? (
     <div className="mt-10">
       <h2 className="text-white text-xl mb-4">
         Codeforces <span className="text-gray-400">Submissions</span>
@@ -234,5 +234,5 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
         )}
       </div>
     </div>
-  );
+  ) : null;
 }
