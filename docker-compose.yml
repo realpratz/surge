@@ -49,6 +49,7 @@ services:
     volumes:
       - ./backend/src:/usr/local/app/backend/src
       - ./backend/tsconfig.json:/usr/local/app/backend/tsconfig.json
+      - ./backend/drizzle.config.ts:/usr/local/app/backend/drizzle.config.ts
     depends_on:
       - postgres
       - redis
