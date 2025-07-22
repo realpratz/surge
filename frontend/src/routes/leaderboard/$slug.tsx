@@ -83,7 +83,7 @@ function RouteComponent() {
                 <img
                   src={filteredLeaderboard[1].pfpUrl}
                   alt="PFP"
-                  className="h-18 w-18 border-[#5FCABB] border-4 rounded-full "
+                  className="h-18 w-18 border-[#5FCABB] border-4 rounded-full object-cover"
                 />
               </div>
               <div className="absolute top-1 w-full text-lg flex justify-center items-center">
@@ -119,7 +119,7 @@ function RouteComponent() {
                 <img
                   src={filteredLeaderboard[0].pfpUrl}
                   alt="PFP"
-                  className="h-24 w-24 border-[#DCBE66] border-4 rounded-full "
+                  className="h-24 w-24 border-[#DCBE66] border-4 rounded-full object-cover"
                 />
               </div>
               <div className="absolute top-3 text-lg flex justify-center items-center w-full">
@@ -158,7 +158,7 @@ function RouteComponent() {
                 <img
                   src={filteredLeaderboard[2].pfpUrl}
                   alt="PFP"
-                  className="h-18 w-18 border-[#DD7A6C] border-4 rounded-full "
+                  className="h-18 w-18 border-[#DD7A6C] border-4 rounded-full object-cover"
                 />
               </div>
               <div className="absolute top-1 text-lg flex justify-center items-center w-full">
@@ -202,7 +202,7 @@ function RouteComponent() {
               <img
                 src={leaderboardUser.pfpUrl}
                 alt="PFP"
-                className="h-10 aspect-1/1 rounded-full"
+                className="h-10 aspect-1/1 rounded-full object-cover"
               />
             </div>
             <Link
