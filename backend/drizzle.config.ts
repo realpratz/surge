@@ -1,14 +1,14 @@
 import { config } from "dotenv";
 import { defineConfig } from "drizzle-kit";
 
-config({ path: "../../.env" });
+config({ path: "../.env" });
 
 export default defineConfig({
   dialect: "postgresql",
-  out: "./drizzle",
-  schema: "./drizzle/schema.ts",
+  out: "./src/drizzle",
+  schema: "./src/drizzle/schema.ts",
   dbCredentials: {
-    host: "localhost",
+    host: process.env.POSTGRES_HOST!,
     port: Number(process.env.PGPORT!),
     user: process.env.POSTGRES_USER!,
     password: process.env.POSTGRES_PASSWORD!,
