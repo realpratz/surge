@@ -84,7 +84,7 @@ passport.use(
           .values({ email, name, pfpUrl })
           .onConflictDoUpdate({
             target: users.email,
-            set: { name, pfpUrl },
+            set: { name },
           })
           .returning()
           .then((rows) => rows[0]);
