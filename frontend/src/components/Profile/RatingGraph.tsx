@@ -15,16 +15,34 @@ interface RatingPoint {
   newRating: number;
 }
 
+const RatingGraphSkeleton = () => {
+  return (
+    <div>
+      <h2 className="text-white text-xl mb-4 mt-4">
+        Rating <span className="text-gray-400">Graph</span>
+      </h2>
+      <div className="bg-highlight-dark p-4 md:p-6 rounded-lg">
+        <div className="w-full h-[300px] bg-gray-600 rounded animate-pulse"></div>
+      </div>
+    </div>
+  );
+};
+
 export default function RatingGraph({ handle }: { handle: string }) {
   const [data, setData] = useState<RatingPoint[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`${import.meta.env.VITE_API_BASE_URL}/account/${handle}/ratings`, {
         withCredentials: true,
       })
       .then((res) => {
         setData(res.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [handle]);
 
@@ -32,6 +50,10 @@ export default function RatingGraph({ handle }: { handle: string }) {
     date: dayjs(d.ratingUpdateTimeSeconds * 1000).format("MM-YY"),
     rating: d.newRating,
   }));
+
+  if (isLoading) {
+    return <RatingGraphSkeleton />;
+  }
 
   return (
     <div>
