@@ -164,25 +164,25 @@ Returns a list of distinct solved problems with tags, rating, and solve date.
 #### Get all contests via the CList API
 
 ```http
-  GET /api/contests
+GET /api/contests
 ```
 
 #### Get only upcoming contests via the CList API
 
 ```http
-  GET /api/contests/upcoming
+GET /api/contests/upcoming
 ```
 
 #### Get campus wide leaderboard
 
 ```http
-  GET /api/leaderboard
+GET /api/leaderboard
 ```
 
 #### Get leaderboard for a specific CodeForces contest
 
 ```http
-  GET /api/leaderboard/:slug
+GET /api/leaderboard/:slug
 ```
 
 | URL Parameter | Type     | Description                         |
@@ -192,13 +192,13 @@ Returns a list of distinct solved problems with tags, rating, and solve date.
 #### Get profile data for current user
 
 ```http
-  GET /api/profile
+GET /api/profile
 ```
 
 #### Get profile data for a given user
 
 ```http
-  GET /api/profile/:slug
+GET /api/profile/:slug
 ```
 
 | URL Parameter | Type     | Description                                 |
