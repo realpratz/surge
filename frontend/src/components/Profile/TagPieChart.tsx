@@ -2,18 +2,33 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
+const TagPieChartSkeleton = () => {
+  return (
+    <div>
+      <h2 className="text-white text-xl mb-4 mt-4">
+        Tags <span className="text-gray-400">Solved</span>
+      </h2>
+      <div className="bg-highlight-dark p-4 md:p-6 rounded-lg">
+        <div className="w-full h-[400px] bg-gray-600 rounded animate-pulse"></div>
+      </div>
+    </div>
+  );
+};
+
 export default function TagPieChart({ handle }: { handle: string }) {
   const [data, setData] = useState<{ name: string; value: number }[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`${import.meta.env.VITE_API_BASE_URL}/account/${handle}/solved`, {
         withCredentials: true,
       })
       .then((res) => {
         const tagCount: Record<string, number> = {};
-        res.data.forEach((p: any) => {
-          p.tags.forEach((tag: string) => {
+        res.data.forEach((p: { tags: string[] }) => {
+          p.tags.forEach((tag) => {
             tagCount[tag] = (tagCount[tag] || 0) + 1;
           });
         });
@@ -23,6 +38,9 @@ export default function TagPieChart({ handle }: { handle: string }) {
           .sort((a, b) => b.value - a.value); // sort descending
 
         setData(result);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [handle]);
 
@@ -52,6 +70,10 @@ export default function TagPieChart({ handle }: { handle: string }) {
     "#c7d2fe",
     "#fda4af",
   ];
+
+  if (isLoading) {
+    return <TagPieChartSkeleton />;
+  }
 
   return data.length ? (
     <div>

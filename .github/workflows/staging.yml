@@ -1,6 +1,9 @@
 name: Host a staging instance of Surge
 
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   staging:

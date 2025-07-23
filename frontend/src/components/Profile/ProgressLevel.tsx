@@ -1,5 +1,5 @@
 import React from "react";
-import { getRatingLevel, getRatingBand } from "../utils";
+import { getRatingLevel, getRatingBand } from "../../utils";
 
 interface ProgressLevelProps {
   cfRating: number | null;
