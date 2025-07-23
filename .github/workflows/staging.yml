@@ -3,7 +3,7 @@ name: Host a staging instance of Surge
 on:
   push:
     branches:
-      - staging
+      - main
 
 jobs:
   staging:
