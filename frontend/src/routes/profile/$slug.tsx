@@ -31,12 +31,12 @@ function RouteComponent() {
         setProfile(res.data);
         setLoading(false);
       })
-      .catch((err: any) => {
+      .catch((err) => {
         console.error(err);
         setError("Failed to load profile.");
         setLoading(false);
       });
-  }, []);
+  }, [slug]);
 
   if (loading) return <LoadingIndicator />;
 
