@@ -23,6 +23,73 @@ const getColor = (count: number) => {
   return "bg-gray-700";
 };
 
+// Loading component for the heatmap
+const HeatmapSkeleton = () => {
+  const weeks = Array.from({ length: 53 });
+  const days = Array.from({ length: 7 });
+
+  return (
+    <div className="mt-10">
+      <h2 className="text-white text-xl mb-4">
+        Codeforces <span className="text-gray-400">Submissions</span>
+      </h2>
+
+      <div className="bg-highlight-dark p-4 rounded-lg">
+        {/* Month labels skeleton */}
+        <div className="grid grid-flow-col text-xs text-gray-300 mb-1 w-full md:ml-7 md:w-[calc(100%-1.75rem)] animate-pulse">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <div key={i} className="text-center">
+              <div className="bg-gray-600 h-3 w-6 rounded mx-auto"></div>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex">
+          {/* Day labels skeleton */}
+          <div className="hidden md:flex flex-col justify-between text-xs text-gray-400 mr-2 w-5">
+            {["", "Mon", "", "Wed", "", "Fri", ""].map((d, i) => (
+              <div key={i} className="h-4">
+                {d && (
+                  <div className="bg-gray-600 h-3 w-5 rounded animate-pulse"></div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Heatmap skeleton */}
+          <div
+            className="grid gap-[2px] w-full aspect-53/7 animate-pulse"
+            style={{
+              gridTemplateRows: "repeat(7, 1fr)",
+              gridTemplateColumns: `repeat(53, 1fr)`,
+            }}
+          >
+            {weeks.map((_, wi) =>
+              days.map((_, di) => (
+                <div
+                  key={`${wi}-${di}`}
+                  style={{ gridColumn: wi + 1, gridRow: di + 1 }}
+                  className="w-full h-full bg-gray-600 md:rounded-sm"
+                />
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Stats skeleton */}
+        <div className="grid grid-cols-3 grid-rows-2 gap-4 text-center text-white mt-6 animate-pulse">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i}>
+              <div className="bg-gray-600 h-6 w-8 rounded mx-auto mb-2"></div>
+              <div className="bg-gray-600 h-3 w-20 rounded mx-auto"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const computeStats = (days: string[], heatmap: Record<string, number>) => {
   const totalAll = Object.values(heatmap).reduce((sum, c) => sum + c, 0);
   let totalYear = 0,
@@ -79,8 +146,10 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
   const [stats, setStats] = useState<ReturnType<typeof computeStats> | null>(
     null
   );
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(
         `${import.meta.env.VITE_API_BASE_URL}/account/${handle}/submissions`,
@@ -98,6 +167,9 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
         const days = getPastYearDates();
         setHeatmap(map);
         setStats(computeStats(days, map));
+      })
+      .finally(async () => {
+        setIsLoading(false);
       });
   }, [handle]);
 
@@ -124,6 +196,11 @@ export default function StreakHeatmap({ handle }: { handle: string }) {
   const monthLabels = monthNums.map((m, i) =>
     i === 0 || m !== monthNums[i - 1] ? dayjs(weeks[i][0]).format("MMM") : ""
   );
+
+  // Show loading state while fetching data
+  if (isLoading) {
+    return <HeatmapSkeleton />;
+  }
 
   return stats?.totalAll ? (
     <div className="mt-10">

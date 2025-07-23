@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Pencil } from "lucide-react";
 import ProfileAvatar from "./ProfileAvatar";
-import { getRatingColor } from "../utils";
-import { useAuth } from "../context/AuthContext";
-import EditProfileModal from "./EditProfileModal";
-import type { User } from "../types/User";
+import { getRatingColor } from "../../utils";
+import { useAuth } from "../../context/AuthContext";
+import EditProfileModal from "../EditProfileModal";
+import type { User } from "../../types/User";
 
 const PLATFORM_LOGOS: Record<string, string> = {
   "codeforces.com": "/logos/codeforces.svg",

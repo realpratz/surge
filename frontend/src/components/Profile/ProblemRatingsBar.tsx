@@ -13,10 +13,25 @@ interface Problem {
   rating?: number;
 }
 
+const ProblemRatingBarSkeleton = () => {
+  return (
+    <div>
+      <h2 className="text-white text-xl mb-4 mt-4">
+        Problems <span className="text-gray-400">Solved</span>
+      </h2>
+      <div className="bg-highlight-dark p-4 md:p-6 rounded-lg text-sm md:text-sm">
+        <div className="w-full h-[300px] bg-gray-600 rounded animate-pulse"></div>
+      </div>
+    </div>
+  );
+};
+
 export default function ProblemRatingBar({ handle }: { handle: string }) {
   const [data, setData] = useState<{ rating: number; count: number }[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     axios
       .get(`${import.meta.env.VITE_API_BASE_URL}/account/${handle}/solved`, {
         withCredentials: true,
@@ -33,8 +48,15 @@ export default function ProblemRatingBar({ handle }: { handle: string }) {
           .sort((a, b) => a.rating - b.rating);
 
         setData(result);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [handle]);
+
+  if (isLoading) {
+    return <ProblemRatingBarSkeleton />;
+  }
 
   return data.length ? (
     <div>
