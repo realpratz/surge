@@ -19,11 +19,13 @@ router.get("/", async (req, res) => {
       .from(users)
       .where(isNotNull(users.cfHandle))
       .orderBy(desc(sql`COALESCE(${users.cfRating}, 0)`));
-    const updatedLeaderboard = leaderboard.map((user) => {
-      const match = user.email.match(/f(\d{4})/);
-      const batch = match ? match[1] : null;
-      return { ...user, batch: batch };
-    });
+    const updatedLeaderboard = leaderboard
+      .map((user) => {
+        const match = user.email.match(/f(\d{4})/);
+        const batch = match ? match[1] : null;
+        return { ...user, batch: batch };
+      })
+      .filter((user) => user.email.endsWith("@hyderabad.bits-pilani.ac.in"));
     res.status(200).json(updatedLeaderboard);
   } catch (err) {
     console.error(`error fetching leaderboard:${err}`);
@@ -56,14 +58,16 @@ router.get("/:slug", async (req, res) => {
         )
       )
       .orderBy(userContests.rank);
-    const updatedLeaderboard = leaderboard.map((user) => {
-      const match = user.email.match(/f(\d{4})/);
-      const batch = match ? match[1] : null;
-      return {
-        ...user,
-        batch: batch,
-      };
-    });
+    const updatedLeaderboard = leaderboard
+      .map((user) => {
+        const match = user.email.match(/f(\d{4})/);
+        const batch = match ? match[1] : null;
+        return {
+          ...user,
+          batch: batch,
+        };
+      })
+      .filter((user) => user.email.endsWith("@hyderabad.bits-pilani.ac.in"));
     res.status(200).json(updatedLeaderboard);
   } catch (err) {
     console.error(`error fetching leaderboard:${err}`);

@@ -25,3 +25,6 @@ dist-ssr
 
 # .env
 .env
+
+#nginx prod conf
+nginx/nginx.prod.conf
