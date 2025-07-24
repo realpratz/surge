@@ -60,14 +60,18 @@ export default function CFHandleModal({ onSuccess }: CFHandleModalProps) {
           body: JSON.stringify({ handle, contestId, index }),
         }
       );
-      const data = await res.json();
       if (res.ok) {
+        const data = await res.json();
         setVerifiedUser(data.data);
         setSuccess(true);
         setTimeout(() => {
           onSuccess(data.data);
         }, 5000);
-      } else {
+      } else if (res.status === 429) {
+        setError("Please wait 5 secs before trying again.")
+      }
+      else {
+        const data = await res.json();
         setError(data.message);
       }
     } catch (err) {

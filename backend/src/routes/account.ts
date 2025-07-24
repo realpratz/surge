@@ -16,10 +16,24 @@ import {
   problems,
 } from "../drizzle/schema";
 import { and, eq } from "drizzle-orm";
+import {rateLimit} from "express-rate-limit";
 
 const router = express.Router();
 
 router.use(requireAuth);
+
+const limiter = rateLimit({
+  windowMs: 5000,
+  limit: 1,
+  standardHeaders: 'draft-8', // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+  ipv6Subnet: 56, // Set to 60 or 64 to be less aggressive, or 52 or 48 to be more aggressive
+  // store: ... , // Redis, Memcached, etc. See below.
+})
+
+//Rate limit these routes to ensure users don't overwhelm the codeforces API
+router.use("/start-verification", limiter)
+router.use("/check-verification", limiter)
 
 router.post(
   "/start-verification",

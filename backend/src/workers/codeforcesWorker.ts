@@ -1,7 +1,7 @@
 import { Worker } from "bullmq";
 import { connection } from "../queues/codeforcesQueue";
 import { RatingChange, Submission } from "../types/codeforces";
-import { client, db } from "../drizzle/db";
+import { db } from "../drizzle/db";
 import { problems } from "../drizzle/schema";
 import {
   addCodeforcesProblems,
@@ -31,7 +31,6 @@ async function refreshProblemKeysCache() {
 }
 
 async function init() {
-  await client.connect();
   await refreshProblemKeysCache();
 
   console.log("Connected to postgres");
