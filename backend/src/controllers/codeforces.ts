@@ -64,7 +64,9 @@ export async function fetchUserRatingChanges(
       jobId: `${cfHandle}-RatingRefresh`,
     }
   );
-  console.log(`Enqueued job for ${cfHandle}`);
+  console.log(
+    `Enqueued fetchUserRatingChanges job for ${cfHandle} (Priority: ${priority})`
+  );
 }
 
 export async function fetchRatingChanges() {
@@ -113,5 +115,7 @@ export async function fetchUserSubmissions(
       jobId: `${cfHandle}-SubmissionsRefresh`,
     }
   );
-  console.log(`Enqueued job for ${cfHandle}`);
+  console.log(
+    `Enqueued fetchUserSubmissions job for ${cfHandle} (Priority: ${priority})`
+  );
 }
