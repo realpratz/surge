@@ -1,3 +1,5 @@
+# Copy this file as nginx.prod.conf and make the required changes before running the prod compose profile!
+
 worker_processes 1;
 
 events { worker_connections 1024; }
