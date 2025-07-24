@@ -14,7 +14,8 @@ const router = express.Router();
 let contestsCache: Contest[] = [];
 
 const BASE_URL = "https://clist.by:443/api/v4/contest/";
-const HOST_REGEX = "^(codeforces\.com|codechef\.com|atcoder\.jp)$";
+const HOST_REGEX =
+  "^(codeforces\.com|codechef\.com|atcoder\.jp|leetcode\.com)$";
 
 const fetchContests = async () => {
   try {
