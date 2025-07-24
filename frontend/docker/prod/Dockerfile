@@ -2,10 +2,17 @@ FROM node:22.17-bookworm-slim AS build-stage
 
 WORKDIR /app
 
+COPY ./frontend/package*.json ./
+COPY ./frontend/public ./public
+COPY ./frontend/index.html ./
+COPY ./frontend/tsconfig* ./
+COPY ./frontend/vite.config.ts ./
+
+RUN npm install
+
 COPY ./frontend/ .
 COPY .env .
 
-RUN npm install
 RUN npm run build
 
 FROM nginx:1.25.3-alpine-slim AS production-stage
