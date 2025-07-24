@@ -42,11 +42,9 @@ const UpcomingContests: React.FC = () => {
     fetch(import.meta.env.VITE_API_BASE_URL + "/contest/upcoming")
       .then((res) => res.json())
       .then((data: Contest[]) => {
-        const sorted = data
-          .sort(
-            (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
-          )
-          .slice(0, 5);
+        const sorted = data.sort(
+          (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
+        );
 
         setContests(sorted);
       })
