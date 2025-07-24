@@ -36,7 +36,7 @@ export async function getCurrentPotd(
       potdId = scheduled[0].pt.id;
     } else {
       // Fallback to a random problem
-      problemRow = await getRandomProblem(800, 2000);
+      problemRow = await getRandomProblem(800, 1800);
       const inserted = await db
         .insert(potd)
         .values({ date: today, problemId: problemRow.id })
