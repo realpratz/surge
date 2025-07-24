@@ -64,6 +64,37 @@ The official Competitive Coding website for BITS Pilani, Hyderabad Campus. Surge
    docker compose --profile prod down
    ```
 
+## Migrations
+**Make sure you have the dev profile up and running before running migrations.**
+
+
+The two containers required to run and generate migrations are:
+- `backend-dev`
+- `postgres`
+
+After the above mentioned containers are running you can use the following commands
+
+### Apply existing migrations
+```bash
+docker compose exec backend-dev npx drizzle-kit migrate
+```
+
+Runs migrations which haven't been applied yet. A list of migrations which have been applied is stored in a table in the database itself. Read more about this [here](https://github.com/jbranchaud/til/blob/master/drizzle/drizzle-tracks-migrations-in-a-log-table.md).
+
+### Apply current schema to the database
+```bash
+docker compose exec backend-dev npx drizzle-kit push
+```
+This command **does not** generate migrations! Make sure to generate migrations for any major changes to ensure that the history of the database schema is always preserved.
+
+
+### Generate migrations from schema
+```bash
+docker compose exec backend-dev npx drizzle-kit generate
+```
+This compares the current state of the database with the schema and generates migrations.
+
+
 ## Contribution
 
 Follow the [Contributing Guide](./CONTRIBUTING.md).
