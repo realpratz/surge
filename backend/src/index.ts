@@ -22,6 +22,8 @@ import {
   fetchSubmissions,
   fetchRatingChanges,
 } from "./controllers/codeforces";
+import "./workers/codeforcesWorker";
+
 
 dotenv.config();
 const app = express();
