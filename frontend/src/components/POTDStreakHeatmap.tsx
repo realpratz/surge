@@ -110,8 +110,8 @@ export default function PotdStreakHeatmap() {
 
         <div className="flex">
           <div className="hidden md:flex flex-col justify-between text-xs text-gray-400 mr-2 w-5">
-            {["", "Mon", "", "Wed", "", "Fri", ""].map((d) => (
-              <div key={d} className="h-4">
+            {["", "Mon", "", "Wed", "", "Fri", ""].map((d, i) => (
+              <div key={i} className="h-4">
                 {d}
               </div>
             ))}

@@ -48,7 +48,7 @@ export default function Dropdown({
         {dropDownOptions.map((option, index) => (
           <Link
             to="."
-            key={option !== "" ? option : undefined}
+            key={`${field}-${option || "N/A"}`}
             search={(prev) => updateDropdown(prev, field, option || undefined)}
             onClick={() => setIsOpen(false)}
             className="absolute top-0 flex rounded-sm h-8 w-full max-w-[10.5rem] shadow-3xl cursor-pointer items-center justify-center border border-y-1 border-x-0 border-[#1B1E30] bg-[#25293E] transition-all duration-200 ease-out hover:bg-[#25294F] md:w-42"
