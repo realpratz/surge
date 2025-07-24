@@ -1,18 +1,17 @@
-name: Host a staging instance of Surge
+name: Host the production instance of Surge
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]
 
 jobs:
-  staging:
-    name: Build and deploy to staging
+  production:
+    name: Build and deploy to surge-prod
     runs-on: self-hosted
     steps:
       - name: Pull latest code and deploy with Docker
         run: |
-          cd /home/ubuntu/clones/surge-staging
+          cd /home/ubuntu/clones/surge-prod
           git reset --hard HEAD
           GIT_SSH_COMMAND="ssh -i /home/ubuntu/.ssh/gh-actions -o IdentitiesOnly=yes" git pull
           docker compose --profile prod down
