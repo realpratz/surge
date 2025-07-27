@@ -22,10 +22,8 @@ import {
   fetchSubmissions,
   fetchRatingChanges,
 } from "./controllers/codeforces";
-import { rateLimit } from 'express-rate-limit';
+import { rateLimit } from "express-rate-limit";
 import "./workers/codeforcesWorker";
-
-
 
 dotenv.config();
 const app = express();
@@ -123,15 +121,15 @@ passport.deserializeUser(async (userId: string, done) => {
 });
 
 const limiter = rateLimit({
-	windowMs: 1000,
-	limit: 25,
-	standardHeaders: 'draft-8', // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
-	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
-	ipv6Subnet: 56, // Set to 60 or 64 to be less aggressive, or 52 or 48 to be more aggressive
-	// store: ... , // Redis, Memcached, etc. See below.
-})
+  windowMs: 1000,
+  limit: 25,
+  standardHeaders: "draft-8", // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+  ipv6Subnet: 56, // Set to 60 or 64 to be less aggressive, or 52 or 48 to be more aggressive
+  // store: ... , // Redis, Memcached, etc. See below.
+});
 
-app.use(limiter)
+app.use(limiter);
 
 app.get("/", (_req, res) => {
   res.send("Backend API is working!");
@@ -148,7 +146,9 @@ app.listen(PORT, "0.0.0.0", async () => {
   console.log(`Server running on port ${PORT}`);
   await fetchContests(1);
   await fetchProblems(1);
-  await fetchSubmissions();
-  await fetchRatingChanges();
-  startCronJobs();
+  if (process.env.VITE_ENV === "production") {
+    await fetchSubmissions();
+    await fetchRatingChanges();
+    startCronJobs();
+  }
 });
