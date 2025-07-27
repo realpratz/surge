@@ -64,6 +64,22 @@ The official Competitive Coding website for BITS Pilani, Hyderabad Campus. Surge
    docker compose --profile prod down
    ```
 
+## Environment Variables
+Make a copy of the `.env.example` file, name it `.env` and include it in the root of your project directory. A list of reccomended defaults has been provided in `.env.example`. Here is an in depth explanation on a few environment variables which you might have to tweak based on your setup.
+
+- `NGINX_PORT` - Used by nginx service running in the `frontend` service. This is only used in production and is the PORT which is exposed to the host and where the project is accessible in a production environment.
+
+- `VITE_CLIENT_URL` - The URL via which your frontend is accessible. This is used to provide permanent links to rich preview images as well as auth redirects.
+
+- `CALLBACK_URL` - This is the URL where the browser is redirected to, after the Google OAuth flow is completed successfully.
+
+- `VITE_API_BASE_URL` - The path to your backend relative to the root of your domain. By default all requests to `/api` are rewritten to the backend via the `nginx.conf` file. This is also the default configured value in `.env.example`.
+
+- `VITE_ENV` - Used to configure the environment where the project is running. Accepts values as `development`, `staging`, or `production`.
+
+**NOTE: The cron jobs to refresh user information only run when `VITE_ENV` is set to `production`** 
+
+
 ## Migrations
 **Make sure you have the dev profile up and running before running migrations.**
 
@@ -81,12 +97,6 @@ docker compose exec backend-dev npx drizzle-kit migrate
 
 Runs migrations which haven't been applied yet. A list of migrations which have been applied is stored in a table in the database itself. Read more about this [here](https://github.com/jbranchaud/til/blob/master/drizzle/drizzle-tracks-migrations-in-a-log-table.md).
 
-### Apply current schema to the database
-```bash
-docker compose exec backend-dev npx drizzle-kit push
-```
-This command **does not** generate migrations! Make sure to generate migrations for any major changes to ensure that the history of the database schema is always preserved.
-
 
 ### Generate migrations from schema
 ```bash
@@ -94,6 +104,23 @@ docker compose exec backend-dev npx drizzle-kit generate
 ```
 This compares the current state of the database with the schema and generates migrations.
 
+## Nginx Setup
+The provided `nginx.dev.conf` should be configured to run with the default configs provided in `.env.example`. However for running in prod, the `nginx.prod.conf.example` file should be copied in the same directory and named `nginx.prod.conf`. After this, the ports in the config file should be configured accordingly.
+
+### For dev
+The containers used for dev are:
+- `backend-dev`
+- `frontend-dev`
+- `nginx-dev`
+
+Both `frontend-dev` and `backend-dev` are proxied through the `nginx` container. All requests to the `/api/*` route are forwarded to `backend-dev` and the rest are forwarded to `frontend-dev`.
+
+### For prod
+The containers used for prod are:
+- `backend`
+- `frontend`
+
+In the prod setup, the `frontend` service is a container running nginx. This container redirects all requests to `/api/*` routes to the `backend` service. All other requests are redirected internally to the compiled vite project. This nginx service is exposed to the host on the configured `NGINX_PORT` environment variable.
 
 ## Contribution
 
