@@ -51,7 +51,9 @@ function RouteComponent() {
 
   const batches = [
     ...new Set<string>(leaderboardData.map((user) => user.batch)),
-  ].filter((batch) => (batch ? true : false));
+  ]
+    .filter((batch) => (batch ? true : false))
+    .sort((a, b) => parseInt(b) - parseInt(a));
 
   if (loading) return <LoadingIndicator />;
 
