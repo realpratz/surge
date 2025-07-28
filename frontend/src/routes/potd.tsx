@@ -38,6 +38,7 @@ interface TopSolver {
 export function RouteComponent() {
   const [problem, setProblem] = useState<Problem | null>(null);
   const [solved, setSolved] = useState(false);
+  const [solveCount, setSolveCount] = useState<number>(0);
   const [showTags, setShowTags] = useState(false);
   const [checking, setChecking] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -55,6 +56,7 @@ export function RouteComponent() {
       .then((data) => {
         setProblem(data.problem);
         setSolved(data.solved);
+        setSolveCount(data.solveCount);
       })
       .catch(() => setProblem(null));
   }, []);
@@ -79,6 +81,7 @@ export function RouteComponent() {
       setMessage(json.message);
       if (res.ok) {
         setSolved(true);
+        fetchTopSolver();
       }
     } catch {
       setMessage("Error checking solve");
@@ -139,7 +142,10 @@ export function RouteComponent() {
               <div>
                 <h2 className="text-3xl text-white mb-1">{problem.name}</h2>
                 <div className="text-muted text-sm">
-                  Contest {problem.contestId} • Problem {problem.index}
+                  Contest {problem.contestId} • Problem {problem.index} • Solved
+                  by <span className="text-white">{solveCount} </span>{" "}
+                  {solveCount == 1 ? "person " : "people "}
+                  today
                 </div>
               </div>
               <button

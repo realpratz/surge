@@ -51,7 +51,19 @@ export async function getCurrentPotd(
       .where(and(eq(potdSolves.userId, userId), eq(potdSolves.potdId, potdId)))
       .limit(1);
 
-    res.json({ problem: problemRow, solved: solve.length > 0 });
+    // how many total solves for this POTD?
+    const [countRow] = await db
+      .select({
+        solveCount: sql<number>`COUNT(${potdSolves.id})`,
+      })
+      .from(potdSolves)
+      .where(eq(potdSolves.potdId, potdId));
+
+    res.json({
+      problem: problemRow,
+      solved: solve.length > 0,
+      solveCount: countRow.solveCount,
+    });
   } catch (err) {
     next(err);
   }
