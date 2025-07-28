@@ -8,7 +8,7 @@ import {
   users,
 } from "../drizzle/schema";
 import { getRandomProblem, verifySubmission } from "../codeforces_api";
-import { eq, gte, desc, and } from "drizzle-orm";
+import { eq, gte, desc, and, sql } from "drizzle-orm";
 
 // GET /potd/current
 export async function getCurrentPotd(
@@ -262,6 +262,35 @@ export async function getSolveHistory(
       .orderBy(desc(potdSolves.solvedAt));
 
     res.json(history);
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getPotdStats(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const topSolvers = await db
+      .select({
+        user: users,
+        solveCount: sql<number>`COUNT(${potdSolves.id})`,
+      })
+      .from(potdSolves)
+      .innerJoin(users, eq(users.id, potdSolves.userId))
+      .groupBy(
+        users.id,
+        users.name,
+        users.cfHandle,
+        users.email,
+        users.createdAt
+      )
+      .orderBy(desc(sql<number>`COUNT(${potdSolves.id})`))
+      .limit(3);
+
+    res.json({ topSolvers });
   } catch (err) {
     next(err);
   }

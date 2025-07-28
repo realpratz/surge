@@ -9,11 +9,13 @@ import {
   Info,
   AlertCircle,
   Lightbulb,
+  Trophy,
 } from "lucide-react";
 import ProfileHeader from "../components/ProfileHeader";
 import { useAuth } from "../context/AuthContext";
 import POTDStreakHeatmap from "../components/POTDStreakHeatmap";
 import LoadingIndicator from "../components/LoadingIndicator";
+import type { User } from "../types/User";
 
 export const Route = createFileRoute("/potd")({
   component: RouteComponent,
@@ -28,16 +30,26 @@ interface Problem {
   tags: string[];
 }
 
+interface TopSolver {
+  user: User;
+  solveCount: number;
+}
+
 export function RouteComponent() {
   const [problem, setProblem] = useState<Problem | null>(null);
   const [solved, setSolved] = useState(false);
   const [showTags, setShowTags] = useState(false);
   const [checking, setChecking] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [showTop, setShowTop] = useState(true);
+  const [topSolver, setTopSolver] = useState<TopSolver | null>(null);
+  const [loadingTop, setLoadingTop] = useState(false);
 
   const { user } = useAuth();
 
   useEffect(() => {
+    fetchTopSolver();
+
     fetch(`${import.meta.env.VITE_API_BASE_URL}/potd/current`)
       .then((res) => res.json())
       .then((data) => {
@@ -75,6 +87,27 @@ export function RouteComponent() {
     }
   };
 
+  const fetchTopSolver = async () => {
+    setLoadingTop(true);
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/potd/stats`
+      );
+      const { topSolvers } = await res.json();
+      if (topSolvers.length) setTopSolver(topSolvers[0]);
+    } catch {
+      // ignore
+    } finally {
+      setLoadingTop(false);
+    }
+  };
+
+  const toggleTop = () => {
+    const next = !showTop;
+    setShowTop(next);
+    if (next && !topSolver) fetchTopSolver();
+  };
+
   if (!problem) {
     return <LoadingIndicator />;
   }
@@ -101,7 +134,7 @@ export function RouteComponent() {
       <div className="mx-auto">
         <div className="flex flex-col lg:flex-row gap-6">
           {/* POTD Card */}
-          <div className="flex-1 bg-highlight-dark  rounded-lg p-4 lg:p-6">
+          <div className="flex-1 bg-highlight-dark  rounded-lg p-4 lg:p-6 flex flex-col justify-between">
             <div className="flex items-start justify-between mb-4">
               <div>
                 <h2 className="text-3xl text-white mb-1">{problem.name}</h2>
@@ -194,23 +227,64 @@ export function RouteComponent() {
 
           {/* How it works */}
           <div className="lg:w-1/3 bg-highlight-dark rounded-lg p-4 lg:p-6">
-            <h3 className="text-lg text-white mb-3 flex items-center gap-1">
-              <Lightbulb className="w-4 h-4" /> How it works
-            </h3>
-            <div className="space-y-2 text-muted text-xs">
-              <div className="flex items-start gap-2">
-                <span className="text-accent-purple">1.</span>
-                <span>Click "Solve" to open the problem</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-accent-purple">2.</span>
-                <span>Submit your solution on Codeforces</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="text-accent-purple">3.</span>
-                <span>Return and click "Verify" to check your answer</span>
-              </div>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-lg text-white flex items-center gap-1">
+                {showTop ? (
+                  <Trophy className="w-5 h-5 mr-2 text-accent-yellow" />
+                ) : (
+                  <Lightbulb className="w-5 h-5 " />
+                )}{" "}
+                {showTop ? "Hall of Fame" : "How it works"}
+              </h3>
+              <button
+                onClick={toggleTop}
+                className="text-xs text-accent-yellow hover:underline hover:cursor-pointer"
+              >
+                {showTop ? "How to solve?" : "See Top"}
+              </button>
             </div>
+
+            {showTop ? (
+              loadingTop ? (
+                <LoadingIndicator />
+              ) : topSolver ? (
+                <div className="p-2 flex flex-col items-center gap-3 max-w-xs mx-auto">
+                  <img
+                    src={topSolver.user.pfpUrl}
+                    className="w-12 h-12 rounded-full"
+                  />
+                  <div className="flex items-center gap-1">
+                    <h4 className="text-lg font-semibold text-white">
+                      {topSolver.user.name}
+                    </h4>
+                  </div>
+                  <p className="text-base text-muted">
+                    has solved{" "}
+                    <span className="font-bold text-accent-yellow">
+                      {topSolver.solveCount}
+                    </span>{" "}
+                    POTD{topSolver.solveCount > 1 ? "s" : ""}
+                  </p>
+                </div>
+              ) : (
+                <div className="text-muted text-sm">No solves yet.</div>
+              )
+            ) : (
+              <div className="space-y-2 text-muted text-xs">
+                <div className="flex items-start gap-2">
+                  <span className="text-accent-purple">1.</span>
+                  <span>Click "Solve" to open the problem</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-accent-purple">2.</span>
+                  <span>Submit your solution on Codeforces</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-accent-purple">3.</span>
+                  <span>Return and click "Verify" to check your answer</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
