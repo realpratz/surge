@@ -5,6 +5,7 @@ import {
   getScheduledPotd,
   verifyPotdSolve,
   getSolveHistory,
+  getPotdStats,
 } from "../controllers/potd";
 import { requireAuth, requireCruxMember } from "../middlewares/auth";
 
@@ -17,5 +18,5 @@ router.get("/schedule", requireCruxMember, getScheduledPotd);
 router.get("/current", requireAuth, getCurrentPotd);
 router.post("/verify-solve", requireAuth, verifyPotdSolve);
 router.get("/solve-history", requireAuth, getSolveHistory);
-
+router.get("/stats", requireAuth, getPotdStats);
 export default router;
