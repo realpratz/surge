@@ -68,11 +68,11 @@ router.patch("/edit", async (req: Request, res: Response) => {
     const updateFields: Partial<typeof users.$inferInsert> = {};
 
     if (pfpUrl !== undefined) updateFields.pfpUrl = pfpUrl;
-    if (atcoderHandle !== undefined) updateFields.atcoderHandle = atcoderHandle;
+    if (atcoderHandle !== undefined) updateFields.atcoderHandle = atcoderHandle || null;
     if (leetcodeHandle !== undefined)
-      updateFields.leetcodeHandle = leetcodeHandle;
+      updateFields.leetcodeHandle = leetcodeHandle || null;
     if (codechefHandle !== undefined)
-      updateFields.codechefHandle = codechefHandle;
+      updateFields.codechefHandle = codechefHandle || null;
 
     await db.update(users).set(updateFields).where(eq(users.id, id));
 
